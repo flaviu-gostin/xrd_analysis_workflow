@@ -25,4 +25,5 @@
 
 > Keep it simple!
 > This presentation: done in Markdown, converted to pdf with Pandoc
-> Emacs, git, github, Python 
+> Version control: git. All git actions done in Bash, used GitHub only as remote repository
+> Emacs, Python 
