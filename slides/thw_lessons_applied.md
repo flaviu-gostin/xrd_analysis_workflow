@@ -43,4 +43,28 @@
 - Keep it simple!
 - This presentation: done in Markdown, converted to pdf with Pandoc
 - Version control: git. All git actions done in Bash, used GitHub only as remote repository
-- Emacs, Python 
+- Emacs, Python
+
+# Ensuring a reproducible environment
+
+- virtualenv
+- made directory venv/ in project root
+- pip freeze > requirements.txt
+
+# Somebody has done something similar, of course
+
+- fit2d - most known
+- pyFAI - Python
+- DAWN Science - Java?
+- GSAS-II (Python!) - does everything! https://subversion.xray.aps.anl.gov/trac/pyGSAS
+
+# Data processing steps
+
+- Calibration
+- Azimuthal integration
+
+# Last slide
+
+- Data processing workflow is reproducible
+- ... but it does not necessarily imply it is correct
+- ... but at least interested people have the chance to check it
