@@ -1,7 +1,7 @@
 """
 Print the entire hierarchy of a hdf5 file
 
-Run with: python print_hdf5_hierarchy.py FILENAME
+Run with: python print_hdf5_tree.py FILENAME
 
 """
 
@@ -26,6 +26,8 @@ def find_all(name, object):
     elif isinstance(object, h5py.Group):
         print(name, '(Group)')
 
+        
 file.visititems(find_all)
+
 
 file.close()
