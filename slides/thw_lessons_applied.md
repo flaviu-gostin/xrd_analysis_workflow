@@ -149,3 +149,10 @@
 - Data processing workflow is reproducible
 - ... but it does not necessarily imply it is correct
 - ... but at least interested people have the chance to check it
+
+
+# Final impression
+
+- This is better than I imagined because
+- I can go back to it anytime and see _exactly_ how the analysis was done
+- and I or someone else can re-use it for other projects
