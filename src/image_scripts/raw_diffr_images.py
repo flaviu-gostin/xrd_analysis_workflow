@@ -1,5 +1,6 @@
 """Creates raw diffraction image"""
 
+print("Generating raw diffraction images ...")
 
 import matplotlib.pyplot as plt
 import sys
@@ -29,5 +30,9 @@ for (file, slice) in slices_to_plot:
     plt.title(file + ", slice " +  str(slice))
     filename = file.split("/")[-1]
     file_no = filename[5:10]
-    plt.savefig(location_of_images + file_no + "_" + str(slice) + ".png")
+    save_file = file_no + "_" + str(slice) + "_raw.png"
+    plt.savefig(location_of_images + save_file)
     plt.close()
+    print("Saved", save_file)
+
+print("Done")
