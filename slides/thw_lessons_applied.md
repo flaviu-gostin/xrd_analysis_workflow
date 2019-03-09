@@ -140,8 +140,39 @@
 
 - use pyFAI module
 - import function does not work on my .hdf files! -> contact dev team, report bug, contribute?
-- meanwhile, use h5py module and write my own import function
-- realised it would be nice to also have a function to visualize the internal .hdf file tree structure
+
+
+# Solution
+
+- use h5py module. Spent a few good hours to understand how it works
+- write small script to visualize the groups tree inside hdf files
+- dataset is a 3D array (stack of 2D images)
+- write function to extract individual diffraction images as 2D numpy arrays
+
+
+# Print some images
+
+- script to plot raw diffraction images for paper with matplotlib
+
+
+# Calibration
+
+- normally, done using a GUI
+- 'tell' the GUI which ring is which by clicking (!) five points on each ring
+- how does one reproduce a click?
+- ...
+- the calibration determines the geometry of the setup, which is saved in a .poni file
+
+
+# Azimuthal integration
+
+- create an AzimuthalIntegrator (ai) object with the .poni file
+- ai.integrate1d(img to integrate as ndarray, etc) all diffration images
+
+
+# Documentation
+
+- all directories have a README.md describing the contents (do they all?)
 
 
 # Last slide
@@ -156,3 +187,4 @@
 - This is better than I imagined because
 - I can go back to it anytime and see _exactly_ how the analysis was done
 - and I or someone else can re-use it for other projects
+- this process actually helped better understand the processing of my data and build confidence 
