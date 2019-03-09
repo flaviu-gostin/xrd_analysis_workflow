@@ -19,7 +19,7 @@ def find_all(name, object):
 
     if isinstance(object, h5py.Dataset):    # if the member is a Dataset ...
         if object.shape == (1,):    # has one dimension with one single value
-            print(name, '(Dataset, value =', object.value, ')')    # print value
+            print(name, '(Dataset, value =', object[()], ')')    # print value
         else:
             print(name, '(Dataset, shape:', object.shape, ', type:', object.dtype, ')')    # otherwise print the shape and type 
 
