@@ -11,10 +11,10 @@ import datetime
 
 
 # Refined gemetry will be saved in this .poni file
-poni_file = "../../results/intermediate/calibration/Si_17950eV.poni"
+poni_file = "../../results/intermediate/calibration/Si_17.95keV.poni"
 
 # Known experimental values
-wl = 0.6907197e-10    # Wavelength in meter
+wl = 0.6907e-10    # Wavelength in meter
 cal = get_calibrant("Si")    # Calibrant used for this experiment
 cal.wavelength = wl
 det = pyFAI.detectors.Detector(2.53e-5, 2.53e-5)    # Pixel size
