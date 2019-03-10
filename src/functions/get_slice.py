@@ -9,18 +9,18 @@ import numpy as np
 
 
 def get_slice(filename, n):
-    """First slice is 0, second is 1, ..."""
+    """Extract one single slice from a .hdf file.  Counting starts at 0."""
     file = h5py.File(filename, 'r')
-    all_slices = file['entry/instrument/detector/data']
-    slice = all_slices[n]
+    dataset = file['entry/instrument/detector/data']
+    slice = dataset[n]
     file.close()
     return slice
 
 
-def test_slice():
-    """Test function get_slice(file, n)"""
-    filename = "../../data/cmos-72532_FOR_TESTS.hdf"
-    a_slice = get_slice(filename, 71)
+def test_get_slice():
+    """Test function get_slice"""
+    filename = "../dataset_for_tests.hdf"
+    a_slice = get_slice(filename, 0)
     assert a_slice.ndim == 2
     assert a_slice.shape == (2045, 4098)
     assert a_slice.dtype == 'uint16'
@@ -28,5 +28,5 @@ def test_slice():
 
 if __name__ == "__main__":
     print("Running tests")
-    test_slice()
+    test_get_slice()
     print("Finished")
