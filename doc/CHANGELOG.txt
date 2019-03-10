@@ -1,0 +1,7 @@
+* TO DO: finish up check_calibration.py, i.e. overlay fake_calibr... and real calibr images
+* TO DO: move control points and experimental details from calibration.py to tehe data/ directory
+
+
+## 2019-03-09
+* First working calibration.py using only Python with the pyFAI module
+* Also tried doing it with the command line interface "pyfai-calib", but not happy about it
