@@ -1,5 +1,12 @@
+* TO DO: write function to extract (peak) maximum value for the 113 reflection of Pd and apply it to PS_1p3V
+
 * TO DO: finish up check_calibration.py, i.e. overlay fake_calibr... and real calibr images
+
 * TO DO: move control points and experimental details from calibration.py to tehe data/ directory
+
+
+## 2019-03-11
+* Wrote and tested script to plot stacks of 1D patterns
 
 
 ## 2019-03-09
