@@ -2,7 +2,7 @@
 
 This workflow takes raw 2D images, performs azimuthal integration on them resulting in an intensity versus 2theta plot and calculates lattice spacing from peak position.
 
-Please try to reproduce my results on your machine by following the steps bellow.  You will know it worked if you get two figures and a text file in `xrd_analysis_workflow/results/final/`.  These should look like Fig. 1c (page 25), Fig. S1 (page 35) and the 1st row in Table 2 (page 31) in the manuscript at `xrd_analysis_workflow/doc/manuscript.pdf`.  Please let me know how it went by issuing an `Issue` at the top of the screen or otherwise.  You are also welcome to send me `Pull requests`. 
+Please try to reproduce my results on your machine by following the steps bellow.  You will know it worked if you get two figures and a text file in `xrd_analysis_workflow/results/final/`.  These should look like Fig. 1c (page 25), Fig. S1 (page 35) and the 1st row in Table 2 (page 31) in the manuscript at `xrd_analysis_workflow/doc/manuscript.pdf`.  Please let me know how it went by issuing an `Issue` at the top of the screen or email me.  You are also welcome to send me `Pull requests`. 
 
 ## Follow these steps:
 
