@@ -1,24 +1,20 @@
 """ Calculate lattice spacing from peak position """
 
 import numpy as np
-import numpy.testing as npt
 import pytest
+import os
+import natsort
 
 
-# array = np.loadtxt(file, usecols=(0, 1)) # returns 2D array, each col is a list
-# get a slice of array containing the Pd111 peak
-
-
-# def peak_max(slice):
-#     find max of second list in slice
-#     find the corresponding value in first list
-#     return 2theta value of peak max
-
-Pd111 = (28.603, 29.404)    # (start, end) values of 2theta interval of Pd111
+wl = 0.6907e-10    # Wavelength in meter
+Pd113 = (33.5, 34.6)    # (start, end) values of 2theta interval of Pd111
+loc_stack = "../../results/intermediate/integrated_1D/PS_1p3V/"
+patterns = (0, 82)    # (first pattern, last pattern + 1, step)
+results_file = "../../results/final/table_Pd_summary.txt"
 
 
 def spacing(wavelength, two_theta):
-    """ Calculate lattice spacing in Angstrom using Bragg's law
+    """ Calculate lattice spacing in Angstrom using Bragg's law and basic geometry
         
         wavelength: in meter
         two_theta: in degree
@@ -30,64 +26,67 @@ def spacing(wavelength, two_theta):
 
     wl = wavelength * 1e+10    # Change unit to Angstrom
     theta = ((two_theta / 2) * np.pi ) / 180   # Calculate theta in radian
-    d = wl / (2 * np.sin(theta))
-    return d
+    d = wl / (2 * np.sin(theta))    # Bragg's law
+    a = d * np.sqrt(1**2 + 1**2 + 3**2)    # Lattice spacing (a) from the interplanar distance (d) of Pd113 atomic planes
+
+    return a
 
 
+def peak_positions(loc_stack, patterns):
+    """ Returns list of Pd113 peak positions for each pattern in a stack"""
 
-def peak_positions(directory):
-    """ Returns list of peak position of Pd113 for each pattern in a stack"""
-    peak_positions = []
-    pattern0 = np.loadtxt(directory + "0.dat", usecols=(0,1))
-    get_indices(pattern0, Pd111)
+    twotheta_peaks = []    # Defined as the 2theta value of the peak top
 
-        for file in directory:
-            pattern_whole = np.loadtxt(file, usecols=(0, 1))
-            get the region of interest
-            two_theta_max = two_theta of max intensity
-            peak_positions.append
+    # Determine array indices for Pd113 from the first file in directory 
+    patt0 = np.loadtxt(loc_stack + str(patterns[0]) + ".dat", usecols=(0,1))
+    st, end = get_indices(patt0, Pd113[0], Pd113[1])
+    
+    files = natsort.natsorted(os.listdir(loc_stack))[patterns[0]:patterns[1]]
 
-    return peak_positions
+    for file in files:
+        pattern_whole = np.loadtxt(loc_stack + file, usecols=(0, 1))
+        roi = pattern_whole[st:end, : ]    # Slice the Pd113 region
+        i_max_idx = np.argmax(roi[..., 1])    # Index of maximum intensity
+        twotheta_peak = roi[i_max_idx, 0]
+        twotheta_peaks.append(twotheta_peak)
+
+    return twotheta_peaks
 
     
-def get_indices(array_a, (start, end)):
+
+def get_indices(array_a, twoth_st, twoth_end):
     """ Determine the start and end indices of given 2theta interval 
 
     array_a: 2D array ([[2theta values list], [intensity values list]])
     (start, end): start and end 2theta values of given interval
 
     """
-    
-    i = 0
-    while array[0, i] < start:
-        i += 1
-    start_index = i
 
-    i = array.shape[-1]
-    while array[0, i] > end:
-        i -= 1
-    end_index = i
+    twoth_axis = array_a[..., 0]    # Get the X axis (two theta) values
+    diff_st = abs(twoth_axis - twoth_st)   # Subtract Pd113 start two theta value
+    st_idx = np.argmin(diff_st)    # Index of Pd113 start two theta 
 
-    return (start_index, end_index)
+    diff_end = abs(twoth_axis - twoth_end)
+    end_idx = np.argmin(diff_end)
+
+    return (st_idx, end_idx)
 
 
 
-def peak_max(sliced_array):
-    
+latt_sp_sum = 0    # lattice spacing summed over all patterns
+for tth in peak_positions(loc_stack, patterns):
+   latt_sp_sum += spacing(wl, tth)
+latt_sp_avg = latt_sp_sum / len(peak_positions(loc_stack, patterns))
 
-sliced_array = array[..., start_index:end_index]
-find maximum in sliced_array[1]
-return the corresponding value in sliced_array[0]
-        
-    a = peak_max(slice)
+
+with open(results_file, "w") as rf:
+    rf.write("# This is summary table of lattice spacing values determined from the Pd113 peak \n")
+    rf.write("PS    1.3V    " + str(np.around(latt_sp_avg, decimals=4)))
     
     
-    
-
-
 def test_spacing():
     d_test0 = spacing(1e-10, 60)
-    npt.assert_almost_equal(d_test0, 1, decimal=7)
+    assert d_test0 == pytest.approx(1)
     with pytest.raises(ValueError):
         spacing(1, 60)
     
