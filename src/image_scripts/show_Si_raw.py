@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import sys
 
 
-location_of_data = "../../data/calibrant_Si/"
+location_of_data = "../../data/"
 filename1 = "Si_17.95keV.hdf"
 file1 = location_of_data + filename1
 

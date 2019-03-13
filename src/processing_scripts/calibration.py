@@ -13,22 +13,22 @@ import datetime
 # Refined gemetry will be saved in this .poni file
 poni_file = "../../results/intermediate/calibration/Si_17.95keV.poni"
 
-# Known experimental values
+# Experimental parameters
 wl = 0.6907e-10    # Wavelength in meter
 cal = get_calibrant("Si")    # Calibrant used for this experiment
 cal.wavelength = wl
 det = pyFAI.detectors.Detector(2.53e-5, 2.53e-5)    # Pixel size
 det.max_shape = (2045, 4098)    # Detector size in pixels
 
-# Approximate geometry (to be refined)
+# Approximate geometry to start with (to be refined by this script)
 d = 1.3e-1    # Distance sample to detector, measured with a ruler
 p1 = 2e-3     # Estimated poni1
 p2 = 2e-3
-r1 = 0           # rot1
+r1 = 0        # rot1
 r2 = 0
 r3 = 0
 
-# Several points on each diffraction ring selected manually from the calibration diffraction image (Si 72379 17950eV)
+# Several points on each diffraction ring selected manually from the calibration diffraction image (Si_17.95keV)
 p =[]
 p.append([854, 21, 0])    # [dim0 (in pixels), dim1, ring index]
 p.append([854, 86, 0])
@@ -73,11 +73,6 @@ geo_ref = GeometryRefinement(data=pts, dist=d, poni1=p1, poni2=p2, rot1=r1, rot2
 
 
 geo_ref.refine2()
-
-
-# print(geo_ref.param)
-
-# print(geo_ref.chi2)
 
 
 # generate new .poni file

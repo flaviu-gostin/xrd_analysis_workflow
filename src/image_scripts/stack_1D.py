@@ -9,7 +9,7 @@ import natsort
 location_data = "../../results/intermediate/integrated_1D/"
 # Sub-directories where stacks to plot are
 subdirs = ["PS_1p3V/"]
-location_plots = "../../results/intermediate/stack_plots_1D/"
+location_plots = "../../results/final/"
 
 
 # Put all of the bellow in a function "plot_stack(subdir, offset, x y ranges)"?

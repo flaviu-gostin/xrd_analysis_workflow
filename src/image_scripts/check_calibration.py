@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 
 
 # The .poni file containing the refined geometry parameters
-poni_file = "../../results/intermediate/calibration/Si_17950eV.poni"
+poni_file = "../../results/intermediate/calibration/Si_17.95keV.poni"
 
 cal = get_calibrant("Si")
 detector_shape = (2045, 4096) 
