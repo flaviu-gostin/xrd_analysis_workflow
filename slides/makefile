@@ -1,6 +1,6 @@
 .PHONY: slides clean
 
-slides: thw_lessons_applied.md
+slides:
 	pandoc -t beamer -s thw_lessons_applied.md -o thw_lessons_applied.pdf
 
 clean:

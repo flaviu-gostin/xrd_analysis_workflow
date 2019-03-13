@@ -175,6 +175,12 @@
 - all directories have a README.md describing the contents (do they all?)
 
 
+# Test driven development?
+
+- at the beginning, not really
+- because struggling to figure out how everything should work together
+
+
 # Last slide
 
 - Data processing workflow is reproducible
