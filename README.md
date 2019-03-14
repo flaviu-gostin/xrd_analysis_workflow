@@ -16,7 +16,7 @@ Please try to reproduce my results on your machine by following the steps bellow
 - Activate the virtual environment with `source venv/bin/activate` (you can deactivate it with `deactivate`, but don't do it now) 
 - Install the requirements in `requirements.txt`, e.g. with `pip install -r requirements.txt`
 - Dig deep inside the virtual environment directory for the module pyFAI.azimuthalIntegrator (something like `xrd_analysis_workflow/venv/lib/python3.5/site-packages/pyFAI/azimuthalIntegrator.py`). At line 178 insert `try:` (above the line `from .opencl import ocl`, which of course needs to be indented) and below it add two lines: `except ImportError:` and with indent `ocl = None` (see Important note below)
-- Finally, download the raw diffraction data from Figshare and do the analysis simply with the command (make sure you are in the project root, i.e. `xrd_analysis_workflow` and the virtual environment is active): `make all`
+- Finally, download the raw diffraction data from Figshare and do the analysis simply with the command (make sure you are in the project root, i.e. `xrd_analysis_workflow` and the virtual environment is active): `make all`. This will download an archive of 1.3G in `data/`, and un-archive it (so it will write another 1.3G on your drive), followed by analysis, which took approx. 2 min on my laptop.
 - If you get some ImportError warnings, you probably need to install those modules that are indicated in the warnings. Make sure the virtual environment is active and install those modules with `pip install module_name`
 - Try again the command: `make all` or just `make analysis` if the raw data has been downloaded at the previous `make all` (check the terminal output or the directory `xrd_analysis_workflow`)
 - Finally finally, compare the files in `xrd_analysis_workflow/results/final/` directory with the manuscript as said above.
@@ -27,6 +27,6 @@ Please try to reproduce my results on your machine by following the steps bellow
 Unfortunately, when _from pyFAI.azimuthalIntegrator import AzimuthalIntegrator_ an _ImportError: cannot import name 'ocl'_ is raised with pyFAI 0.17.0. The solution that seems best now is to modify the pyFAI/azimuthalIntegrator.py module to add a `try` statement before the problematic import at line 178, as has been done for the latest version of that module on https://github.com/silx-kit/pyFAI/blob/master/pyFAI/azimuthalIntegrator.py, see commit 1e2b476
 This is how your modification should look like:
 `try:`
-`    from .opencl import ocl`
+`(indent) from .opencl import ocl`
 `except ImportError:`
-`    ocl = None`
+`(indent) ocl = None`
