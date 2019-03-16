@@ -13,11 +13,11 @@ Please try to reproduce my results on your machine by following the steps bellow
 - Clone the repository with: `git clone [URL copied above]`
 - Change directory to the repository directory: `cd xrd_analysis_workflow/`
 - Create a virtual environment, e.g. install virtualenv with `sudo apt install virtualenv` if it is not already installed, create a virtual environment with `virtualenv --python=python3.5 venv`. 
-  - If this command fails, try `which python` to show the python3 interpretor name on your machine. For me it was `python 3`, so I had to use the command `virtualenv --python=python3 venv` instead.
+  - If this command fails, try `which python` or `which python3` to find out the python3 interpretor name on your machine. For me it was `python 3`, so I had to use the command `virtualenv --python=python3 venv` instead.
 - (a directory `venv/` will be created, which will contain the Python packages)
 - Activate the virtual environment with `source venv/bin/activate` (you can deactivate it with `deactivate`, but don't do it now)
 - Install the requirements in `requirements.txt`, e.g. with `pip install -r requirements.txt`
-- Dig deep inside the virtual environment directory for the module pyFAI.azimuthalIntegrator (something like `xrd_analysis_workflow/venv/lib/python*/site-packages/pyFAI/azimuthalIntegrator.py`). At line 178, change the `from .opencl import ocl` line to the following *four* line:
+- Dig deep inside the virtual environment directory for the module pyFAI.azimuthalIntegrator (something like `xrd_analysis_workflow/venv/lib/python*/site-packages/pyFAI/azimuthalIntegrator.py`). At line 178, change the `from .opencl import ocl` line to the following *four* lines:
 ```
 try:
     from .opencl import ocl
