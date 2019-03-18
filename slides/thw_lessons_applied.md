@@ -10,33 +10,34 @@
 * No formal programming training
 
 
-# The path to The Hacker Within
+# My path to The Hacker Within
 
+* Excel catastrophes early on. Origin much better, but still not enough
 * Keyword: unnatural
-* I had enough of Windows and GUIs, all the good tools seems to be developed as Python packages
+* I had enough of Windows and GUIs, all the good tools seem to be developed for GNU/Linux and as Python packages
 * 19 March 2018, Matt's welcome talk - the right talk at the right time
+* Switch to GNU/Linux, command line, Emacs, Python, Git
 
 
 # What this presentation is about
 
-* My first attempt to make the analysis for my recent research project compliant with computational reproducibility standards
+* My first attempt to make a new analysis workflow for my recent research project, which is (computationally) reproducibile
 * Describe the research
-* Show the paper and some intermediary analysis/plots
+* Show the results I want to reproduce
 * Show how I did it
-* Show how I would do it now
+* Show the new workflow
 
 
 # Practical stuff
 
 * Let's see if my analysis can be reproduced on your machine:
-..* Navigate to: https://github.com/craicrai/xrd_analysis_workflow
-..* Fork
-..* Open terminal
-..* cd Desktop
-..* git clone https://github.com/*your-user-name*/xrd_analysis_workflow
-..* cd xrd_analysis_workflow
-..* make all
-
+* Navigate to: https://github.com/craicrai/xrd_analysis_workflow
+* Fork
+* Open terminal
+* cd Desktop
+* git clone https://github.com/*your-user-name*/xrd_analysis_workflow
+* cd xrd_analysis_workflow
+* make all
 
 
 # DESCRIBE THE RESEARCH
@@ -69,62 +70,59 @@ Dental implant made of titanium
 # Azimuthal integration
 
 \centerline{\includegraphics[height=2.5in]{images/integration.png}}
+Calibration required to find the centre and the detector tilt
 
 
-
-# SHOW THE PAPER AND SOME INTERMEDIARY ANALYSIS
+# SHOW THE RESULTS I WANT TO REPRODUCE
 
 # Selected raw 2D diffraction image
 
-* (show a raw diffraction image from Supplement)
-* show the actual pdf outside the presentation (copyright issue)
-
+\centerline{\includegraphics[height=2.5in]{images/figure_S1_paper.png}}
+Figure S1 in paper
 
 # Stack of 1D diffraction patterns
 
-* (show Figure 1 in paper)
+\centerline{\includegraphics[height=2.5in]{images/figure_1c_paper.png}}
+Figure 1c in paper
 
 
-# Calculate average values
+# Extract peak info and calculate lattice spacing
 
-* (show the large table)
-
+\centerline{\includegraphics[height=1in]{images/table2_paper.png}}
+Table 2 in paper
 
 
 # HOW I DID THE ANALYSIS ORIGINALLY
 
 * complete chaos!
+* conspicuously irreproducible
 
 # Documentation
 
 * no repository, no appendix with details, just this:
-* (show excerpt from Experimental section in paper about the analysis)
-
+\centerline{\includegraphics[height=1in]{images/computation_description_paper.png}}
+Excerpt paper
 
 # Project organization
 
 * very poor organization
 * afraid of losing track of which data is where: just leave it as it comes
 * inconsistent structure
-* (show tree of glassix and inbox)
-
+* mixed raw data with processed data with metadata with Python scripts etc.
 
 # Software
 
 * DAWN Science for calibration and azimuthal integration
 * Brucker X pert for peak detection, fitting and indexing
 * Also used Match for the same thing as it had access to a different database
-* 
+* CrystalDiffract
+* CrystalMaker
+* gnuplot for plotting
 
-* (show the azimuthal integration pipeline in DAWN)
+# Version control
 
-
-# Frustruation build-up and the enlightenment moments
-
-* drawing thousands of lines in ppts: there must be a better way! Started learning Python
-* automation, efficiency improvement, tweaks
-* the first THW seminar by Matt in March 2018
-
+* ls | less
+\centerline{\includegraphics[height=2.5in]{images/manuscript_versions.png}}
 
 
 # HOW I WOULD DO THE ANALYSIS NOW
@@ -145,6 +143,8 @@ Dental implant made of titanium
 * This presentation: done in Markdown, converted to pdf with Pandoc
 * Version control: git. All git actions done in Bash, used GitHub only as remote repository
 * Bash, Emacs, Python
+* Instructions in README
+* Left Jupyter and Binder for later
 
 
 # Ensuring a reproducible environment
@@ -154,37 +154,27 @@ Dental implant made of titanium
 * pip freeze > requirements.txt, NO! better manually
 
 
-# Somebody has done something similar, of course
+# "Always search for well-maintained software libraries that do what you need"
 
-* fit2d * oldest (?) and most known
-* pyFAI * Python, faster than pyFAI, good for 
-* DAWN Science * Java?
-* GSAS-II (Python!) * does everything! https://subversion.xray.aps.anl.gov/trac/pyGSAS
+* fit2d, oldest (?) and most known
+* pyFAI, in Python, faster than fit2d 
+* DAWN Science, it's a GUI, in Java?
+* GSAS-II, in Python and does a lot more! https://subversion.xray.aps.anl.gov/trac/pyGSAS
 
 
 # Data processing steps in pyFAI
 
-* Calibration
-* Azimuthal integration
+* Calibration, calibrate experiment geometry and save it to a .poni file
+* Azimuthal integration, use the .poni file
 
 
-# Developing the workflow
+# pyFAI import does not work
 
-* use pyFAI module
 * import function does not work on my .hdf files! -> contact dev team, report bug, contribute?
-
-
-# Solution
-
 * use h5py module. Spent a few good hours to understand how it works
 * write small script to visualize the groups tree inside hdf files
 * dataset is a 3D array (stack of 2D images)
 * write function to extract individual diffraction images as 2D numpy arrays
-
-
-# Print some images
-
-* script to plot raw diffraction images for paper with matplotlib
 
 
 # Experiment geometry in pyFAI
@@ -206,11 +196,6 @@ Dental implant made of titanium
 
 * create an AzimuthalIntegrator (ai) object with the .poni file
 * ai.integrate1d(img to integrate as ndarray, etc) all diffration images
-
-
-# Documentation
-
-* all directories have a README.md describing the contents (do they all?)
 
 
 # Test driven development?
@@ -238,17 +223,19 @@ Dental implant made of titanium
 
 * OceanNuclear, mkdir data  and clarify README 
 * Greg, make README more concise and ImportError (tk ...)
+* Observations from auditorium?
 
 
-# Last slide
+# Not the last slide
 
 * Data processing workflow is reproducible
 * ... but it does not necessarily imply it is correct
 * ... but at least interested people have the chance to check it
 
 
-# Final impression
+# My impressions
 
+* This is so much fun!
 * This is better than I imagined because
 * I can go back to it anytime and see _exactly_ how the analysis was done
 * and I or someone else can re-use it for other projects
