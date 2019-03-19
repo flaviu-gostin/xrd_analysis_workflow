@@ -3,6 +3,16 @@
 * TO DO: move control points and experimental details from calibration.py to tehe data/ directory
 
 
+## 2019-03-19
+* Made azimuthalIntegrator.patch
+* Uninstalled all Python packages and deleted venv/. Then created a new virtual environment and reinstalled all packages, applied the patch. Tested `make analysis`, it worked.
+
+
+## 2019-03-18
+* Added about 5 images and text to slides
+* Gave talk at THW
+
+
 ## 2019-03-13
 * Wrote script to extract Pd113 peak position for PS_1p3V patterns and calculate average lattice spacing from those
 * Wrote and tested Makefile recipe (`make data`) to download data from Figshare and un-archive it
