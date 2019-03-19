@@ -1,4 +1,4 @@
-.PHONY: all data validate eda analysis slides clean test verbose coverage
+.PHONY: all data validate eda analysis slides patch clean test verbose coverage
 
 all:
 	make data
@@ -24,6 +24,9 @@ analysis:
 
 slides:
 	cd slides && make slides
+
+patch:
+	cat azimuthalIntegrator.patch | patch -d `find -name azimuthalIntegrator.py -printf %h`
 
 clean:
 	to do
