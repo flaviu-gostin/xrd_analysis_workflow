@@ -10,7 +10,7 @@ from get_slice import get_slice
 
 location_of_data = "../../data/"
 location_of_images = "../../results/final/"
-slices_to_plot = [("PS_1p3V", 71)]    # [(file, slice no), ...]
+slices_to_plot = [("PS_1p3V_b", 71)]    # [(file, slice no), ...]
 
 
 for (condition, slice) in slices_to_plot:

@@ -14,7 +14,7 @@ import os
 
 location_hdfs = "../../data/"
 # Names of hdf files to integrate
-names = ["PS_1p3V"]
+names = ["PS_1p3V_b"]
 location_results = "../../results/intermediate/integrated_1D/"
 poni_file = "../../results/intermediate/calibration/Si_17.95keV.poni"
 

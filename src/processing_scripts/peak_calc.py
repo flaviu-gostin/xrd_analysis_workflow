@@ -8,7 +8,7 @@ import natsort
 
 wl = 0.6907e-10    # Wavelength in meter
 Pd113 = (33.5, 34.6)    # (start, end) values of 2theta interval of Pd111
-loc_stack = "../../results/intermediate/integrated_1D/PS_1p3V/"
+loc_stack = "../../results/intermediate/integrated_1D/PS_1p3V_b/"
 patterns = (0, 82)    # (first pattern, last pattern + 1, step)
 results_file = "../../results/final/table_Pd_summary.txt"
 
