@@ -1,11 +1,25 @@
 ## TO DO
-   * copy all data into data/ and give files proper names
-   * change peak_calc.py to calculate all values in summary table Pd113
-   * finish up check_calibration.py, i.e. overlay fake_calibr... and real calibr images
-   * move control points and experimental details in calibration.py to the data/ directory
-   * when all data is copied into data/ with proper file names, and the workflow is finished and tested, upload the data to Zenodo and delete what is on Figshare
-   * ask a few people to test it on their machines
-   * at the very end, upload workflow to ... Zenodo or a journal?
+   * Separate peak_calc.py into table_Pd.py and functions/peak_calculations.py
+   * Finish up check_calibration.py, i.e. overlay fake_calibr... and real calibr images
+   * Move control points and experimental details in calibration.py to the data/ directory
+   * Copy non-XRD data into data/
+   * When all data is copied into data/ with proper file names, and the workflow is finished and tested, upload the data to Zenodo and delete what is on Figshare
+   * Ask a few people to test it on their machines
+   * At the very end, upload workflow to ... Zenodo or a journal?
+
+
+## 2019-06-03
+   * Changed peak_calc.py to calculate all values in summary table on Pd.
+   * Changed azimuthal_integration.py to integrate all XRD scans in data/
+
+## 2019-06-02
+   * Renamed all XRD scan files with proper names
+   * New bash script data/script_rename.sh to rename all XRD scan files
+   * Copied all XRD scans that I want in the workflow
+
+## 2019-06-01
+   * New file data/scan_numbers.txt containing a list of XRD scans with their original number and intuitive names to be used in this workflow
+   * Replaced 'PS_1p3V' with 'PS_1p3V_b' in file and directory names and inside files (according to names in data/scan_numbers.txt)
 
 ## 2019-03-19
    * Made azimuthalIntegrator.patch
