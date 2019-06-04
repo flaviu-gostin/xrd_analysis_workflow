@@ -1,4 +1,4 @@
-"""Calculate lattice spacing from peak position"""
+"""Calculate lattice constant from peak position"""
 
 import numpy as np
 import pytest
@@ -9,11 +9,11 @@ wl = 0.6907e-10    # Wavelength in meter
 roi_Pd113 = (33.5, 34.6)    # (start, end) values of 2theta interval of Pd113
 
 
-def spacing(wavelength, peak_pos):
+def latt_ct(wavelength, peak_pos):
     """
-    Calculate spacing of cubic lattice from 113 peaks.
+    Calculate constant of cubic lattice from 113 peaks.
     
-    Calculate the spacing of a cubic lattice from the position of the
+    Calculate the constant of a cubic lattice from the position of the
     113 peak using Bragg's law and simple geometry.
 
     Parameters
@@ -27,7 +27,7 @@ def spacing(wavelength, peak_pos):
     Returns
     -------
     a : float
-        Value of lattice spacing.
+        Value of lattice constant.
 
     """
     if wavelength < 1e-12 or wavelength > 1e-9:
@@ -39,7 +39,7 @@ def spacing(wavelength, peak_pos):
     theta = ((peak_pos / 2) * np.pi ) / 180
     # d is interplanar spacing from Bragg's law
     d = wl / (2 * np.sin(theta))
-    # a is lattice spacing
+    # a is lattice constant
     a = d * np.sqrt(1**2 + 1**2 + 3**2)
     return a
 
@@ -101,11 +101,11 @@ def get_indices(array_a, twoth_st, twoth_end):
     return (st_idx, end_idx)
 
 
-def latt_sp_avg(dir_1D, patterns, wl):
+def latt_ct_avg(dir_1D, patterns, wl):
     """
-    Calculate average lattice spacing of Pd.
+    Calculate average lattice constant of Pd.
 
-    Calculates the average lattice spacing of Pd from the Pd113 peak for each 
+    Calculates the average lattice constant of Pd from the Pd113 peak for each 
     pattern and then calculates the average over all given patterns.
 
     Parameters
@@ -121,18 +121,18 @@ def latt_sp_avg(dir_1D, patterns, wl):
     -------
     out : float
         Float number representing the average of the Pd lattice
-    spacing.
+    constant.
 
     """ 
-    latt_sp_sum = 0    # lattice spacing summed over all patterns
+    latt_ct_sum = 0    # lattice constant summed over all patterns
     for tth in peak_positions(dir_1D, patterns):
-        latt_sp_sum += spacing(wl, tth)
-    latt_sp_avg = latt_sp_sum / len(peak_positions(dir_1D, patterns))
-    return latt_sp_avg
+        latt_ct_sum += latt_ct(wl, tth)
+    latt_ct_avg = latt_ct_sum / len(peak_positions(dir_1D, patterns))
+    return latt_ct_avg
 
 
-def test_spacing():
-    d_test0 = spacing(1e-10, 60)
+def test_latt_ct():
+    d_test0 = latt_ct(1e-10, 60)
     assert d_test0 == pytest.approx(1)
     with pytest.raises(ValueError):
-        spacing(1, 60)
+        latt_ct(1, 60)

@@ -7,7 +7,7 @@ import numpy as np
 import os
 import sys
 sys.path.append("../functions/")
-from peak_calc import latt_sp_avg 
+from peak_calc import latt_ct_avg 
 
 wl = 0.6907e-10    # Wavelength in meter
 roi_Pd113 = (33.5, 34.6)    # (start, end) values of 2theta interval of Pd113
@@ -33,10 +33,10 @@ with open(results_file, "w") as rf:
     rf.write("# This is a summary table of lattice spacing values determined from the Pd113 peak \n")
     for [scan, patterns] in scans_patterns:
         dir_1D = location_stacks + scan + "/"
-        lsa = latt_sp_avg(dir_1D, patterns, wl)
+        lca = latt_ct_avg(dir_1D, patterns, wl)
         #e is the electrolyte
         e = scan.split('_')[0]
         #p is the potential
         p = scan.split('_')[1]
         rf.write(e + "     " + p + "    " +
-                 str(np.around(lsa, decimals=4)) + "\n")
+                 str(np.around(lca, decimals=4)) + "\n")
