@@ -1,5 +1,4 @@
 ## TO DO
-   * Separate peak_calc.py into table_Pd.py and functions/peak_calculations.py
    * Finish up check_calibration.py, i.e. overlay fake_calibr... and real calibr images
    * Move control points and experimental details in calibration.py to the data/ directory
    * Copy non-XRD data into data/
@@ -7,6 +6,12 @@
    * Ask a few people to test it on their machines
    * At the very end, upload workflow to ... Zenodo or a journal?
 
+
+## 2019-06-03
+   * Separate peak_calc.py into table_Pd.py and functions/peak_calc.py
+   * Moved the averaging bit from peak_calc to table_Pd
+   * Did a lot of code reorganisation
+   * Wrote better function docstrings according to numpy style
 
 ## 2019-06-03
    * Changed peak_calc.py to calculate all values in summary table on Pd.
