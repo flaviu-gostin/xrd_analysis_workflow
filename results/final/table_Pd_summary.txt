@@ -1,10 +1,16 @@
-# This is a summary table of lattice spacing values determined from the Pd113 peak 
-PS     1p3V    3.8925
-PSA     1p3V    3.8873
-PSP     1p3V    3.8908
-PSAP     1p3V    3.8906
-PS     0p7V    3.887
-PS     0p5V    3.9003
-PS     0p0V    3.9138
-PS     0p0V    3.9317
-PS     0p0V    3.9435
+
+Table.  Lattice constant and crystallite size of Pd particles
+generated inside artificial pits on Ti40Zr10Cu34Pd14Sn2 metallic glass
+ribbons.
+---------------------------------------------
+Electrolyte    Potential   Lattice constant
+---------------------------------------------
+PS             1.3V        3.892(6)
+PSA            1.3V        3.887(2)
+PSP            1.3V        3.891(5)
+PSAP           1.3V        3.891(3)
+PS             0.7V        3.887(6)
+PS             0.5V        3.900(6)
+PS             0.0V        3.91(1)
+PS             0.0V        3.932(3)
+PS             0.0V        3.943(1)
