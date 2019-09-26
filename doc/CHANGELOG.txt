@@ -1,4 +1,5 @@
 ## TO DO
+   * Simulate diffraction patterns of Pd, CuCl etc. -- simulate_diff_patt.py
    * Finish up check_calibration.py, i.e. overlay fake_calibr... and real calibr images
    * Move control points and experimental details in calibration.py to the data/ directory
    * Copy non-XRD data into data/
@@ -7,7 +8,7 @@
    * At the very end, upload workflow to ... Zenodo or a journal?
 
 
-## 2019-06-03
+## 2019-06-04
    * Separate peak_calc.py into table_Pd.py and functions/peak_calc.py
    * Moved the averaging bit from peak_calc to table_Pd
    * Did a lot of code reorganisation
