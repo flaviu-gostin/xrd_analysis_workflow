@@ -1,4 +1,5 @@
 ## TO DO
+   * Create function to plot stack of XRD patterns along with simulated patterns of standards
    * Simulate diffraction patterns of Pd, CuCl etc. -- simulate_diff_patt.py
    * Finish up check_calibration.py, i.e. overlay fake_calibr... and real calibr images
    * Move control points and experimental details in calibration.py to the data/ directory
