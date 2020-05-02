@@ -19,14 +19,14 @@ to send me `Pull requests`.
 - Open Terminal
 - `cd Desktop`
 - `git clone https://github.com/craicrai/xrd_analysis_workflow.git`
-- `cd xrd_analysis_workflow/`
 
 ### Create a virtual environment and install packages
 
 For example:
+- `cd xrd_analysis_workflow/`
 - `sudo apt install virtualenv`
 - `virtualenv --python=python3 venv` (this will create a directory named
-  `venv/`, which will contain the required Python packages).  Note: this project
+  `venv/`, where required Python packages will be installed).  Note: this project
   was developed with Python3.5
 - `source venv/bin/activate` (it can be deactivated with `deactivate`, but don't
   do it now)
