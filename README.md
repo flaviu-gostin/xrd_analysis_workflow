@@ -1,7 +1,7 @@
-# Data analysis for article Gostin et al., 2018
+# Data analysis for article Gostin et al 2018
 
-Gostin et al., *In Situ Synchrotron X‐Ray Diffraction Characterization of
-Corrosion Products of a Ti‐Based Metallic Glass for Implant Applications*
+P. F. Gostin et al., *In Situ Synchrotron X‐Ray Diffraction Characterization of
+Corrosion Products of a Ti‐Based Metallic Glass for Implant Applications*,
 Advanced Healthcare Materials, 2018, 7, 1800338
 (<https://doi.org/10.1002/adhm.201800338>)
 
@@ -35,7 +35,7 @@ results](results/final/).
 
 - Open Terminal
 - `cd Desktop`
-- `git clone https://github.com/craicrai/xrd_analysis_workflow.git`
+- `git clone https://github.com/flaviu-gostin/xrd_analysis_workflow.git`
 
 ### Create a virtual environment and install required packages
 
