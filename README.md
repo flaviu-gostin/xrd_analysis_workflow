@@ -3,22 +3,25 @@
 Article title: In Situ Synchrotron X‐Ray Diffraction Characterization of
  Corrosion Products of a Ti‐Based Metallic Glass for Implant Applications
 
-Non-free final published version: <https://doi.org/10.1002/adhm.201800338>
+Non-free final published version: [https://doi.org/10.1002/adhm.201800338]
 
-Free pre-publication version: <doc/manuscript_Gostin_2018.pdf>
+Free pre-publication version:
+[doc/manuscript_Gostin_2018.pdf](doc/manuscript_Gostin_2018.pdf)
 
-This repo contains Python code which does data analysis, plots figures and
+**This repo contains** Python code which performs data analysis, plots figures and
 creates tables for the article mentioned above.
 
-How it works?  In short:
+**How it works.**  In short:
 - download the raw 2D XRD image data from a public data repository
 - perform azimuthal integration on those images resulting in 1D XRD patterns
-  using @pyFAI
+  using [pyFAI](https://github.com/silx-kit/pyFAI)
 - determine peak position, calculate lattice spacing and write values in a table
-- calculate diffraction patterns from structures using @pymatgen
-- plot measured and calculated diffraction patterns using @matplotlib
+- calculate diffraction patterns from structures using
+  [pymatgen](https://github.com/materialsproject/pymatgen)
+- plot measured and calculated diffraction patterns using
+  [matplotlib](https://github.com/matplotlib/matplotlib)
 
-This repo is for people interested in knowing whether this data analysis is
+**This repo is for** people interested in knowing whether this data analysis is
 reproducible.  It is also for people who want to re-use some of this code.
 
 2020-05-08: This project is under work.  At the moment, it generates
@@ -33,7 +36,7 @@ results](results/final/).
 - `cd Desktop`
 - `git clone https://github.com/craicrai/xrd_analysis_workflow.git`
 
-### Create a virtual environment and install packages
+### Create a virtual environment and install required packages
 
 For example:
 - `cd xrd_analysis_workflow/`
@@ -62,6 +65,8 @@ Note: if you get some ImportError warnings, you probably need to install those
  is active and install those modules with `pip install module_name`. Then try
  again the command: `make all` or just `make analysis` if the raw data has
  already been downloaded.
+
+## Feedback
 
 Please let me know how it went by creating an issue at the top of the screen or
 email me.  You are also welcome to send me pull requests.
