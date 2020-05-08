@@ -1,6 +1,9 @@
-# Data analysis for article: Gostin et al, *In Situ Synchrotron X‐Ray Diffraction Characterization of Corrosion Products of a Ti‐Based Metallic Glass for Implant Applications* Adv. Healthcare Mater. 2018, 7, 1800338
+# Data analysis for article Gostin et al., 2018
 
-Non-free final published version: <https://doi.org/10.1002/adhm.201800338>
+Gostin et al., *In Situ Synchrotron X‐Ray Diffraction Characterization of
+Corrosion Products of a Ti‐Based Metallic Glass for Implant Applications*
+Advanced Healthcare Materials, 2018, 7, 1800338
+(<https://doi.org/10.1002/adhm.201800338>)
 
 Free pre-publication version:
 [doc/manuscript_Gostin_2018.pdf](doc/manuscript_Gostin_2018.pdf)
@@ -18,8 +21,9 @@ creates tables for the article mentioned above.
 - plot measured and calculated diffraction patterns using
   [matplotlib](https://github.com/matplotlib/matplotlib)
 
-**This repo is for** people interested in knowing whether this data analysis is
-reproducible.  It is also for people who want to re-use some of this code.
+**This repo is for** people interested in knowing whether the results of the
+data analysis are reproducible.  It is also for people who want to re-use some
+of this code.
 
 2020-05-08: This project is under work.  At the moment, it generates
 figures 1c and S1 (in Supporting Information) and Table 2.  See [final
@@ -51,9 +55,9 @@ For example:
 
 ### Download raw data and do the analysis
 
-- `make all` (this will download an archive of 1.3 GB in [data/](data/), and
-  un-archive it (so you need >1.3GB free space on your drive), followed by
-  analysis, which took approx. 2 min on an average laptop)
+- `make all` (this will download an archive of 1.3 GB, and un-archive it (so you
+  need >1.3GB free space on your drive), followed by analysis, which took
+  approx. 2 min on an average laptop)
 
 You should find the results (figures and tables) in the directory
 [results/](results/)
