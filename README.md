@@ -1,18 +1,24 @@
-# Analysis of 2D X-ray diffraction images
+# Data analysis for article: Gostin et al, Adv. Healthcare Mater. 2018, 7, 1800338
+
+Article title: In Situ Synchrotron X‐Ray Diffraction Characterization of
+ Corrosion Products of a Ti‐Based Metallic Glass for Implant Applications
+
+Non-free final published version: https://doi.org/10.1002/adhm.201800338
+
+Free pre-publication version:
+[doc/manuscript_Gostin_2018.pdf](doc/manuscript_Gostin_2018.pdf)
 
 This workflow takes raw 2D images, performs azimuthal integration on them
 resulting in an intensity versus 2theta plot and calculates lattice spacing from
 peak position.
 
-Please try to reproduce my results on your machine by following the steps
-bellow.  You will know it worked if you get two figures and a text file in
-`xrd_analysis_workflow/results/final/`.  These should look like Fig. 1c (page
-25), Fig. S1 (page 35) and the 1st row in Table 2 (page 31) in the manuscript at
-`xrd_analysis_workflow/doc/manuscript.pdf`.  Please let me know how it went by
-issuing an `Issue` at the top of the screen or email me.  You are also welcome
-to send me `Pull requests`.
 
-## Follow these steps:
+
+2020-05-08: This project is still under work.  At the moment, it generates
+figures 1c and S1 (in Supporting Information) and Table 2.  See [final
+results](results/final/).
+
+## To repeat the analysis, follow these steps:
 
 ### Clone this repository
 
@@ -49,3 +55,6 @@ Note: if you get some ImportError warnings, you probably need to install those
  is active and install those modules with `pip install module_name`. Then try
  again the command: `make all` or just `make analysis` if the raw data has
  already been downloaded.
+
+Please let me know how it went by creating an issue at the top of the screen or
+email me.  You are also welcome to send me pull requests.
