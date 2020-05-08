@@ -1,9 +1,6 @@
-# Data analysis for article: Gostin et al, Adv. Healthcare Mater. 2018, 7, 1800338
+# Data analysis for article: Gostin et al, *In Situ Synchrotron X‐Ray Diffraction Characterization of Corrosion Products of a Ti‐Based Metallic Glass for Implant Applications* Adv. Healthcare Mater. 2018, 7, 1800338
 
-Article title: In Situ Synchrotron X‐Ray Diffraction Characterization of
- Corrosion Products of a Ti‐Based Metallic Glass for Implant Applications
-
-Non-free final published version: [https://doi.org/10.1002/adhm.201800338]
+Non-free final published version: <https://doi.org/10.1002/adhm.201800338>
 
 Free pre-publication version:
 [doc/manuscript_Gostin_2018.pdf](doc/manuscript_Gostin_2018.pdf)
@@ -54,11 +51,12 @@ For example:
 
 ### Download raw data and do the analysis
 
-- `make all` (this will download an archive of 1.3 GB in `data/`, and un-archive it (so
-  you need >1.3GB free space on your drive), followed by analysis, which took
-  approx. 2 min on an average laptop)
+- `make all` (this will download an archive of 1.3 GB in [data/](data/), and
+  un-archive it (so you need >1.3GB free space on your drive), followed by
+  analysis, which took approx. 2 min on an average laptop)
 
-You should find the results (figures and tables) in the directory results/
+You should find the results (figures and tables) in the directory
+[results/](results/)
 
 Note: if you get some ImportError warnings, you probably need to install those
  modules that are indicated in the warnings. Make sure the virtual environment
