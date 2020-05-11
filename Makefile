@@ -13,7 +13,7 @@ validate:
 	use hash, see project-alpha
 
 eda:
-	to do
+# to do
 
 analysis:
 	cd src/processing_scripts/ && python calibration.py
@@ -22,6 +22,10 @@ analysis:
 	cd src/image_scripts/ && python stack_1D.py
 	cd src/image_scripts/ && python raw_diffr_images.py
 
+calibration :
+# check calibration.py and make it take dependencies from sys.arg
+# so that they are given explicitly in this Makefile
+
 slides:
 	cd slides && make slides
 
@@ -29,4 +33,4 @@ patch:
 	cat azimuthalIntegrator.patch | patch -d `find -name azimuthalIntegrator.py -printf %h`
 
 clean:
-	to do
+# to do
