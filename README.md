@@ -12,7 +12,8 @@ Free pre-publication version:
 creates tables for the article mentioned above.
 
 **How it works.**  In short:
-- download the raw 2D XRD image data from a public data repository
+- download the raw 2D XRD image data from a public data repository (only one set
+  of images for now)
 - perform azimuthal integration on those images resulting in 1D XRD patterns
   using [pyFAI](https://github.com/silx-kit/pyFAI)
 - determine peak position, calculate lattice spacing and write values in a table
