@@ -26,9 +26,9 @@ creates tables for the article mentioned above.
 data analysis are reproducible.  It is also for people who want to re-use some
 of this code.
 
-2020-05-08: This project is under work.  At the moment, it generates
-figures 1c and S1 (in Supporting Information) and Table 2.  See [final
-results](results/final/).
+2020-05-08: This project is under work.  At the moment, it generates figures 1c
+and S1 (in Supporting Information) and Table 2.  See
+[results/final/](results/final/).
 
 ## To repeat the analysis, follow these steps:
 
@@ -49,10 +49,9 @@ For example:
 - `source venv/bin/activate` (it can be deactivated with `deactivate`, but don't
   do it now)
 - `pip install -r requirements.txt` (install all required Python packages)
-- `make patch` (apply a patch which adds a try statement to
-  azimuthalIntegrator.py, a pyFAI module, to circumvent an ImportError.  Without
-  this patch, the analysis will not work.  See file
-  xrd_analysis_workflow/azimuthalIntegrator.patch)
+- `make patch` (apply a [patch](azimuthalIntegrator.patch) which adds a try
+  statement to azimuthalIntegrator.py, a pyFAI module, to circumvent an
+  ImportError.  Without this patch, the analysis will not work)
 
 ### Download raw data and do the analysis
 
@@ -60,8 +59,7 @@ For example:
   need >1.3GB free space on your drive), followed by analysis, which took
   approx. 2 min on an average laptop)
 
-You should find the results (figures and tables) in the directory
-[results/](results/)
+You should find the results (figures and tables) in [results/](results/)
 
 Note: if you get some ImportError warnings, you probably need to install those
  modules that are indicated in the warnings. Make sure the virtual environment
