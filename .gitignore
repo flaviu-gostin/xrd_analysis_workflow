@@ -4,3 +4,4 @@ venv/
 data/
 *__pycache__/
 *#*
+results/intermediate/integrated_1D/
