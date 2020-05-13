@@ -5,3 +5,4 @@ data/*
 !data/README.md
 *__pycache__/
 *#*
+results/intermediate/integrated_1D/
