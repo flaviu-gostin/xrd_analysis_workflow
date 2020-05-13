@@ -1,3 +1,25 @@
+# all these directories need to exist!
+
+DATA_DIR=data
+HDF_FILES=$(wildcard $(DATA_DIR)/PS*.hdf) #hdf-s need to be downloaded
+
+RESULTS_INTERM_DIR=results/intermediate
+INT_PATT_DIR=$(RESULTS_INTERM_DIR)/integrated_1D
+
+# All integrated patterns from one hdf file go in a directory with the same name
+# Need to create those directories
+INT_PATT_DIRS=$(patsubst $(DATA_DIR)/%.hdf, $(INT_PATT_DIR)/%, $(HDF_FILES))
+
+PONI_FILE=$(RESULTS_INTERM_DIR)/calibration/Si_17.95keV.poni # git add this one
+
+SRC_DIR=src
+PROC_SRC_DIR=$(SRC_DIR)/processing_scripts
+IMG_SRC_DIR=$(SRC_DIR)/image_scripts
+LANGUAGE=python
+AZIM_INT_SRC=$(PROC_SRC_DIR)/azimuthal_integration.py
+AZIM_INT_EXE=$(LANGUAGE) $(AZIM_INT_SRC)
+
+
 .PHONY: all data validate eda analysis slides patch clean test verbose coverage
 
 all:
@@ -10,7 +32,7 @@ data:
 	cd data && tar -zxvf xrd_data.tgz
 
 validate:
-	use hash, see project-alpha
+# use hash, see project-alpha
 
 eda:
 # to do
@@ -25,6 +47,15 @@ analysis:
 calibration :
 # check calibration.py and make it take dependencies from sys.arg
 # so that they are given explicitly in this Makefile
+
+.PHONY : ai-all
+ai-all : $(INT_PATT_DIRS)
+
+.PHONY : ai-test
+ai-test : $(INT_PATT_DIR)/PS_1p3V_b
+
+$(INT_PATT_DIR)/% : $(DATA_DIR)/%.hdf $(PONI_FILE) $(AZIM_INT_SRC)
+	$(AZIM_INT_EXE) $(PONI_FILE) $< $@
 
 slides:
 	cd slides && make slides
