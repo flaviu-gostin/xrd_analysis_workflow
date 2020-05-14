@@ -1,23 +1,11 @@
-# all these directories need to exist!
-
-DATA_DIR=data
-HDF_FILES=$(wildcard $(DATA_DIR)/PS*.hdf) #hdf-s need to be downloaded
-
-RESULTS_INTERM_DIR=results/intermediate
-INT_PATT_DIR=$(RESULTS_INTERM_DIR)/integrated_1D
-
-# All integrated patterns from one hdf file go in a directory with the same name
-# Need to create those directories
-INT_PATT_DIRS=$(patsubst $(DATA_DIR)/%.hdf, $(INT_PATT_DIR)/%, $(HDF_FILES))
-
-PONI_FILE=$(RESULTS_INTERM_DIR)/calibration/Si_17.95keV.poni # git add this one
+PONI_FILE=results/intermediate/calibration/Si_17.95keV.poni # git add this one
 
 SRC_DIR=src
 PROC_SRC_DIR=$(SRC_DIR)/processing_scripts
 IMG_SRC_DIR=$(SRC_DIR)/image_scripts
 LANGUAGE=python
-AZIM_INT_SRC=$(PROC_SRC_DIR)/azimuthal_integration.py
-AZIM_INT_EXE=$(LANGUAGE) $(AZIM_INT_SRC)
+AI_SRC=$(PROC_SRC_DIR)/azimuthal_integration.py
+AI_EXE=$(LANGUAGE) $(AI_SRC)
 
 
 .PHONY: all data validate eda analysis slides patch clean test verbose coverage
@@ -39,7 +27,7 @@ eda:
 
 analysis:
 	cd src/processing_scripts/ && python calibration.py
-	cd src/processing_scripts/ && python azimuthal_integration.py
+	make ai-all
 	cd src/processing_scripts/ && python peak_calc.py
 	cd src/image_scripts/ && python stack_1D.py
 	cd src/image_scripts/ && python raw_diffr_images.py
@@ -48,14 +36,38 @@ calibration :
 # check calibration.py and make it take dependencies from sys.arg
 # so that they are given explicitly in this Makefile
 
-.PHONY : ai-all
-ai-all : $(INT_PATT_DIRS)
+# azimuthal integration 'ai'
+# these HDF variables are here because we need to first download some hdf files
+HDF_DIR:=data
+HDF_FILES:=$(wildcard $(HDF_DIR)/*.hdf)
+HDF_STEMS:=$(basename $(notdir $(HDF_FILES)))
+INT_1D_DIR:=results/intermediate/integrated_1D
+# for each hdf file, create a directory with same name
+INTEGRATED_DIRS:=$(addprefix $(INT_1D_DIR)/,$(HDF_STEMS))
+# AI-INDIVIDUAL - target names for individual hdf files, e.g. 'ai-PS_1p3V-b'
+# there will be less typing with these simpler target names
+AI_INDIVIDUAL_TARGETS:=$(addprefix ai-,$(HDF_STEMS))
 
-.PHONY : ai-test
-ai-test : $(INT_PATT_DIR)/PS_1p3V_b
 
-$(INT_PATT_DIR)/% : $(DATA_DIR)/%.hdf $(PONI_FILE) $(AZIM_INT_SRC)
-	$(AZIM_INT_EXE) $(PONI_FILE) $< $@
+.PHONY : ai-all $(AI_INDIVIDUAL_TARGETS)
+## ai-all           : Perform azimuthal integration (ai) on all hdf files
+ai-all : $(AI_INDIVIDUAL_TARGETS)
+
+
+## ai-(hdf_stem)    : Perform 'ai' on one (hdf_stem), e.g. ai-PS_1p3V_b
+$(AI_INDIVIDUAL_TARGETS) : ai-% :
+	mkdir -p $(INT_1D_DIR)/$*
+	make $(INT_1D_DIR)/$*/0.dat
+
+# don't want a directory as target.  Use first file in it instead, i.e. 0.dat
+$(INT_1D_DIR)/%/0.dat: $(HDF_DIR)/%.hdf $(PONI_FILE) $(AI_SRC)
+	$(AI_EXE) $(PONI_FILE) $< $(patsubst %/,%,$(dir $@))
+
+## clean-ai : Delete all directories containing integrated 1D patterns
+.PHONY : clean-ai
+clean-ai :
+	rm -rf $(INT_1D_DIR)/*
+
 
 slides:
 	cd slides && make slides
@@ -65,3 +77,17 @@ patch:
 
 clean:
 # to do
+
+
+## variables        : Print some variables
+.PHONY : variables
+variables :
+	@echo HDF_FILES: $(HDF_FILES)
+	@echo HDF_STEMS: $(HDF_STEMS)
+	@echo INTEGRATED_DIRS: $(INTEGRATED_DIRS)
+	@echo AI_INDIVIDUAL_TARGETS: $(AI_INDIVIDUAL_TARGETS)
+
+## help             : Print this help
+.PHONY : help
+help : Makefile
+	@sed -n 's/^##//p' $<
