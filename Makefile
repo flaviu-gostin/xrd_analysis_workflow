@@ -15,7 +15,7 @@ all:
 	make analysis
 
 data:
-	mkdir data
+	mkdir -p data
 	cd data && wget -O xrd_data.tgz https://ndownloader.figshare.com/files/14574803?private_link=5f423271a5a4e7fee3ed
 	cd data && tar -zxvf xrd_data.tgz
 
