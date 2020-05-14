@@ -36,6 +36,7 @@ calibration :
 # check calibration.py and make it take dependencies from sys.arg
 # so that they are given explicitly in this Makefile
 
+
 # azimuthal integration 'ai'
 # these HDF variables are here because we need to first download some hdf files
 HDF_DIR:=data
@@ -44,12 +45,12 @@ HDF_STEMS:=$(basename $(notdir $(HDF_FILES)))
 INT_1D_DIR:=results/intermediate/integrated_1D
 # for each hdf file, create a directory with same name
 INTEGRATED_DIRS:=$(addprefix $(INT_1D_DIR)/,$(HDF_STEMS))
-# AI-INDIVIDUAL - target names for individual hdf files, e.g. 'ai-PS_1p3V-b'
-# there will be less typing with these simpler target names
+
+# simpler target names for 'ai' of individual hdf files, e.g. 'ai-PS_1p3V-b'
 AI_INDIVIDUAL_TARGETS:=$(addprefix ai-,$(HDF_STEMS))
 
-
 .PHONY : ai-all $(AI_INDIVIDUAL_TARGETS)
+
 ## ai-all           : Perform azimuthal integration (ai) on all hdf files
 ai-all : $(AI_INDIVIDUAL_TARGETS)
 
