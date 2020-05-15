@@ -1,7 +1,14 @@
-"""This script performs calibration of experiment geometry"""
+""" This script performs calibration of experiment geometry.
+
+Usage: python calibration.py poni-file
+
+poni-file : file to write the calibration info to
+
+"""
 
 
 import numpy as np
+import sys
 import pyFAI
 pyFAI.use_opencl = False    # It must be set before requesting any OpenCL modules
 
@@ -11,7 +18,7 @@ import datetime
 
 
 # Refined gemetry will be saved in this .poni file
-poni_file = "../../results/intermediate/Si_17.95keV.poni"
+poni_file = sys.argv[1]
 
 # Experimental parameters
 wl = 0.6907e-10    # Wavelength in meter

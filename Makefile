@@ -41,10 +41,9 @@ calibration :
 	make $(PONI_FILE)
 
 $(PONI_FILE) : $(CALIB_SRC)
-	cd $(PROC_SRC_DIR) && $(LANGUAGE) calibration.py
-#	$(CALIB_EXE)  replace this for the above when the time comes
-# check calibration.py and make it take dependencies from sys.arg
-# so that they are given explicitly in this Makefile
+	$(CALIB_EXE) $@
+# todo: move variables out of calibration.py into a config file in data/
+# ... and add that config file as a prerequisite to this rule
 
 
 # azimuthal integration 'ai'
