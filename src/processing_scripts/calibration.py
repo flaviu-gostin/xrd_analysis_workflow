@@ -11,7 +11,7 @@ import datetime
 
 
 # Refined gemetry will be saved in this .poni file
-poni_file = "../../results/intermediate/calibration/Si_17.95keV.poni"
+poni_file = "../../results/intermediate/Si_17.95keV.poni"
 
 # Experimental parameters
 wl = 0.6907e-10    # Wavelength in meter

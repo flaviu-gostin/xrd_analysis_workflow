@@ -6,4 +6,4 @@ data/*
 *__pycache__/
 *#*
 results/intermediate/integrated_1D/
-results/intermediate/calibration/Si_17.95keV.poni
+results/intermediate/Si_17.95keV.poni

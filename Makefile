@@ -1,12 +1,12 @@
-PONI_DIR=results/intermediate/calibration
-PONI_FILE=$(PONI_DIR)/Si_17.95keV.poni
+RESULTS_INTERMED:=results/intermediate
+PONI_FILE:=$(RESULTS_INTERMED)/Si_17.95keV.poni
 
-SRC_DIR=src
-PROC_SRC_DIR=$(SRC_DIR)/processing_scripts
-IMG_SRC_DIR=$(SRC_DIR)/image_scripts
-LANGUAGE=python
-AI_SRC=$(PROC_SRC_DIR)/azimuthal_integration.py
-AI_EXE=$(LANGUAGE) $(AI_SRC)
+SRC_DIR:=src
+PROC_SRC_DIR:=$(SRC_DIR)/processing_scripts
+IMG_SRC_DIR:=$(SRC_DIR)/image_scripts
+LANGUAGE:=python
+AI_SRC:=$(PROC_SRC_DIR)/azimuthal_integration.py
+AI_EXE:=$(LANGUAGE) $(AI_SRC)
 CALIB_SRC:=$(PROC_SRC_DIR)/calibration.py
 CALIB_EXE:=$(LANGUAGE) $(CALIB_SRC)
 
@@ -37,12 +37,12 @@ analysis:
 .PHONY : calibration
 ## calibration      : Refine experiment geometry
 calibration :
-	mkdir -p $(PONI_DIR)
+	mkdir -p $(dir PONI_FILE)
 	make $(PONI_FILE)
 
 $(PONI_FILE) : $(CALIB_SRC)
-	cd $(PROC_SRC_DIR) && python calibration.py
-#	$(CALIB_EXE)
+	cd $(PROC_SRC_DIR) && $(LANGUAGE) calibration.py
+#	$(CALIB_EXE)  replace this for the above when the time comes
 # check calibration.py and make it take dependencies from sys.arg
 # so that they are given explicitly in this Makefile
 
@@ -52,7 +52,7 @@ $(PONI_FILE) : $(CALIB_SRC)
 HDF_DIR:=data
 HDF_FILES:=$(wildcard $(HDF_DIR)/*.hdf)
 HDF_STEMS:=$(basename $(notdir $(HDF_FILES)))
-INT_1D_DIR:=results/intermediate/integrated_1D
+INT_1D_DIR:=$(RESULTS_INTERMED)/integrated_1D
 # for each hdf file, create a directory with same name
 INTEGRATED_DIRS:=$(addprefix $(INT_1D_DIR)/,$(HDF_STEMS))
 
