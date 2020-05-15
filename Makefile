@@ -10,7 +10,8 @@ AI_EXE:=$(LANGUAGE) $(AI_SRC)
 CALIB_SRC:=$(PROC_SRC_DIR)/calibration.py
 CALIB_EXE:=$(LANGUAGE) $(CALIB_SRC)
 
-.PHONY: all data validate eda analysis slides patch clean test verbose coverage
+.PHONY : all data validate eda analysis slides patch test verbose coverage
+.PHONY : clean-all
 
 all:
 	make data
@@ -88,7 +89,7 @@ slides:
 patch:
 	cat azimuthalIntegrator.patch | patch -d `find -name azimuthalIntegrator.py -printf %h`
 
-clean:
+clean-all:
 # to do
 
 
