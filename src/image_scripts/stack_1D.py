@@ -8,7 +8,7 @@ import natsort
 
 location_data = "../../results/intermediate/integrated_1D/"
 # Sub-directories where stacks to plot are
-subdirs = ["PS_1p3V/"]
+subdirs = ["PS_1p3V_b/"]
 location_plots = "../../results/final/"
 
 
