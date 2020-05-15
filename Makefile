@@ -1,4 +1,5 @@
-PONI_FILE=results/intermediate/calibration/Si_17.95keV.poni # git add this one
+PONI_DIR=results/intermediate/calibration
+PONI_FILE=$(PONI_DIR)/Si_17.95keV.poni
 
 SRC_DIR=src
 PROC_SRC_DIR=$(SRC_DIR)/processing_scripts
@@ -6,7 +7,8 @@ IMG_SRC_DIR=$(SRC_DIR)/image_scripts
 LANGUAGE=python
 AI_SRC=$(PROC_SRC_DIR)/azimuthal_integration.py
 AI_EXE=$(LANGUAGE) $(AI_SRC)
-
+CALIB_SRC:=$(PROC_SRC_DIR)/calibration.py
+CALIB_EXE:=$(LANGUAGE) $(CALIB_SRC)
 
 .PHONY: all data validate eda analysis slides patch clean test verbose coverage
 
@@ -26,13 +28,21 @@ eda:
 # to do
 
 analysis:
-	cd src/processing_scripts/ && python calibration.py
+	make calibration
 	make ai-all
 	cd src/processing_scripts/ && python peak_calc.py
 	cd src/image_scripts/ && python stack_1D.py
 	cd src/image_scripts/ && python raw_diffr_images.py
 
+.PHONY : calibration
+## calibration      : Refine experiment geometry
 calibration :
+	mkdir -p $(PONI_DIR)
+	make $(PONI_FILE)
+
+$(PONI_FILE) : $(CALIB_SRC)
+	cd $(PROC_SRC_DIR) && python calibration.py
+#	$(CALIB_EXE)
 # check calibration.py and make it take dependencies from sys.arg
 # so that they are given explicitly in this Makefile
 
