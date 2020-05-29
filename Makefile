@@ -77,7 +77,7 @@ $(AI_INDIVIDUAL_TARGETS) : ai-% :
 $(INT_1D_DIR)/%/0.dat: $(HDF_DIR)/%.hdf $(PONI_FILE) $(AI_SRC)
 	$(AI_EXE) $(PONI_FILE) $< $(patsubst %/,%,$(dir $@))
 
-## clean-ai : Delete all directories containing integrated 1D patterns
+## clean-ai         : Delete all directories containing integrated 1D patterns
 .PHONY : clean-ai
 clean-ai :
 	rm -rf $(INT_1D_DIR)/*
