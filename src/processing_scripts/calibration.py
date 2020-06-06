@@ -1,7 +1,8 @@
 """ This script performs calibration of experiment geometry.
 
-Usage: python calibration.py poni-file
+Usage: python calibration.py experiment-parameters-file poni-file
 
+experiment-parameters-file : file from which to get experiment parameters
 poni-file : file to write the calibration info to
 
 """
@@ -16,16 +17,22 @@ from pyFAI.calibrant import get_calibrant
 from pyFAI.geometryRefinement import GeometryRefinement
 import datetime
 
+# import experiment-parameters-file as a module
+import importlib
+spec = importlib.util.spec_from_file_location('what.ever', sys.argv[1])
+exper_param = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(exper_param)
+
 
 # Refined gemetry will be saved in this .poni file
-poni_file = sys.argv[1]
+poni_file = sys.argv[2]
 
 # Experimental parameters
-wl = 0.6907e-10    # Wavelength in meter
-cal = get_calibrant("Si")    # Calibrant used for this experiment
-cal.wavelength = wl
-det = pyFAI.detectors.Detector(2.53e-5, 2.53e-5)    # Pixel size
-det.max_shape = (2045, 4098)    # Detector size in pixels
+cal = get_calibrant(exper_param.calibrant)
+cal.wavelength = exper_param.wavelength
+det = pyFAI.detectors.Detector(exper_param.detector_pixel_size[0],
+                               exper_param.detector_pixel_size[1])
+det.max_shape = exper_param.detector_shape
 
 # Approximate geometry to start with (to be refined by this script)
 d = 1.3e-1    # Distance sample to detector, measured with a ruler
@@ -35,7 +42,8 @@ r1 = 0        # rot1
 r2 = 0
 r3 = 0
 
-# Several points on each diffraction ring selected manually from the calibration diffraction image (Si_17.95keV)
+# Several points on each diffraction ring selected manually from the calibration
+# diffraction image (Si_17.95keV)
 p =[]
 p.append([854, 21, 0])    # [dim0 (in pixels), dim1, ring index]
 p.append([854, 86, 0])
@@ -76,7 +84,9 @@ p.append([1431, 4081, 6])
 pts = np.array(p, dtype="float64")
 
 
-geo_ref = GeometryRefinement(data=pts, dist=d, poni1=p1, poni2=p2, rot1=r1, rot2=r2, rot3=r3, detector=det, wavelength=wl, calibrant=cal)
+geo_ref = GeometryRefinement(data=pts, dist=d, poni1=p1, poni2=p2, rot1=r1,
+                             rot2=r2, rot3=r3, detector=det,
+                             wavelength=exper_param.wavelength, calibrant=cal)
 
 
 geo_ref.refine2()

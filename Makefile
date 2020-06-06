@@ -9,6 +9,7 @@ AI_SRC:=$(PROC_SRC_DIR)/azimuthal_integration.py
 AI_EXE:=$(LANGUAGE) $(AI_SRC)
 CALIB_SRC:=$(PROC_SRC_DIR)/calibration.py
 CALIB_EXE:=$(LANGUAGE) $(CALIB_SRC)
+EXPER_PARAM_FILE:=data/exper_param.py
 
 .PHONY : all data validate eda analysis slides patch test verbose coverage
 .PHONY : clean-all
@@ -41,8 +42,8 @@ calibration :
 	mkdir -p $(dir PONI_FILE)
 	make $(PONI_FILE)
 
-$(PONI_FILE) : $(CALIB_SRC)
-	$(CALIB_EXE) $@
+$(PONI_FILE) :  $(EXPER_PARAM_FILE) $(CALIB_SRC)
+	$(CALIB_EXE) $< $@
 # todo: move variables out of calibration.py into a config file in data/
 # ... and add that config file as a prerequisite to this rule
 
