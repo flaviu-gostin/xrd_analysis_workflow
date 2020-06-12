@@ -90,7 +90,9 @@ patch:
 	cat azimuthalIntegrator.patch | patch -d `find -name azimuthalIntegrator.py -printf %h`
 
 clean-all:
-# to do
+	make clean-calibration
+	make clean-ai
+# add other clean rules as you create them
 
 
 ## variables        : Print some variables
