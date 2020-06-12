@@ -36,6 +36,7 @@ analysis:
 	cd src/image_scripts/ && python stack_1D.py
 	cd src/image_scripts/ && python raw_diffr_images.py
 
+
 .PHONY : calibration clean-calibration
 ## calibration      : Refine experiment geometry
 calibration :
@@ -44,8 +45,6 @@ calibration :
 
 $(PONI_FILE) :  $(EXPER_PARAM_FILE) $(CALIB_SRC)
 	$(CALIB_EXE) $< $@
-# todo: move variables out of calibration.py into a config file in data/
-# ... and add that config file as a prerequisite to this rule
 
 clean-calibration :
 	rm -f $(PONI_FILE)
