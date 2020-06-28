@@ -7,11 +7,11 @@ import numpy as np
 import os
 import sys
 sys.path.append("../functions/")
-from peak_calc import peak_maxima, latt_ct_cubic
+from peak_calc import peak_position, latt_ct_cubic
 
 wl = 0.6907e-10    # Wavelength in meter
 # (start, end) values of 2theta interval of Pd113
-tth_int_Pd113 = (33.5, 34.6)
+tth_int_Pd113 = [33.5, 34.6]
 planes_Pd113 = (1, 1, 3)
 location_stacks = "../../results/intermediate/integrated_1D/"
 
@@ -41,12 +41,15 @@ ribbons.
 
 with open(results_file, "w") as rf:
     rf.write(table_header)
-    for [scan, patterns] in scans_patterns:
-        dir_1D = location_stacks + scan + "/"
-        # pm contains 2theta values of Pd113 peak max for each pattern
-        pm = peak_maxima(dir_1D, patterns, tth_int_Pd113)
+    for [scan, pattern_idxs] in scans_patterns:
+        files = [os.path.join(location_stacks, scan, idx + '.dat') for idx in
+                 [str(x) for x in range(pattern_idxs[0], pattern_idxs[1])]]
+        #patterns = list of patterns as numpy arrays
+        patterns = [np.loadtxt(file_name) for file_name in files]
+        peak_positions = [peak_position(pattern, tth_int_Pd113) for pattern in
+                          patterns]
         # lc calculates lattice constant values from 2theta values in pm
-        lc = [latt_ct_cubic(wl, i, planes_Pd113) for i in pm]
+        lc = [latt_ct_cubic(wl, i, planes_Pd113) for i in peak_positions]
         lca = np.mean(lc, dtype=np.float64)    # Average over lc
         lcsd = np.std(lc, dtype=np.float64)    # St dev over lc
         lcsd_1signif = '{:.1g}'.format(lcsd)    # Round to 1 signif digit

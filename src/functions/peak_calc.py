@@ -1,4 +1,4 @@
-"""Calculate lattice constant from peak position"""
+"""Functions to determine peak position and lattice constant."""
 
 import numpy as np
 import pytest
@@ -47,79 +47,45 @@ def latt_ct_cubic(wavelength, peak_pos, planes):
     return a
 
 
-def peak_maxima(dir_1D, patterns, tth_interval):
-    """Determine two-theta of peak maximum for given patterns.
+def peak_position(pattern, two_theta_interval):
+    """Determine peak position as the highest point in given interval.
 
-    For each given pattern determine the two-theta value of the highest
-    intensity in the given interval.  Note: it is assumed that the two-theta
-    axis is the same for all patterns, i.e. patterns[0][..., 0] ==
-    patterns[1][..., 0] == ...
+    Determine peak position as the 2theta value of the data point with the
+    highest intensity among all the data points in given interval.
 
     Parameters
     ----------
-    dir_1D : string
-        Directory where the 1D diffraction pattern are
-    patterns : tuple
-        Tuple with 2 integers (first pattern, last pattern + 1)
-    tth_interval : tuple
-        Tuple with 2 float objects representing the left and right
-        margins of the two-theta interval in which the peak is located.
+    pattern : ndarray
+        Numpy 2 dimensional array. Two-theta values are in pattern[:,0] and
+        intensity values are in pattern[:,1]
+    two_theta_interval : list
+        Two two-theta values, one at the onset and one at the end of a
+        diffraction peak.
 
     Returns
     -------
-    twotheta_peaks : list
-        List containing two-theta values in degrees, one value for each
-        pattern.  Each value corresponds to the maximum intensity in the
-        given interval.
+    peak_position : float
+        Two-theta value of peak position.
 
     """
-    # twotheta_peaks is a list collecting peak maxima
-    twotheta_peaks = []
-    # Use the 1st pattern to determine indices of tth_interval
-    patt0 = np.loadtxt(dir_1D + str(patterns[0]) + ".dat",
-                       usecols=(0,1))
-    st = get_idx(patt0, tth_interval[0])
-    end = get_idx(patt0, tth_interval[1])
-    # List of files (each file contains a pattern) sorted numerically
-    files = \
-    natsort.natsorted(os.listdir(dir_1D))[patterns[0]:patterns[1]]
-    for file in files:
-        pattern_whole = np.loadtxt(dir_1D + file, usecols=(0, 1))
-        # roi is a slice containing the Pd113 region
-        roi = pattern_whole[st:end, : ]
-        i_max_idx = np.argmax(roi[..., 1])    # Index of maximum intensity
-        twotheta_peak = roi[i_max_idx, 0]
-        twotheta_peaks.append(twotheta_peak)
-    return twotheta_peaks
+    if not isinstance(pattern, np.ndarray):
+        raise TypeError("'pattern' must be a numpy array")
 
+    if pattern.ndim != 2 or len(pattern[0]) != 2:
+        raise ValueError("'pattern' must have 2 dimensions, and 2nd dimension \
+                         must have 2 elements")
 
-def get_idx(array_a, twoth):
-    """
-    Determine the index of 2theta which is nearest to given 2theta.
+    if not isinstance(two_theta_interval, list):
+        raise TypeError("'two_theta_interval' must be a list")
 
-    Parameters
-    ----------
-    array_a : ndarray
-        Numpy 2-dimensional array ([[2theta, intensity],
-                                    [2theta, intensity],
-                                    ...                ]).
-    twoth : float
-        Value of 2theta for which we want a (near) index.
+    if len(two_theta_interval) != 2:
+        raise ValueError("this list must have exactly 2 members")
 
-    Returns
-    -------
-    idx : integer
-        Index in array_a of the 2theta value which is nearest to the
-        given twoth
-
-    """
-    twoth_axis = array_a[..., 0]    # Get the X axis (two theta) values
-    # Subtract given twoth from each 2theta value in twoth_axis
-    diff_2th = abs(twoth_axis - twoth)
-    # idx is the index of the smallest item in diff_2th (= index of
-    # 2theta closest to the given 2theta)
-    idx = np.argmin(diff_2th)
-    return idx
+    two_theta_interval = [float(i) for i in two_theta_interval]
+    st_idx, end_idx = np.searchsorted(pattern[:,0], two_theta_interval)
+    intensity_slice = pattern[st_idx:end_idx, 1]
+    idx_max_intensity = np.argmax(intensity_slice) + st_idx
+    return pattern[idx_max_intensity, 0]
 
 
 def test_latt_ct_cubic():
@@ -129,3 +95,21 @@ def test_latt_ct_cubic():
     #test ValueError exception is raised if wavelength has unexpected value
     with pytest.raises(ValueError):
         latt_ct_cubic(1, 60, (1, 0, 0))
+
+
+def test_peak_position():
+    test_file = '../twotheta-intensity_tests.dat'
+    data = np.loadtxt(test_file)
+    two_theta_interval = [33.5, 34.6]
+    expect_val = 34.24808
+    assert peak_position(data, two_theta_interval) == pytest.approx(expect_val,
+                                                                    abs=0.001)
+    with pytest.raises(TypeError):
+        peak_position("fg", [5.6, 8.9])
+    with pytest.raises(ValueError):
+        a = np.arange(24).reshape(2, 3, 4)
+        peak_position(a, [5.6, 8.9])
+    with pytest.raises(TypeError):
+        peak_position(data, (3.5, 9.8)) #2nd argument should be a list
+    with pytest.raises(ValueError):
+        peak_position(data, [5.6, 8.9, 7])
