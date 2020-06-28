@@ -6,12 +6,13 @@ import os
 import natsort
 
 
-def latt_ct(wavelength, peak_pos, cryst_system, planes):
+def latt_ct_cubic(wavelength, peak_pos, planes):
     """Calculate lattice constant of cubic systems.
 
     Calculate the lattice constant for a cubic lattice from the position of
     given peak position as 2theta and given hkl plane using Bragg's law and
-    simple geometry.
+    simple geometry. Note: you should make sure the hkl plane is the right one
+    for the selected peak.
 
     Parameters
     ----------
@@ -20,9 +21,6 @@ def latt_ct(wavelength, peak_pos, cryst_system, planes):
         diffraction pattern.
     peak_pos : float
         The 2theta position of the diffraction peak in degree.
-    cryst_system : string
-        String describing the crystal system of the phase for which the
-        lattice constant is calculated.
     planes : tuple
         Tuple with 3 integers representing the Miller indices (h, k, l)
         of the planes used for calculating the lattice constant.
@@ -37,9 +35,7 @@ def latt_ct(wavelength, peak_pos, cryst_system, planes):
     if wavelength < 1e-12 or wavelength > 1e-9:
         raise ValueError(str(wavelength) + " (meter) is an unlikely\
         value for the wavelength")
-    if cryst_system != "cubic":
-        raise ValueError("At the moment this works only for cubic\
-                         systems")
+
     # Change unit to Angstrom
     wl = wavelength * 1e+10
     # Calculate theta in radian
@@ -126,8 +122,10 @@ def get_idx(array_a, twoth):
     return idx
 
 
-def test_latt_ct():
-    d_test0 = latt_ct(1e-10, 60)
+def test_latt_ct_cubic():
+    d_test0 = latt_ct_cubic(1e-10, 60, (1, 0, 0))
+    #test the calculation is correct
     assert d_test0 == pytest.approx(1)
+    #test ValueError exception is raised if wavelength has unexpected value
     with pytest.raises(ValueError):
-        latt_ct(1, 60)
+        latt_ct_cubic(1, 60, (1, 0, 0))
