@@ -48,7 +48,7 @@ with open(results_file, "w") as rf:
         patterns = [np.loadtxt(file_name) for file_name in files]
         peak_positions = [peak_position(pattern, tth_int_Pd113) for pattern in
                           patterns]
-        # lc calculates lattice constant values from 2theta values in pm
+        # calculate lattice constants
         lc = [latt_ct_cubic(wl, i, planes_Pd113) for i in peak_positions]
         lca = np.mean(lc, dtype=np.float64)    # Average over lc
         lcsd = np.std(lc, dtype=np.float64)    # St dev over lc
