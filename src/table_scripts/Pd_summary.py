@@ -1,12 +1,17 @@
 """
-Create table containing the lattice constant of Pd calculated from the 
+Create table containing the lattice constant of Pd calculated from the
 position of the 113 peak.
+
+Usage: python Pd_summary.py
 
 """
 import numpy as np
 import os
 import sys
-sys.path.append("../functions/")
+#workaround to be able to append "functions" irrespective of cwd
+script_abspath = os.path.abspath(sys.argv[0])
+common_path = os.path.dirname(os.path.dirname(script_abspath))
+sys.path.append(os.path.join(common_path, 'functions'))
 from peak_calc import peak_position, latt_ct_cubic
 
 wl = 0.6907e-10    # Wavelength in meter
