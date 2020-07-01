@@ -2,7 +2,11 @@
 Create table containing the lattice constant of Pd calculated from the
 position of the 113 peak.
 
-Usage: python Pd_summary.py
+Usage: python3 Pd_summary.py source-dir config-Pd-table table-file
+
+source-dir : directory where files with peak position data can be found
+config-Pd-table : file containing scan names and patterns for each
+table-file : file to write the table to
 
 """
 import numpy as np
@@ -15,6 +19,8 @@ sys.path.append(os.path.join(common_path, 'functions'))
 from peak_calc import peak_position, latt_ct_cubic
 
 wl = 0.6907e-10    # Wavelength in meter
+results_file = sys.argv[3]
+
 # (start, end) values of 2theta interval of Pd113
 tth_int_Pd113 = [33.5, 34.6]
 planes_Pd113 = (1, 1, 3)
@@ -32,7 +38,7 @@ scans_patterns = [["PS_1p3V_b", (0, 82)],
                   ["PS_0p0V_a", (143, 148)],
                   ["PS_0p0V_a", (69, 74)],
                   ["PS_0p0V_a", (0, 5)]]
-results_file = "../../results/final/table_Pd_summary.txt"
+
 
 table_header = \
 """
