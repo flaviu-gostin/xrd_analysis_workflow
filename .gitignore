@@ -7,3 +7,4 @@ data/*
 *#*
 results/intermediate/integrated_1D/
 results/intermediate/Si_17.95keV.poni
+results/intermediate/peaks/*
