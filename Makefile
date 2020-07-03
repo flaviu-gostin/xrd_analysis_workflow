@@ -114,6 +114,7 @@ $(EXPER_PARAM_FILE) $(PEAKS_SRC) $(PEAKS_FUNC)
 	$(PEAKS_EXE) $(dir $<) $(CONFIG_PD113) $(EXPER_PARAM_FILE) $@
 
 .PHONY : clean-peaks
+## clean-peaks      : Delete all files containing info on on peaks
 clean-peaks :
 	rm -rf $(PEAKS_DIR)/*
 
@@ -121,15 +122,22 @@ clean-peaks :
 TABLE_PD_FILE:=$(RESULTS_FINAL_DIR)/table_Pd_summary.txt
 TABLE_PD_SRC:=$(SRC_DIR)/table_scripts/Pd_summary.py
 TABLE_PD_EXE:=$(LANGUAGE) $(TABLE_PD_SRC)
-TABLE_PD_CONFIG:=easy
-FILES_FOR_TABLE_PD:=extract somehow from config file
-## tables           : Create tables (todo: refactor script creating Pd table!)
-.PHONY : tables
+HDF_STEMS_FOR_TABLE_PD:=PS_1p3V_b PSA_1p3V_c PSP_1p3V_b PSAP_1p3V_a PS_0p7V_b
+HDF_STEMS_FOR_TABLE_PD+=PS_0p5V_b PS_0p0V_a
+FILENAMES_FOR_TABLE_PD:=$(addsuffix _Pd113.dat,$(HDF_STEMS_FOR_TABLE_PD))
+FILES_FOR_TABLE_PD:=$(addprefix $(PEAKS_DIR)/,$(FILENAMES_FOR_TABLE_PD))
+.PHONY : tables clean-tables
+## tables           : Create tables
 tables :
 	make $(TABLE_PD_FILE)
-# To do: refactor this one
-$(TABLE_PD_FILE) :  $(TABLE_PD_SRC)
-	cd $(dir $(TABLE_PD_SRC)) && $(LANGUAGE) $(notdir $(TABLE_PD_SRC))
+
+## table-Pd         : Create table on Pd lattice constant
+$(TABLE_PD_FILE) :  $(TABLE_PD_SRC) $(FILES_FOR_TABLE_PD)
+	$(TABLE_PD_EXE) $(PEAKS_DIR) $@
+
+## clean-tables     : Delete all tables
+clean-tables :
+	rm -rf $(TABLE_PD_FILE)
 
 
 slides:
@@ -142,6 +150,7 @@ clean-all:
 	make clean-calibration
 	make clean-ai
 	make clean-peaks
+	make clean-tables
 # add other clean rules as you create them
 
 
