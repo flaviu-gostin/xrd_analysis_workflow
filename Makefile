@@ -92,6 +92,7 @@ clean-ai :
 PEAKS_DIR:=$(RESULTS_INTERMED_DIR)/peaks
 PEAKS_SRC:=$(PROC_SRC_DIR)/determine_peak_position.py
 PEAKS_EXE:=$(LANGUAGE) $(PEAKS_SRC)
+PEAKS_FUNC:=$(SRC_DIR)/functions/peak_calc.py
 ## peaks            : Determine peak position for selected peaks
 peaks :
 	mkdir -p $(PEAKS_DIR)
@@ -108,8 +109,9 @@ $(PEAKS_PD113_INDIVIDUAL_TARGETS) : peaks-Pd113-% :   #"static pattern rule"
 	make $(PEAKS_DIR)/$*_Pd113.dat
 
 CONFIG_PD113:=$(SRC_DIR)/config_Pd113.py
-$(PEAKS_DIR)/%_Pd113.dat : $(INT_1D_DIR)/%/0.dat $(CONFIG_PD113) $(PEAKS_SRC)
-	$(PEAKS_EXE) $(dir $<) $(CONFIG_PD113) $@
+$(PEAKS_DIR)/%_Pd113.dat : $(INT_1D_DIR)/%/0.dat $(CONFIG_PD113) \
+$(EXPER_PARAM_FILE) $(PEAKS_SRC) $(PEAKS_FUNC)
+	$(PEAKS_EXE) $(dir $<) $(CONFIG_PD113) $(EXPER_PARAM_FILE) $@
 
 .PHONY : clean-peaks
 clean-peaks :
