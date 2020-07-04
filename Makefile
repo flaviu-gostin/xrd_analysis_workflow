@@ -15,7 +15,7 @@ CALIB_EXE:=$(LANGUAGE) $(CALIB_SRC)
 PONI_FILE:=$(RESULTS_INTERMED_DIR)/Si_17.95keV.poni
 
 
-.PHONY : all data validate eda analysis slides patch test verbose coverage
+.PHONY : all data validate eda analysis slides test verbose coverage
 .PHONY : clean-all
 
 all:
@@ -143,15 +143,42 @@ clean-tables :
 slides:
 	cd slides && make slides
 
-patch:
-	cat azimuthalIntegrator.patch | patch -d `find -name azimuthalIntegrator.py -printf %h`
-
 clean-all:
 	make clean-calibration
 	make clean-ai
 	make clean-peaks
 	make clean-tables
 # add other clean rules as you create them
+
+
+.PHONY : install venv requirements patches clean-venv
+## install          : Create virtual env, install requirements (, apply patch)
+install :
+	make venv
+	make requirements
+	make patches
+
+## venv             : Create virtual environment
+venv :
+	virtualenv --python=python3 venv
+#	python3 -m venv venv (this did not work on my machine)
+
+## requirements     : Install requirements in virtual environment
+requirements :
+	. venv/bin/activate; pip install -r requirements.txt
+
+pyFAI_bad_ver:=0.17.0
+## patches          : Apply patches if necessary depending on local installation
+patches :
+ifeq ($(shell . venv/bin/activate && pip show pyFAI | sed -nE\
+'s/^Version: ([[:digit:].]*)/\1/p'),$(pyFAI_bad_ver))
+	cat azimuthalIntegrator.patch | patch -d\
+	`find -name azimuthalIntegrator.py -printf %h`
+endif
+
+## clean-venv       : Delete virtual environment
+clean-venv :
+	rm -rf venv
 
 
 ## variables        : Print some variables
@@ -161,6 +188,7 @@ variables :
 	@echo HDF_STEMS: $(HDF_STEMS)
 	@echo INTEGRATED_DIRS: $(INTEGRATED_DIRS)
 	@echo AI_INDIVIDUAL_TARGETS: $(AI_INDIVIDUAL_TARGETS)
+
 
 ## help             : Print this help
 .PHONY : help
