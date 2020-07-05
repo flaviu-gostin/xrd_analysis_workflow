@@ -131,7 +131,6 @@ FILES_FOR_TABLE_PD:=$(addprefix $(PEAKS_DIR)/,$(FILENAMES_FOR_TABLE_PD))
 tables :
 	make $(TABLE_PD_FILE)
 
-## table-Pd         : Create table on Pd lattice constant
 $(TABLE_PD_FILE) :  $(TABLE_PD_SRC) $(FILES_FOR_TABLE_PD)
 	$(TABLE_PD_EXE) $(PEAKS_DIR) $@
 
