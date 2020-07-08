@@ -1,6 +1,15 @@
+# TO DO
+
+Copy here the data rules from the main Makefile.
+
 # The data/ directory
 
-The data/ directory contains only raw data (processed data is located in the results/ directory).  Because the raw data is large, it is stored separately on (Zenodo, not yet really).  For each dataset there are two files, e.g. PS_1p3V_b.hdf and PS_1p3V_b.nxs.  Both are HDF5 files.  The *.hdf files contain the actual stack of two-dimensional diffraction images.  The *.nxs files contain beamline setup parameters and some identifiers.
+The data/ directory contains only raw data (processed data is located in the
+results/ directory).  Because the raw data is large, it is stored separately on
+(Zenodo, not yet really).  For each dataset there are two files,
+e.g. PS_1p3V_b.hdf and PS_1p3V_b.nxs.  Both are HDF5 files.  The *.hdf files
+contain the actual stack of two-dimensional diffraction images.  The *.nxs files
+contain beamline setup parameters and some identifiers.
 
 
 Filenames explained:
@@ -16,3 +25,13 @@ Filenames explained:
 * 0V
 
 * Si_17.95keV: silicon calibrant at energy 17.95 keV
+
+
+# Data for tests
+
+For testing purposes, two hdf files have been created (see directory
+'test_data').  These two files contain only two diffraction images each to keep
+them small.  The two images are copies of the first two images in the raw files
+with corresponding names.
+
+To automatically re-generate the test files: `make test-data`
