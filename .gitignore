@@ -1,11 +1,10 @@
 *~
 
 venv/
-data/*
-!data/README.md
-!data/generate_test_data.py
-!data/test_data/*
-!data/Makefile
+data/PS*.hdf
+data/PS*.nxs
+data/cif_files/
+data/*.tgz
 *__pycache__/
 *#*
 results/intermediate/integrated_1D/

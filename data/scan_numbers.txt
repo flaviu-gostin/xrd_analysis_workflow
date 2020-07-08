@@ -1,0 +1,22 @@
+# File_name    Scan_number    Step_micron    SampleID    Figure_in_manuscript
+#
+PS_1p3V_a    72531    100    mg2sn30    Fig.1b
+PS_1p3V_b    72532    5    mg2sn30    Fig.1c,Table2
+PS_1p3V_c    72536    10    mg2sn30
+PS_0p7V_a    72628    10    mg2sn38
+PS_0p7V_b    72631    3    mg2sn38    Fig.2b,Table2
+PS_0p5V_a    72637    3    mg2sn38
+PS_0p5V_b    72640    3    mg2sn38    Fig.2c,Fig.3a,Table2
+PS_0p0V_a    72642    3    mg2sn38    Fig.2d,Fig.3b,Fig.3c,Table2
+PSA_1p3V_a    72579    50    mg2sn23
+PSA_1p3V_b    72582    50    mg2sn23
+PSA_1p3V_c    72583    10    mg2sn23    Table2
+PSA_1p3V_d    72586    20    mg2sn23
+PSAP_1p3V_a    72507    50    mg2sn32    Table2
+PSAP_1p3V_b    72508    100    mg2sn32
+PSAP_1p3V_c    72510    20    mg2sn32
+PSAP_1p3V_d    72516    200    mg2sn32
+PSAP_1p3V_e    72520    20    mg2sn32
+PSP_1p3V_a    72597    50    mg2sn29
+PSP_1p3V_b    72598    10    mg2sn29    Table2
+PSP_1p3V_c    72599    10    mg2sn29

@@ -1,0 +1,1 @@
+# This file contains coordinates of diffraction spots on the diffraction image of Si_17.95keV. These points were selected manually. Format [y coord, x coord, ring index]
