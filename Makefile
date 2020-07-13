@@ -15,7 +15,7 @@ CALIB_EXE:=$(LANGUAGE) $(CALIB_SRC)
 PONI_FILE:=$(RESULTS_INTERMED_DIR)/Si_17.95keV.poni
 
 
-.PHONY : all data validate eda analysis slides test verbose coverage
+.PHONY : all data validate eda analysis slides verbose coverage
 .PHONY : clean-all
 
 all:
@@ -178,6 +178,20 @@ endif
 ## clean-venv       : Delete virtual environment
 clean-venv :
 	rm -rf venv
+
+
+.PHONY : test
+## test             : Execute some rules using test files
+test :
+	make ai-all 'HDF_DIR:=data/test_data' #overriding variable
+	make peaks 'HDF_DIR:=data/test_data'
+	make tables 'HDF_STEMS_FOR_TABLE_PD:=test-PS_1p3V_b test-PSP_1p3V_b'
+# add more rules as you create them
+
+.PHONY : clean-test
+clean-test :
+	rm -rf $(INT_1D_DIR)/test*
+	rm -rf $(PEAKS_DIR)/test*
 
 
 ## variables        : Print some variables

@@ -20,8 +20,10 @@ table_file = sys.argv[2]
 # average lattice constant of Pd for each scan, as a tuple (first_pattern,
 # last_pattern)
 scans_patterns = [["PS_1p3V_b", (0, 81)],
+                  ["test-PS_1p3V_b", (0, 1)],
                   ["PSA_1p3V_c", (0, 42)],
                   ["PSP_1p3V_b", (0, 62)],
+                  ["test-PSP_1p3V_b", (0, 1)],
                   ["PSAP_1p3V_a", (10, 30)],
                   ["PS_0p7V_b", (0, 69)],
                   ["PS_0p5V_b", (0, 100)],
@@ -69,7 +71,10 @@ with open(table_file, "w") as rf:
     rf.write(table_header)
     for [scan, (st, end)] in scans_patterns:
         filename = os.path.join(source_dir, scan + '_Pd113.dat')
-        data_all = np.loadtxt(filename, usecols=2)
+        try:
+            data_all = np.loadtxt(filename, usecols=2)
+        except OSError:
+            continue
         data = data_all[st:end + 1]
         n = end - st + 1
 
