@@ -6,7 +6,7 @@ This is for testing purposes.
 
 from pymatgen import Lattice, Structure
 import sys
-sys.path.append("functions/")
+sys.path.append("../functions/")
 from calculate_pattern import calculate_pattern
 from plot_calculated_pattern import plot_calculated_pattern
 
