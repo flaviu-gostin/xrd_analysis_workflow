@@ -129,6 +129,7 @@ FILES_FOR_TABLE_PD:=$(addprefix $(PEAKS_DIR)/,$(FILENAMES_FOR_TABLE_PD))
 .PHONY : tables clean-tables
 ## tables           : Create tables
 tables :
+	mkdir -p $(RESULTS_FINAL_DIR)
 	make $(TABLE_PD_FILE)
 
 $(TABLE_PD_FILE) :  $(TABLE_PD_SRC) $(FILES_FOR_TABLE_PD)
