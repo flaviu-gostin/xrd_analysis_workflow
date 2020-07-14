@@ -1,7 +1,7 @@
 """Test rules in Makefiles using small test files
 
 Note: Running this script will (might?) delete some result files.  It runs `make
-clean-all` in a subprocess.
+clean-test` in a subprocess.
 
 """
 
@@ -27,7 +27,7 @@ table_Pd_file = os.path.join(final_dir, 'table_Pd_summary.txt')
 
 
 def make_rules():
-    sp.run(['make', 'clean-all'])
+    sp.run(['make', 'clean-test'])
     sp.run(['make', 'test'])
 
 
@@ -39,4 +39,4 @@ def test_make_rules():
     for peaks_file in peaks_files:
         assert os.path.exists(peaks_file)
     assert os.path.exists(table_Pd_file)
-    sp.run(['make', 'clean-all'])
+    sp.run(['make', 'clean-test'])

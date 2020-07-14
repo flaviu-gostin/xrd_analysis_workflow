@@ -192,6 +192,7 @@ test :
 clean-test :
 	rm -rf $(INT_1D_DIR)/test*
 	rm -rf $(PEAKS_DIR)/test*
+	make clean-tables
 
 
 ## variables        : Print some variables
