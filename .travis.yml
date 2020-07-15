@@ -10,4 +10,4 @@ install:
   - make install
 
 script:
-  - python -m pytest
+  - . venv/bin/activate && python -m pytest
