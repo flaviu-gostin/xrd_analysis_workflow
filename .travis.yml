@@ -7,7 +7,7 @@ python:
   - 3.8
 
 install:
-  - make install
+  - pip install -r requirements.txt
 
 script:
-  - . venv/bin/activate && python -m pytest
+  - python -m pytest
