@@ -49,9 +49,6 @@ For example:
 - `source venv/bin/activate` (it can be deactivated with `deactivate`, but don't
   do it now)
 - `pip install -r requirements.txt` (install all required Python packages)
-- `make patch` (apply a [patch](azimuthalIntegrator.patch) which adds a try
-  statement to azimuthalIntegrator.py, a pyFAI module, to circumvent an
-  ImportError.  Without this patch, the analysis will not work)
 
 ### Download raw data and do the analysis
 
