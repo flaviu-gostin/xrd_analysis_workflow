@@ -162,13 +162,9 @@ requirements :
 	pip install -r requirements.txt
 
 pyFAI_bad_ver:=0.17.0
-pyFAI_ver=$(shell pip show pyFAI | sed -nE 's/^Version: ([[:digit:].]*)/\1/p')
-## patches          : Apply patches (activate virtual environment, if using one)
+
 patches :
-ifeq ($(pyFAI_ver),$(pyFAI_bad_ver))
-	cat azimuthalIntegrator.patch | patch -d\
-	`find -name azimuthalIntegrator.py -printf %h`
-endif
+#	no need for patches for now
 
 ## clean-venv       : Delete virtual environment
 clean-venv :
