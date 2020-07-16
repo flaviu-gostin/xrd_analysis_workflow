@@ -151,27 +151,21 @@ clean-all:
 # add other clean rules as you create them
 
 
-.PHONY : install venv requirements patches clean-venv
-## install          : Create virtual env, install requirements (, apply patch)
-install :
-	make venv
-	make requirements
-	make patches
-
+.PHONY : venv requirements patches clean-venv
 ## venv             : Create virtual environment
 venv :
 	virtualenv --python=python3 venv
 #	python3 -m venv venv (this did not work on my machine)
 
-## requirements     : Install requirements in virtual environment
+## requirements     : Install requirements (do it in a virtual environment?)
 requirements :
-	. venv/bin/activate; pip install -r requirements.txt
+	pip install -r requirements.txt
 
 pyFAI_bad_ver:=0.17.0
-## patches          : Apply patches if necessary depending on local installation
+pyFAI_ver=$(shell pip show pyFAI | sed -nE 's/^Version: ([[:digit:].]*)/\1/p')
+## patches          : Apply patches (activate virtual environment, if using one)
 patches :
-ifeq ($(shell . venv/bin/activate && pip show pyFAI | sed -nE\
-'s/^Version: ([[:digit:].]*)/\1/p'),$(pyFAI_bad_ver))
+ifeq ($(pyFAI_ver),$(pyFAI_bad_ver))
 	cat azimuthalIntegrator.patch | patch -d\
 	`find -name azimuthalIntegrator.py -printf %h`
 endif
@@ -181,7 +175,7 @@ clean-venv :
 	rm -rf venv
 
 
-.PHONY : test
+.PHONY : test clean-test
 ## test             : Execute some rules using test files
 test :
 	make ai-all 'HDF_DIR:=data/test_data' #overriding variable
@@ -189,7 +183,7 @@ test :
 	make tables 'HDF_STEMS_FOR_TABLE_PD:=test-PS_1p3V_b test-PSP_1p3V_b'
 # add more rules as you create them
 
-.PHONY : clean-test
+## clean-test       : Delete files created by `make test`
 clean-test :
 	rm -rf $(INT_1D_DIR)/test*
 	rm -rf $(PEAKS_DIR)/test*
