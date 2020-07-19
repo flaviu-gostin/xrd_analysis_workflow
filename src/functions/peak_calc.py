@@ -1,7 +1,6 @@
 """Functions to determine peak position and lattice constant."""
 
 import numpy as np
-import pytest
 import os
 import natsort
 
