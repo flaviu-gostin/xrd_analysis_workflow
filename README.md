@@ -38,17 +38,21 @@ and S1 (in Supporting Information) and Table 2.  See
 - `cd Desktop`
 - `git clone https://github.com/flaviu-gostin/xrd_analysis_workflow.git`
 
-### Create a virtual environment and install required packages
+### Install required packages
 
-For example:
+It is recommended installing packages in a virtual environment as their versions
+might be different from the ones you have on your system. For example:
 - `cd xrd_analysis_workflow/`
 - `sudo apt install virtualenv`
 - `virtualenv --python=python3 venv` (this will create a directory named
   `venv/`, where required Python packages will be installed).  Note: this project
-  was developed with Python3.5
-- `source venv/bin/activate` (it can be deactivated with `deactivate`, but don't
-  do it now)
-- `pip install -r requirements.txt` (install all required Python packages)
+  was developed with Python3.5, but it is also tested on Python3.6-3.8
+
+To install required packages:
+- `source venv/bin/activate` (if you want packages installed in the virtual
+  environment)
+- `pip install -r requirements.txt` (install all required Python packages with
+  given versions)
 
 ### Download raw data and do the analysis
 
@@ -58,12 +62,6 @@ For example:
 
 You should find the results (figures and tables) in [results/](results/)
 
-Note: if you get some ImportError warnings, you probably need to install those
- modules that are indicated in the warnings. Make sure the virtual environment
- is active and install those modules with `pip install module_name`. Then try
- again the command: `make all` or just `make analysis` if the raw data has
- already been downloaded.
-
 ## Feedback
 
 Please let me know how it went by creating an issue at the top of the screen or
@@ -71,19 +69,19 @@ email me.  You are also welcome to send me pull requests.
 
 ## Note on calibration (geometry refinement)
 
-Calibration uses the Python module pyFAI 0.17.0.  This is listed in
+Calibration uses the Python module pyFAI 0.19.0.  This is listed in
 requirements.txt.  When installing this module, a set of command line interfaces
 (CLIs) are also installed in bin/, e.g. pyFAI-calib.  The recommended way to do
 the calibration is to use the pyFAI-calib CLI (there is also a GUI available for
-that).  With those interfaces the user must click on several diffraction spots
-for several rings to help the program with the location of the rings.  Another
-reason for using the CLI or the GUI is to be able to check visually that the
-refined rings match well enough the real rings of the calibrant.  However, I
-intentionally avoided using either interface because clicks cannot be reproduced
-easily.  Instead, I wrote a script which uses the refinement function in pyFAI
-and takes as arguments a long list of manually selected points.  Thus, the
-calibration is guaranteed to be reproducible.  Moreover, one can check that the
-manually selected points are located on diffraction rings.
+that).  With those interfaces the user must click on several diffraction rings
+to help the program locatie of the rings.  Another reason for using the CLI or
+the GUI is to be able to check visually that the refined rings match well enough
+the real rings of the calibrant.  However, I intentionally avoided using either
+interface because clicks cannot be reproduced easily.  Instead, I wrote a script
+which uses the refinement function in pyFAI and takes as arguments a long list
+of manually selected points.  Thus, the calibration is guaranteed to be
+reproducible.  Moreover, one can check that the manually selected points are
+located on diffraction rings.
 
 The refined (calibrated) geometry is saved in a .poni file.  This .poni file is
 the basis for the azimuthal integrator object used to integrate all the
