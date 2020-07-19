@@ -6,7 +6,7 @@ import os
 import natsort
 
 
-def latt_ct_cubic(wavelength, peak_pos, planes):
+def latt_ct_cubic(wavelength, peak_pos, hkl):
     """Calculate lattice constant of cubic systems.
 
     Calculate the lattice constant for a cubic lattice from the position of
@@ -21,7 +21,7 @@ def latt_ct_cubic(wavelength, peak_pos, planes):
         diffraction pattern.
     peak_pos : float
         The 2theta position of the diffraction peak in degree.
-    planes : tuple
+    hkl : tuple
         Tuple with 3 integers representing the Miller indices (h, k, l)
         of the planes used for calculating the lattice constant.
 
@@ -43,7 +43,7 @@ def latt_ct_cubic(wavelength, peak_pos, planes):
     # d is interplanar spacing from Bragg's law
     d = wl / (2 * np.sin(theta))
     # a is lattice constant
-    a = d * np.sqrt(planes[0]**2 + planes[1]**2 + planes[2]**2)
+    a = d * np.sqrt(hkl[0]**2 + hkl[1]**2 + hkl[2]**2)
     return a
 
 
