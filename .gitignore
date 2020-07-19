@@ -5,6 +5,28 @@ data/PS*.hdf
 data/PS*.nxs
 data/cif_files/
 data/*.tgz
-*__pycache__/
 *#*
 results/
+
+
+# Python stuff
+# Byte-compiled, optimized, DLL files
+*__pycache__/
+*.py[cod]
+*$py.class
+# Unit tests, coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+cover/
+# see this for more Python stuff to ignore:
+# https://github.com/github/gitignore/blob/master/Python.gitignore
