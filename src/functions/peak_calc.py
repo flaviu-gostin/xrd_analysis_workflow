@@ -86,30 +86,3 @@ def peak_position(pattern, two_theta_interval):
     intensity_slice = pattern[st_idx:end_idx, 1]
     idx_max_intensity = np.argmax(intensity_slice) + st_idx
     return pattern[idx_max_intensity, 0]
-
-
-def test_latt_ct_cubic():
-    d_test0 = latt_ct_cubic(1e-10, 60, (1, 0, 0))
-    #test the calculation is correct
-    assert d_test0 == pytest.approx(1)
-    #test ValueError exception is raised if wavelength has unexpected value
-    with pytest.raises(ValueError):
-        latt_ct_cubic(1, 60, (1, 0, 0))
-
-
-def test_peak_position():
-    test_file = '../twotheta-intensity_tests.dat'
-    data = np.loadtxt(test_file)
-    two_theta_interval = [33.5, 34.6]
-    expect_val = 34.24808
-    assert peak_position(data, two_theta_interval) == pytest.approx(expect_val,
-                                                                    abs=0.001)
-    with pytest.raises(TypeError):
-        peak_position("fg", [5.6, 8.9])
-    with pytest.raises(ValueError):
-        a = np.arange(24).reshape(2, 3, 4)
-        peak_position(a, [5.6, 8.9])
-    with pytest.raises(TypeError):
-        peak_position(data, (3.5, 9.8)) #2nd argument should be a list
-    with pytest.raises(ValueError):
-        peak_position(data, [5.6, 8.9, 7])
