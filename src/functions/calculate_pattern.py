@@ -1,8 +1,9 @@
-""" Calculate diffraction pattern from structure """
+""" Calculate/plot diffraction pattern from structure """
 
 
 from pymatgen import Lattice, Structure
 from pymatgen.analysis.diffraction.xrd import XRDCalculator
+import matplotlib.pyplot as plt
 
 
 def calculate_pattern(structure, wavelength, two_theta_range):
@@ -24,10 +25,9 @@ def calculate_pattern(structure, wavelength, two_theta_range):
 
     Returns
     -------
-    (two_theta, intensity) : 2x numpy arrays
-        Tuple with two elements, both numpy arrays.  First is the 2theta values
-    in degree for each reflection and second is the corresponding intensity
-    values.
+    two_theta, intensity : 2x numpy arrays
+        Numpy arrays.  Two-theta in degree and intensity for each Bragg
+    reflection.
 
     References
     ----------
@@ -41,4 +41,28 @@ def calculate_pattern(structure, wavelength, two_theta_range):
     pattern = calculator.get_pattern(structure, two_theta_range=two_theta_range)
     two_theta, intensity = pattern.x, pattern.y
 
-    return (two_theta, intensity)
+    return two_theta, intensity
+
+
+def plot_calculated_pattern(two_theta, intensity, color='black', savefile=None):
+    """Plot a calculated diffraction pattern.
+
+    Parameters
+    ----------
+    two_theta, intensity : 2x numpy arrays
+        Two-theta in degree and intensity for each Bragg reflection.
+    color : str
+        Color of the bars.
+    savefile : str
+        Filename for saving the plot ( png works).  If not provided, show plot
+    in a window.
+
+    """
+    plt.stem(two_theta, intensity, linefmt=color, markerfmt='None')
+    # For more advanced control of the format properties see here:
+    # https://matplotlib.org/gallery/lines_bars_and_markers/stem_plot.html#sphx-glr-gallery-lines-bars-and-markers-stem-plot-py
+    if not savefile:
+        plt.show()
+    else:
+        plt.savefig(savefile, dpi=500)
+        plt.close()

@@ -3,12 +3,11 @@
 This is for testing purposes.
 
 """
-
 from pymatgen import Lattice, Structure
 import sys
-sys.path.append("../functions/")
-from calculate_pattern import calculate_pattern
-from plot_calculated_pattern import plot_calculated_pattern
+import os
+sys.path.append(os.path.join(os.path.dirname(__file__), "../functions/"))
+from calculate_pattern import calculate_pattern, plot_calculated_pattern
 
 
 wavelength = 1.0
