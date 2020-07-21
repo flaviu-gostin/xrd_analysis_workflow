@@ -44,8 +44,8 @@ def calculate_pattern(structure, wavelength, two_theta_range):
     return two_theta, intensity
 
 
-def plot_calculated_pattern(two_theta, intensity, color='black', savefile=None):
-    """Plot a calculated diffraction pattern.
+def plot_calculated_pattern(two_theta, intensity):
+    """ Create a stick plot of a calculated diffraction pattern.
 
     Parameters
     ----------
@@ -57,12 +57,13 @@ def plot_calculated_pattern(two_theta, intensity, color='black', savefile=None):
         Filename for saving the plot ( png works).  If not provided, show plot
     in a window.
 
+    Returns
+    -------
+    StemContainer
+        https://matplotlib.org/api/_as_gen/matplotlib.axes.Axes.stem.html
+
     """
-    plt.stem(two_theta, intensity, linefmt=color, markerfmt='None')
-    # For more advanced control of the format properties see here:
-    # https://matplotlib.org/gallery/lines_bars_and_markers/stem_plot.html#sphx-glr-gallery-lines-bars-and-markers-stem-plot-py
-    if not savefile:
-        plt.show()
-    else:
-        plt.savefig(savefile, dpi=500)
-        plt.close()
+    stem_container = plt.stem(two_theta, intensity)
+    stem_container.baseline.set_visible(False)
+    stem_container.markerline.set_visible(False)
+    return stem_container
