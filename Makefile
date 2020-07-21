@@ -42,14 +42,18 @@ analysis:
 	cd src/image_scripts/ && python raw_diffr_images.py
 
 
-.PHONY : calibration clean-calibration
+.PHONY : calibration calibration-check clean-calibration
 ## calibration      : Refine experiment geometry
 calibration :
 	mkdir -p $(dir PONI_FILE)
 	make $(PONI_FILE)
+	make calibration-check
 
 $(PONI_FILE) :  $(EXPER_PARAM_FILE) $(CALIB_SRC)
 	$(CALIB_EXE) $< $@
+
+calibration-check :
+	cd src/image_scripts/ && $(LANGUAGE) check_calibration.py
 
 clean-calibration :
 	rm -f $(PONI_FILE)
