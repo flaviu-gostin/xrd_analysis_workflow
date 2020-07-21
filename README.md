@@ -46,7 +46,7 @@ might be different from the ones you have on your system. For example:
 - `sudo apt install virtualenv`
 - `virtualenv --python=python3 venv` (this will create a directory named
   `venv/`, where required Python packages will be installed).  Note: this project
-  was developed with Python3.5, but it is also tested on Python3.6-3.8
+  requires Python>=3.6, because an important dependency pymatgen requires that.
 
 To install required packages:
 - `source venv/bin/activate` (if you want packages installed in the virtual
@@ -69,17 +69,17 @@ email me.  You are also welcome to send me pull requests.
 
 ## Note on calibration (geometry refinement)
 
-Calibration uses the Python module pyFAI 0.19.0.  This is listed in
-requirements.txt.  When installing this module, a set of command line interfaces
-(CLIs) are also installed in bin/, e.g. pyFAI-calib.  The recommended way to do
-the calibration is to use the pyFAI-calib CLI (there is also a GUI available for
-that).  With those interfaces the user must click on several diffraction rings
-to help the program locatie of the rings.  Another reason for using the CLI or
-the GUI is to be able to check visually that the refined rings match well enough
-the real rings of the calibrant.  However, I intentionally avoided using either
-interface because clicks cannot be reproduced easily.  Instead, I wrote a script
-which uses the refinement function in pyFAI and takes as arguments a long list
-of manually selected points.  Thus, the calibration is guaranteed to be
+Calibration uses the Python module pyFAI.  This is listed in requirements.txt.
+When installing this module, a set of command line interfaces (CLIs) are also
+installed in bin/, e.g. pyFAI-calib.  The recommended way to do the calibration
+is to use the pyFAI-calib CLI (there is also a GUI available for that).  With
+those interfaces the user must click on several diffraction rings to help the
+program locatie of the rings.  Another reason for using the CLI or the GUI is to
+be able to check visually that the refined rings match well enough the real
+rings of the calibrant.  However, I intentionally avoided using either interface
+because clicks cannot be reproduced easily.  Instead, I wrote a script which
+uses the refinement function in pyFAI and takes as arguments a long list of
+manually selected points.  Thus, the calibration is guaranteed to be
 reproducible.  Moreover, one can check that the manually selected points are
 located on diffraction rings.
 

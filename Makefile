@@ -154,7 +154,7 @@ clean-all:
 .PHONY : venv requirements patches clean-venv
 ## venv             : Create virtual environment
 venv :
-	virtualenv --python=python3 venv
+	virtualenv --python=python3.6 venv
 #	python3 -m venv venv (this did not work on my machine)
 
 ## requirements     : Install requirements (do it in a virtual environment?)
