@@ -1,0 +1,16 @@
+# Peak positions for Si powder standard "SRM 640e" (NIST)
+# The certified lattice parameter at 22.5 Celsius:
+# 0.543 117 9 nm ± 0.000 008 nm
+# Computed using Cu K alpha radiation, 1.5405929 Angstrom
+# h,k,l,2theta(degrees)
+1,1,1,28.441
+2,2,0,47.300
+3,1,1,56.120
+4,0,0,69.126
+3,3,1,76.372
+4,2,2,88.025
+5,1,1,94.947
+4,4,0,106.701
+5,3,1,114.084
+6,2,0,127.534
+5,3,3,136.880
