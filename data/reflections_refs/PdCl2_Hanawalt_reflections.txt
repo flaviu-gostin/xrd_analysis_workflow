@@ -1,0 +1,31 @@
+# Bragg reflections for commercially-sourced PdCl2
+# Source: Hanawalt et al, 1938, vol 10, p 457
+# (journal) Industrial and Engineering Chemistry-Analytical Edition
+# 2theta values calculated for wavelength 0.6907 Angstrom
+# 2theta(degree) intensity
+7.472	100
+12.051	24
+12.751	28
+16.616	80
+17.658	3
+19.688	6
+20.616	3
+21.285	10
+21.877	13
+22.503	24
+24.313	40
+24.773	13
+25.414	20
+25.918	3
+26.622	3
+27.951	5
+29.201	2
+30.1	6
+30.571	6
+32.077	3
+33.167	8
+35.591	11
+37.659	2
+39.581	5
+42.122	3
+43.352	5
