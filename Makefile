@@ -53,6 +53,7 @@ $(PONI_FILE) :  $(EXPER_PARAM_FILE) $(CALIB_SRC)
 	$(CALIB_EXE) $< $@
 
 calibration-check :
+	make ai-Si_17.95keV
 	cd src/image_scripts/ && $(LANGUAGE) check_calibration.py
 
 clean-calibration :
@@ -85,6 +86,7 @@ $(AI_INDIVIDUAL_TARGETS) : ai-% :   #"static pattern rule"
 # don't want a directory as target.  Use first file in it instead, i.e. 0.dat
 $(INT_1D_DIR)/%/0.dat: $(HDF_DIR)/%.hdf $(PONI_FILE) $(AI_SRC)
 	$(AI_EXE) $(PONI_FILE) $< $(patsubst %/,%,$(dir $@))
+# don't use above rule.  Use ai-... to avoid problems with inexistent dir
 
 ## clean-ai         : Delete all directories containing integrated 1D patterns
 .PHONY : clean-ai
