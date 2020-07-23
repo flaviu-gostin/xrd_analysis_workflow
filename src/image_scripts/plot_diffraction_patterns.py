@@ -32,7 +32,7 @@ standard_fig_widths_inch = {'single_column': 3.5,
                             'two_column': 7.2}
 figwidth = standard_fig_widths_inch['single_column']
 figheight = figwidth * 1.5
-global_linewidth = figwidth / 5
+global_linewidth = 0.4
 mpl.rcParams['axes.linewidth'] = global_linewidth
 #plt.rcParams.update({'figure.autolayout': True})
 
