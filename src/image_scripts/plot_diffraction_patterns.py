@@ -60,10 +60,10 @@ for idx, fn in enumerate(sorted_fns):
         label_text = fn.split(sep='.')[0]
         idx_rightmost_point = np.searchsorted(x_vals, ax_measured.get_xlim()[1])
         x_ref, y_ref = x_vals[idx_rightmost_point], y_vals[idx_rightmost_point]
-        labels = ax_measured.annotate(label_text, (x_ref, y_ref),
+        label = ax_measured.annotate(label_text, (x_ref, y_ref),
                                       textcoords="offset points", xytext=(2,0),
                                       va='center')
-        labels.set_fontsize('xx-small')
+        label.set_fontsize('xx-small')
 
 
 # add stick plot(s) for reference phases
