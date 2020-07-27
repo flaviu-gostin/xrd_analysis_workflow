@@ -42,6 +42,7 @@ fig = plt.figure()
 fig.set_figwidth(figwidth)
 fig.set_figheight(figheight)
 
+#plot the measured patterns
 ax_measured = fig.add_subplot(1, 1, 1)
 ax_measured.tick_params(axis='y', which='both', left=False, labelleft=False)
 ax_measured.set_ylabel("Relative intensity")
@@ -51,6 +52,7 @@ fns = os.listdir(measured_patterns_dir) #this is not sorted
 #sort in order: 0.dat, 1.dat, ..., 10.dat, ...
 sorted_fns = sorted(fns, key=lambda fn: int(fn.split(sep='.')[0]))
 
+#plot data and label patterns with numbers
 for idx, fn in enumerate(sorted_fns):
     data = np.loadtxt(os.path.join(measured_patterns_dir, fn))
     x_vals, y_vals = data[:,0], data[:,1] - offset_patterns * idx
@@ -65,6 +67,8 @@ for idx, fn in enumerate(sorted_fns):
                                       textcoords="offset points", xytext=(2,0),
                                       va='center')
         label.set_fontsize('xx-small')
+
+#label layers, e.g. "Pd", "PdCl2"
 
 
 # add stick plot(s) for reference phases
