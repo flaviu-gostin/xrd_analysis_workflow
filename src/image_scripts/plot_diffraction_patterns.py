@@ -58,7 +58,8 @@ for idx, fn in enumerate(sorted_fns):
     line.set_linewidth(global_linewidth)
     if idx % label_every_nth_pattern == 0:
         label_text = fn.split(sep='.')[0]
-        idx_rightmost_point = np.searchsorted(x_vals, ax_measured.get_xlim()[1])
+        idx_rightmost_point = np.searchsorted(x_vals, ax_measured.get_xlim()[1],
+                                              side='right') - 1
         x_ref, y_ref = x_vals[idx_rightmost_point], y_vals[idx_rightmost_point]
         label = ax_measured.annotate(label_text, (x_ref, y_ref),
                                       textcoords="offset points", xytext=(2,0),
