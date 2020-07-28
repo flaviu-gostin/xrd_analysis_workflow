@@ -99,6 +99,8 @@ for k, v in layers.items():
                                       xytext = (2 + 12 , 0), va='center')
 
     #add line between upper and lower annotation boxes
+    ax_measured.annotate('', xy=(0, 0.5), xycoords=ann_top, xytext=(0, 0.5),
+                         textcoords=ann_bottom, arrowprops={'arrowstyle': '-'})
 
 
 # add stick plot(s) for reference phases
