@@ -71,14 +71,17 @@ for idx, fn in enumerate(sorted_fns):
 #label layers, e.g. "Pd", "PdCl2"
 for k, v in layers.items():
     label_text = k
-    data = np.loadtxt(os.path.join(measured_patterns_dir, str(v[0]) + '.dat'))
-    x_vals, y_vals = data[:,0], data[:,1] - offset_patterns * v[0]
-    idx_rightmost_point = np.searchsorted(x_vals, ax_measured.get_xlim()[1],
-                                          side='right') - 1
-    x_ref, y_ref = x_vals[idx_rightmost_point], y_vals[idx_rightmost_point]
-    top_box = ax_measured.annotate(label_text, (x_ref, y_ref),
+    for pattern_no in v:
+        label_text = k if pattern_no == v[0] else "x" + k
+        data = np.loadtxt(os.path.join(measured_patterns_dir, str(pattern_no) +
+                                       '.dat'))
+        x_vals, y_vals = data[:,0], data[:,1] - offset_patterns * pattern_no
+        idx_rightmost_point = np.searchsorted(x_vals, ax_measured.get_xlim()[1],
+                                              side='right') - 1
+        x_ref, y_ref = x_vals[idx_rightmost_point], y_vals[idx_rightmost_point]
+        box = ax_measured.annotate(label_text, (x_ref, y_ref),
                                    textcoords="offset points",
-                                   xytext = (2 + 10, 0), va='center')
+                                   xytext = (2 + 12 , 0), va='center')
 
 # add stick plot(s) for reference phases
 
