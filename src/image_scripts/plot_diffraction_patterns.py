@@ -37,7 +37,7 @@ mpl.rcParams['axes.linewidth'] = global_linewidth
 #plt.rcParams.update({'figure.autolayout': True})
 
 
-fig = plt.figure()
+fig = plt.figure(constrained_layout=True)
 #fig.set_dpi(500)    useless for vector graphics?
 fig.set_figwidth(figwidth)
 fig.set_figheight(figheight)
