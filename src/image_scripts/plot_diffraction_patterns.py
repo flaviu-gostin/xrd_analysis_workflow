@@ -70,7 +70,7 @@ for idx, fn in enumerate(sorted_fns):
 
 #label layers, e.g. "Pd", "PdCl2"
 for k, v in layers.items():
-    label_text = k
+    #add upper and (empty) lower annotation boxes
     for pattern_no in v:
         label_text = k if pattern_no == v[0] else "x" + k
         data = np.loadtxt(os.path.join(measured_patterns_dir, str(pattern_no) +
