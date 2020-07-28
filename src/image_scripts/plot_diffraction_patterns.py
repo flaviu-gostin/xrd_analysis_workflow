@@ -71,17 +71,35 @@ for idx, fn in enumerate(sorted_fns):
 #label layers, e.g. "Pd", "PdCl2"
 for k, v in layers.items():
     #add upper and (empty) lower annotation boxes
-    for pattern_no in v:
-        label_text = k if pattern_no == v[0] else "x" + k
-        data = np.loadtxt(os.path.join(measured_patterns_dir, str(pattern_no) +
+    label_text_top, label_text_bottom = k, 'x' + k
+    data_top = np.loadtxt(os.path.join(measured_patterns_dir, str(v[0]) +
                                        '.dat'))
-        x_vals, y_vals = data[:,0], data[:,1] - offset_patterns * pattern_no
-        idx_rightmost_point = np.searchsorted(x_vals, ax_measured.get_xlim()[1],
+    data_bottom = np.loadtxt(os.path.join(measured_patterns_dir, str(v[1]) +
+                                          '.dat'))
+    x_vals_top, y_vals_top = data_top[:,0], data_top[:,1] - offset_patterns *\
+                             v[0]
+    x_vals_bottom, y_vals_bottom = data_bottom[:,0], data_bottom[:,1] -\
+                                   offset_patterns * v[1]
+    idx_rightmost_point_top = np.searchsorted(x_vals_top,
+                                              ax_measured.get_xlim()[1],
                                               side='right') - 1
-        x_ref, y_ref = x_vals[idx_rightmost_point], y_vals[idx_rightmost_point]
-        box = ax_measured.annotate(label_text, (x_ref, y_ref),
+    idx_rightmost_point_bottom = np.searchsorted(x_vals_bottom,
+                                              ax_measured.get_xlim()[1],
+                                              side='right') - 1
+    x_ref_top, y_ref_top = x_vals_top[idx_rightmost_point_top],\
+    y_vals_top[idx_rightmost_point_top]
+    x_ref_bottom, y_ref_bottom = x_vals_bottom[idx_rightmost_point_bottom],\
+    y_vals_bottom[idx_rightmost_point_bottom]
+    ann_top = ax_measured.annotate(label_text_top, (x_ref_top, y_ref_top),
                                    textcoords="offset points",
                                    xytext = (2 + 12 , 0), va='center')
+    ann_bottom = ax_measured.annotate(label_text_bottom,
+                                      (x_ref_bottom, y_ref_bottom),
+                                      textcoords="offset points",
+                                      xytext = (2 + 12 , 0), va='center')
+
+    #add line between upper and lower annotation boxes
+
 
 # add stick plot(s) for reference phases
 
