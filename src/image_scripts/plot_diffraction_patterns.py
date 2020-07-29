@@ -71,7 +71,7 @@ for idx, fn in enumerate(sorted_fns):
 #label layers, e.g. "Pd", "PdCl2"
 for idx, (k, v) in enumerate(layers.items()):
     #add upper and (empty) lower annotation boxes
-    label = k
+    label_text = k
     data_top = np.loadtxt(os.path.join(measured_patterns_dir, str(v[0]) +
                                        '.dat'))
     data_bottom = np.loadtxt(os.path.join(measured_patterns_dir, str(v[1]) +
@@ -90,7 +90,7 @@ for idx, (k, v) in enumerate(layers.items()):
     y_vals_top[idx_rightmost_point_top]
     x_ref_bottom, y_ref_bottom = x_vals_bottom[idx_rightmost_point_bottom],\
     y_vals_bottom[idx_rightmost_point_bottom]
-    ann_top = ax_measured.annotate(label, (x_ref_top, y_ref_top),
+    ann_top = ax_measured.annotate(label_text, (x_ref_top, y_ref_top),
                                    textcoords="offset points",
                                    xytext = (2 + 12 + idx * 4, 0), va='center')
     ann_bottom = ax_measured.annotate('', (x_ref_bottom, y_ref_bottom),
