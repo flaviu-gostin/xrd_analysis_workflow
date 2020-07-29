@@ -71,7 +71,7 @@ for idx, fn in enumerate(sorted_fns):
 #label layers, e.g. "Pd", "PdCl2"
 for idx, (k, v) in enumerate(layers.items()):
     #add upper and (empty) lower annotation boxes
-    label_text_top, label_text_bottom = k, '' #'x' + k
+    label_text_top, label_text_bottom = k, 'x' + k
     data_top = np.loadtxt(os.path.join(measured_patterns_dir, str(v[0]) +
                                        '.dat'))
     data_bottom = np.loadtxt(os.path.join(measured_patterns_dir, str(v[1]) +
@@ -92,15 +92,17 @@ for idx, (k, v) in enumerate(layers.items()):
     y_vals_bottom[idx_rightmost_point_bottom]
     ann_top = ax_measured.annotate(label_text_top, (x_ref_top, y_ref_top),
                                    textcoords="offset points",
-                                   xytext = (2 + 12 + idx * 4, 0), va='center')
+                                   xytext = (2 + 12 + idx * 4, 0), va='center',
+                                   bbox=dict(boxstyle='round', fc='w'))
     ann_bottom = ax_measured.annotate(label_text_bottom,
                                       (x_ref_bottom, y_ref_bottom),
                                       textcoords="offset points",
                                       xytext = (2 + 12 + idx * 4, 0),
-                                      va='center')
+                                      va='center',
+                                      bbox=dict(boxstyle='round', fc='w'))
 
     #add line between upper and lower annotation boxes
-    ax_measured.annotate('', xy=(0, 0.5), xycoords=ann_top, xytext=(0, 0.5),
+    ax_measured.annotate('', xy=(0, 0.7), xycoords=ann_top, xytext=(0, 0.3),
                          textcoords=ann_bottom, arrowprops={'arrowstyle': '-'})
 
 
