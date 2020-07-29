@@ -15,6 +15,8 @@ import os
 measured_patterns_dir = "../../results/intermediate/integrated_1D/PS_1p3V_b"
 figure_fn = "diffraction_patterns.svg"
 
+start_pattern, end_pattern = 70, 90 #patterns to plot (end is not included)
+#use value "-1" if you need the last pattern
 label_every_nth_pattern = 5
 
 # TODO: use this dict to draw vertical lines on the right side of the figure
@@ -53,7 +55,7 @@ fns = os.listdir(measured_patterns_dir) #this is not sorted
 sorted_fns = sorted(fns, key=lambda fn: int(fn.split(sep='.')[0]))
 
 #plot data and label patterns with numbers
-for idx, fn in enumerate(sorted_fns):
+for idx, fn in enumerate(sorted_fns[start_pattern:end_pattern]):
     data = np.loadtxt(os.path.join(measured_patterns_dir, fn))
     x_vals, y_vals = data[:,0], data[:,1] - offset_patterns * idx
     line, = ax_measured.plot(x_vals, y_vals)
