@@ -18,6 +18,8 @@ import os
 import sys
 
 measured_patterns_dir = "../../results/intermediate/integrated_1D/PS_1p3V_b"
+reference_peaks_dir = "../../results/intermediate/peaks_references"
+references_fnames = {'Pd': 'Pd.dat'}
 figure_fn = "diffraction_patterns.svg"
 
 measured_patterns_fns_unsorted = os.listdir(measured_patterns_dir)
@@ -127,6 +129,11 @@ for idx, (k, v) in enumerate(layers.items()):
 #ax_ref1.set_box_aspect(1/4) #Don't use this.  Use gridspec_kw in fig
 ax_ref1.tick_params(axis='y', which='both', left=False, labelleft=False)
 plt.setp(ax_ref1.get_xticklabels(), visible=False)
+data = np.loadtxt(os.path.join(reference_peaks_dir, references_fnames['Pd']))
+twotheta, intensity = data[:,0], data[:,1]
+stem_container = ax_ref1.stem(twotheta, intensity)
+stem_container.baseline.set_visible(False)
+stem_container.markerline.set_visible(False)
 
 fig.savefig(figure_fn)
 #plt.grid()
