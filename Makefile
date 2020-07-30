@@ -3,6 +3,7 @@ RESULTS_INTERMED_DIR:=$(RESULTS_DIR)/intermediate
 RESULTS_FINAL_DIR:=$(RESULTS_DIR)/final
 
 EXPER_PARAM_FILE:=data/exper_param.py
+CIF_DIR:=data/cif
 
 SRC_DIR:=src
 PROC_SRC_DIR:=$(SRC_DIR)/processing_scripts
@@ -38,6 +39,7 @@ analysis:
 	make ai-all
 	make peaks
 	make tables
+	make reference-peaks
 	cd src/image_scripts/ && python stack_1D.py
 	cd src/image_scripts/ && python raw_diffr_images.py
 
@@ -144,6 +146,22 @@ $(TABLE_PD_FILE) :  $(TABLE_PD_SRC) $(FILES_FOR_TABLE_PD)
 ## clean-tables     : Delete all tables
 clean-tables :
 	rm -rf $(TABLE_PD_FILE)
+
+
+REF_PEAKS_SRC:=$(PROC_SRC_DIR)/calc_pattern.py
+REF_PEAKS_EXE:=$(LANGUAGE) $(REF_PEAKS_SRC)
+REF_PEAKS_FUNC:=$(SRC_DIR)/functions/calculate_pattern.py
+Pd_CIF_FILE:=$(CIF_DIR)/Pd.cif
+REF_PEAKS_DIR:=$(RESULTS_INTERMED_DIR)/peaks_references
+REF_PEAKS_Pd_FILE:=$(REF_PEAKS_DIR)/Pd.dat
+PHONY : reference-peaks clean-reference-peaks
+reference-peaks :
+	mkdir -p $(REF_PEAKS_DIR)
+	make $(REF_PEAKS_Pd_FILE)
+
+$(REF_PEAKS_Pd_FILE) : $(Pd_CIF_FILE) $(REF_PEAKS_SRC) $(REF_PEAKS_FUNC) \
+$(EXPER_PARAM_FILE)
+	$(REF_PEAKS_EXE) $< $@
 
 
 slides:
