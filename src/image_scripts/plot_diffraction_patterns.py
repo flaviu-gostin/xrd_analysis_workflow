@@ -33,17 +33,15 @@ except IndexError:
 
 patterns_to_plot = list(range(start, stop))
 
+offset_patterns = 2000
 label_every_nth_pattern = 5
 
-# TODO: use this dict to draw vertical lines on the right side of the figure
-#indicating patterns containing peaks of given phase(s)
-# TODO: need to get more accurate values for this dict
-layers = {'Pd': (0, 84), #not sure about the end
-          'PdCl2': (4, 65), #OK
-          'X1+X2': (54, 70), #~OK
-          'X3+X4': (67,81), #OK
-          'CuCl': (72, 88), #~OK
-          'MG': (85, 100)} #not sure about start
+layers = {'Pd': (0, 83),
+          'PdCl2': (4, 65),
+          'X1+X2': (52, 70),
+          'X3+X4': (67,81),
+          'CuCl': (66, 89),
+          'MG': (77, 100)}
 
 standard_fig_widths_inch = {'single_column': 3.5,
                             'onehalf_column': 5,
@@ -67,7 +65,6 @@ ax_measured = fig.add_subplot(1, 1, 1)
 ax_measured.tick_params(axis='y', which='both', left=False, labelleft=False)
 ax_measured.set_ylabel("Relative intensity")
 ax_measured.set(xlim=[2, 41], xlabel="2theta, degree")
-offset_patterns = 2000
 
 
 #plot data and label patterns with numbers
@@ -127,3 +124,5 @@ for idx, (k, v) in enumerate(layers.items()):
 # add stick plot(s) for reference phases
 
 fig.savefig(figure_fn)
+#plt.grid()
+#plt.show()
