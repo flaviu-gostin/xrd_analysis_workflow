@@ -15,8 +15,7 @@ import os
 measured_patterns_dir = "../../results/intermediate/integrated_1D/PS_1p3V_b"
 figure_fn = "diffraction_patterns.svg"
 
-start_pattern, end_pattern = 0, -1 #patterns to plot (end is not included)
-#use value "-1" if you need the last pattern
+patterns_to_plot = list(range(40, 90))
 label_every_nth_pattern = 5
 
 # TODO: use this dict to draw vertical lines on the right side of the figure
@@ -57,13 +56,14 @@ fns = os.listdir(measured_patterns_dir) #this is not sorted
 sorted_fns = sorted(fns, key=lambda fn: int(fn.split(sep='.')[0]))
 
 #plot data and label patterns with numbers
-for idx, fn in enumerate(sorted_fns[start_pattern:end_pattern]):
-    data = np.loadtxt(os.path.join(measured_patterns_dir, fn))
-    x_vals, y_vals = data[:,0], data[:,1] - offset_patterns * idx
+for pattern_no in patterns_to_plot:
+    data = np.loadtxt(os.path.join(measured_patterns_dir, str(pattern_no) +
+                                   '.dat'))
+    x_vals, y_vals = data[:,0], data[:,1] - offset_patterns * pattern_no
     line, = ax_measured.plot(x_vals, y_vals)
     line.set_linewidth(global_linewidth)
-    if idx % label_every_nth_pattern == 0:
-        label_text = fn.split(sep='.')[0]
+    if pattern_no % label_every_nth_pattern == 0:
+        label_text = str(pattern_no)
         idx_rightmost_point = np.searchsorted(x_vals, ax_measured.get_xlim()[1],
                                               side='right') - 1
         x_ref, y_ref = x_vals[idx_rightmost_point], y_vals[idx_rightmost_point]
