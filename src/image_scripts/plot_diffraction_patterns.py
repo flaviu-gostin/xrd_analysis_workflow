@@ -53,15 +53,17 @@ mpl.rcParams['axes.linewidth'] = global_linewidth
 #plt.rcParams.update({'figure.autolayout': True})
 
 
-fig = plt.figure()
+fig, ax = plt.subplots(nrows=2, sharex=True,
+                       gridspec_kw=dict(height_ratios=[1, 6]))#2nd is 3x higher
+ax_ref1, ax_measured = ax
 #fig.set_dpi(500)    useless for vector graphics?
 fig.set_figwidth(figwidth)
 fig.set_figheight(figheight)
 fig.subplots_adjust(left=0.06, right=0.755, bottom=0.085, top=0.995,
-                    wspace=0.2, hspace=0.2)
+                    wspace=0.2, hspace=0.05)
 
 #plot the measured patterns
-ax_measured = fig.add_subplot(1, 1, 1)
+#ax_measured.set_box_aspect(3/1) #Don't use this.  Use gridspec_kw in fig
 ax_measured.tick_params(axis='y', which='both', left=False, labelleft=False)
 ax_measured.set_ylabel("Relative intensity")
 ax_measured.set(xlim=[2, 41], xlabel="2theta, degree")
@@ -122,6 +124,9 @@ for idx, (k, v) in enumerate(layers.items()):
 
 
 # add stick plot(s) for reference phases
+#ax_ref1.set_box_aspect(1/4) #Don't use this.  Use gridspec_kw in fig
+ax_ref1.tick_params(axis='y', which='both', left=False, labelleft=False)
+plt.setp(ax_ref1.get_xticklabels(), visible=False)
 
 fig.savefig(figure_fn)
 #plt.grid()
