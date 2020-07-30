@@ -4,25 +4,42 @@ Create a figure containing multiple subfigures.  One subfigure contains a
 sequence of measured diffraction patterns.  Each of the other subfigures is a
 stick plot of calculated Bragg reflections of a reference phase.
 
-Run with: python plot_diffraction_patterns.py
+Run with: python plot_diffraction_patterns.py [patterns]
+
+patterns : two integers separated by one colon, e.g. '21:67' plots all patterns
+from 21 to 66 (stop position 67 is not plotted).  If omitted, all available
+patterns are plotted.
 
 """
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 import numpy as np
 import os
+import sys
 
 measured_patterns_dir = "../../results/intermediate/integrated_1D/PS_1p3V_b"
 figure_fn = "diffraction_patterns.svg"
 
-patterns_to_plot = list(range(40, 90))
+measured_patterns_fns_unsorted = os.listdir(measured_patterns_dir)
+#sort in order: 0.dat, 1.dat, ..., 10.dat, ...
+measured_patterns_fns = sorted(measured_patterns_fns_unsorted,
+                               key=lambda fn: int(fn.split(sep='.')[0]))
+
+try:
+    positions = sys.argv[1].split(sep=':')
+    start, stop = [int(position) for position in positions]
+except IndexError:
+    start, stop = 0, len(measured_patterns_fns)
+
+patterns_to_plot = list(range(start, stop))
+
 label_every_nth_pattern = 5
 
 # TODO: use this dict to draw vertical lines on the right side of the figure
 #indicating patterns containing peaks of given phase(s)
 # TODO: need to get more accurate values for this dict
 layers = {'Pd': (0, 84), #not sure about the end
-          'PdCl2': (15, 64), #~OK
+          'PdCl2': (4, 65), #OK
           'X1+X2': (54, 70), #~OK
           'X3+X4': (67,81), #OK
           'CuCl': (72, 88), #~OK
@@ -51,9 +68,7 @@ ax_measured.tick_params(axis='y', which='both', left=False, labelleft=False)
 ax_measured.set_ylabel("Relative intensity")
 ax_measured.set(xlim=[2, 41], xlabel="2theta, degree")
 offset_patterns = 2000
-fns = os.listdir(measured_patterns_dir) #this is not sorted
-#sort in order: 0.dat, 1.dat, ..., 10.dat, ...
-sorted_fns = sorted(fns, key=lambda fn: int(fn.split(sep='.')[0]))
+
 
 #plot data and label patterns with numbers
 for pattern_no in patterns_to_plot:
