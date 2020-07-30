@@ -15,7 +15,7 @@ import os
 measured_patterns_dir = "../../results/intermediate/integrated_1D/PS_1p3V_b"
 figure_fn = "diffraction_patterns.svg"
 
-start_pattern, end_pattern = 70, 90 #patterns to plot (end is not included)
+start_pattern, end_pattern = 0, -1 #patterns to plot (end is not included)
 #use value "-1" if you need the last pattern
 label_every_nth_pattern = 5
 
@@ -39,10 +39,12 @@ mpl.rcParams['axes.linewidth'] = global_linewidth
 #plt.rcParams.update({'figure.autolayout': True})
 
 
-fig = plt.figure(constrained_layout=True)
+fig = plt.figure()
 #fig.set_dpi(500)    useless for vector graphics?
 fig.set_figwidth(figwidth)
 fig.set_figheight(figheight)
+fig.subplots_adjust(left=0.06, right=0.755, bottom=0.085, top=0.995,
+                    wspace=0.2, hspace=0.2)
 
 #plot the measured patterns
 ax_measured = fig.add_subplot(1, 1, 1)
