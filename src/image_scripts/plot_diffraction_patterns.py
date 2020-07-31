@@ -19,7 +19,8 @@ import sys
 
 measured_patterns_dir = "../../results/intermediate/integrated_1D/PS_1p3V_b"
 reference_peaks_dir = "../../results/intermediate/peaks_references"
-references_fnames = {'Pd': 'Pd.dat'}
+references_fnames = {'Pd': 'Pd.dat',
+                     'PdCl2': 'PdCl2.dat'}
 figure_fn = "diffraction_patterns.svg"
 
 measured_patterns_fns_unsorted = os.listdir(measured_patterns_dir)
@@ -55,9 +56,10 @@ mpl.rcParams['axes.linewidth'] = global_linewidth
 #plt.rcParams.update({'figure.autolayout': True})
 
 
-fig, ax = plt.subplots(nrows=2, sharex=True,
-                       gridspec_kw=dict(height_ratios=[1, 6]))#2nd is 3x higher
-ax_ref1, ax_measured = ax
+fig, ax = plt.subplots(nrows=3, sharex=True,
+                       gridspec_kw=dict(height_ratios=[1, 1, 5]))
+#3rd cell is 5x higher than 1st and 2nd
+ax_ref1, ax_ref2, ax_measured = ax
 #fig.set_dpi(500)    useless for vector graphics?
 fig.set_figwidth(figwidth)
 fig.set_figheight(figheight)
@@ -129,11 +131,24 @@ for idx, (k, v) in enumerate(layers.items()):
 #ax_ref1.set_box_aspect(1/4) #Don't use this.  Use gridspec_kw in fig
 ax_ref1.tick_params(axis='y', which='both', left=False, labelleft=False)
 plt.setp(ax_ref1.get_xticklabels(), visible=False)
+ax_ref1.set(ylim=[0, 110])
 data = np.loadtxt(os.path.join(reference_peaks_dir, references_fnames['Pd']))
 twotheta, intensity = data[:,0], data[:,1]
 stem_container = ax_ref1.stem(twotheta, intensity)
 stem_container.baseline.set_visible(False)
 stem_container.markerline.set_visible(False)
+stem_container.stemlines.set_color('blue')
+
+ax_ref2.tick_params(axis='y', which='both', left=False, labelleft=False)
+plt.setp(ax_ref2.get_xticklabels(), visible=False)
+ax_ref2.set(ylim=[0, 110])
+data = np.loadtxt(os.path.join(reference_peaks_dir, references_fnames['PdCl2']))
+twotheta, intensity = data[:,0], data[:,1]
+stem_container = ax_ref2.stem(twotheta, intensity)
+stem_container.baseline.set_visible(False)
+stem_container.markerline.set_visible(False)
+stem_container.stemlines.set_color('red')
+
 
 fig.savefig(figure_fn)
 #plt.grid()
