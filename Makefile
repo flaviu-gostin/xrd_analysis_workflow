@@ -1,3 +1,4 @@
+DATA_DIR:=data
 RESULTS_DIR:=results
 RESULTS_INTERMED_DIR:=$(RESULTS_DIR)/intermediate
 RESULTS_FINAL_DIR:=$(RESULTS_DIR)/final
@@ -154,14 +155,20 @@ REF_PEAKS_FUNC:=$(SRC_DIR)/functions/calculate_pattern.py
 Pd_CIF_FILE:=$(CIF_DIR)/Pd.cif
 REF_PEAKS_DIR:=$(RESULTS_INTERMED_DIR)/peaks_references
 REF_PEAKS_Pd_FILE:=$(REF_PEAKS_DIR)/Pd.dat
+REF_PEAKS_PdCl2_SOURCE_FILE:=$(DATA_DIR)/reflections_refs/PdCl2.txt
+REF_PEAKS_PdCl2_FILE:=$(REF_PEAKS_DIR)/PdCl2.dat
 PHONY : reference-peaks clean-reference-peaks
 reference-peaks :
 	mkdir -p $(REF_PEAKS_DIR)
 	make $(REF_PEAKS_Pd_FILE)
+	make $(REF_PEAKS_PdCl2_FILE)
 
 $(REF_PEAKS_Pd_FILE) : $(Pd_CIF_FILE) $(REF_PEAKS_SRC) $(REF_PEAKS_FUNC) \
 $(EXPER_PARAM_FILE)
 	$(REF_PEAKS_EXE) $< $@
+
+$(REF_PEAKS_PdCl2_FILE) : $(REF_PEAKS_PdCl2_SOURCE_FILE)
+	cp $< $@
 
 
 slides:
