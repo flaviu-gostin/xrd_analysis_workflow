@@ -139,6 +139,10 @@ stem_container = ax_ref1.stem(twotheta, intensity)
 stem_container.baseline.set_visible(False)
 stem_container.markerline.set_visible(False)
 stem_container.stemlines.set_color('blue')
+label_ref1 = ax_ref1.annotate('Pd\nreference', xy=(1, 0.5),
+                              xycoords='axes fraction',
+                              xytext=(10, 0), textcoords='offset points',
+                              va='center', color='blue')
 
 ax_ref2.tick_params(axis='y', which='both', left=False, labelleft=False)
 plt.setp(ax_ref2.get_xticklabels(), visible=False)
@@ -149,6 +153,10 @@ stem_container = ax_ref2.stem(twotheta, intensity)
 stem_container.baseline.set_visible(False)
 stem_container.markerline.set_visible(False)
 stem_container.stemlines.set_color('red')
+label_ref2 = ax_ref2.annotate('PdCl2\nreference', xy=(1, 0.5),
+                              xycoords='axes fraction',
+                              xytext=(10, 0), textcoords='offset points',
+                              va='center', color='red')
 
 ax_ref3.tick_params(axis='y', which='both', left=False, labelleft=False)
 #plt.setp(ax_ref3.get_xticklabels(), visible=False)
@@ -160,6 +168,10 @@ stem_container = ax_ref3.stem(twotheta, intensity)
 stem_container.baseline.set_visible(False)
 stem_container.markerline.set_visible(False)
 stem_container.stemlines.set_color('green')
+label_ref3 = ax_ref3.annotate('CuCl\nreference', xy=(1, 0.5),
+                              xycoords='axes fraction',
+                              xytext=(10, 0), textcoords='offset points',
+                              va='center', color='green')
 
 fig.savefig(figure_fn)
 #plt.grid()
