@@ -20,7 +20,8 @@ import sys
 measured_patterns_dir = "../../results/intermediate/integrated_1D/PS_1p3V_b"
 reference_peaks_dir = "../../results/intermediate/peaks_references"
 references_fnames = {'Pd': 'Pd.dat',
-                     'PdCl2': 'PdCl2.dat'}
+                     'PdCl2': 'PdCl2.dat',
+                     'CuCl': 'CuCl.dat'}
 figure_fn = "diffraction_patterns.svg"
 
 measured_patterns_fns_unsorted = os.listdir(measured_patterns_dir)
@@ -56,10 +57,10 @@ mpl.rcParams['axes.linewidth'] = global_linewidth
 #plt.rcParams.update({'figure.autolayout': True})
 
 
-fig, ax = plt.subplots(nrows=3, sharex=True,
-                       gridspec_kw=dict(height_ratios=[1, 1, 5]))
-#3rd cell is 5x higher than 1st and 2nd
-ax_ref1, ax_ref2, ax_measured = ax
+fig, ax = plt.subplots(nrows=4, sharex=True,
+                       gridspec_kw=dict(height_ratios=[1, 1, 5,1]))
+#3rd cell is 5x higher than 1st, 2nd and 4th
+ax_ref1, ax_ref2, ax_measured, ax_ref3 = ax
 #fig.set_dpi(500)    useless for vector graphics?
 fig.set_figwidth(figwidth)
 fig.set_figheight(figheight)
@@ -70,7 +71,7 @@ fig.subplots_adjust(left=0.06, right=0.755, bottom=0.085, top=0.995,
 #ax_measured.set_box_aspect(3/1) #Don't use this.  Use gridspec_kw in fig
 ax_measured.tick_params(axis='y', which='both', left=False, labelleft=False)
 ax_measured.set_ylabel("Relative intensity")
-ax_measured.set(xlim=[2, 41], xlabel="2theta, degree")
+plt.setp(ax_measured.get_xticklabels(), visible=False)
 
 
 #plot data and label patterns with numbers
@@ -127,7 +128,7 @@ for idx, (k, v) in enumerate(layers.items()):
                                      'linewidth': global_linewidth})
 
 
-# add stick plot(s) for reference phases
+# Add stick plot(s) for reference phases
 #ax_ref1.set_box_aspect(1/4) #Don't use this.  Use gridspec_kw in fig
 ax_ref1.tick_params(axis='y', which='both', left=False, labelleft=False)
 plt.setp(ax_ref1.get_xticklabels(), visible=False)
@@ -149,6 +150,16 @@ stem_container.baseline.set_visible(False)
 stem_container.markerline.set_visible(False)
 stem_container.stemlines.set_color('red')
 
+ax_ref3.tick_params(axis='y', which='both', left=False, labelleft=False)
+#plt.setp(ax_ref3.get_xticklabels(), visible=False)
+ax_ref3.set(xlim=[2, 41], xlabel="2theta, degree")
+ax_ref3.set(ylim=[0, 110])
+data = np.loadtxt(os.path.join(reference_peaks_dir, references_fnames['CuCl']))
+twotheta, intensity = data[:,0], data[:,1]
+stem_container = ax_ref3.stem(twotheta, intensity)
+stem_container.baseline.set_visible(False)
+stem_container.markerline.set_visible(False)
+stem_container.stemlines.set_color('green')
 
 fig.savefig(figure_fn)
 #plt.grid()
