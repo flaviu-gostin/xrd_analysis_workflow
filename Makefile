@@ -1,10 +1,10 @@
 DATA_DIR:=data
+EXPER_PARAM_FILE:=$(DATA_DIR)/exper_param.py
+CIF_DIR:=$(DATA_DIR)/cif
+
 RESULTS_DIR:=results
 RESULTS_INTERMED_DIR:=$(RESULTS_DIR)/intermediate
 RESULTS_FINAL_DIR:=$(RESULTS_DIR)/final
-
-EXPER_PARAM_FILE:=data/exper_param.py
-CIF_DIR:=data/cif
 
 SRC_DIR:=src
 PROC_SRC_DIR:=$(SRC_DIR)/processing_scripts
@@ -152,23 +152,24 @@ clean-tables :
 REF_PEAKS_SRC:=$(PROC_SRC_DIR)/calc_pattern.py
 REF_PEAKS_EXE:=$(LANGUAGE) $(REF_PEAKS_SRC)
 REF_PEAKS_FUNC:=$(SRC_DIR)/functions/calculate_pattern.py
-Pd_CIF_FILE:=$(CIF_DIR)/Pd.cif
 REF_PEAKS_DIR:=$(RESULTS_INTERMED_DIR)/peaks_references
-REF_PEAKS_Pd_FILE:=$(REF_PEAKS_DIR)/Pd.dat
-REF_PEAKS_PdCl2_SOURCE_FILE:=$(DATA_DIR)/reflections_refs/PdCl2.txt
-REF_PEAKS_PdCl2_FILE:=$(REF_PEAKS_DIR)/PdCl2.dat
-PHONY : reference-peaks clean-reference-peaks
+PHONY : reference-peaks ref-peaks-internal clean-reference-peaks
 reference-peaks :
 	mkdir -p $(REF_PEAKS_DIR)
-	make $(REF_PEAKS_Pd_FILE)
-	make $(REF_PEAKS_PdCl2_FILE)
+	make $(REF_PEAKS_DIR)/Pd.dat
+	make $(REF_PEAKS_DIR)/CuCl.dat
+	make $(REF_PEAKS_DIR)/PdCl2.dat
 
-$(REF_PEAKS_Pd_FILE) : $(Pd_CIF_FILE) $(REF_PEAKS_SRC) $(REF_PEAKS_FUNC) \
+$(REF_PEAKS_DIR)/%.dat : $(CIF_DIR)/%.cif $(REF_PEAKS_SRC) $(REF_PEAKS_FUNC) \
 $(EXPER_PARAM_FILE)
+	mkdir -p $(REF_PEAKS_DIR)
 	$(REF_PEAKS_EXE) $< $@
 
-$(REF_PEAKS_PdCl2_FILE) : $(REF_PEAKS_PdCl2_SOURCE_FILE)
+$(REF_PEAKS_DIR)/PdCl2.dat : $(DATA_DIR)/reflections_refs/PdCl2.txt
 	cp $< $@
+
+clean-reference-peaks :
+	rm -rf $(REF_PEAKS_DIR)
 
 
 slides:
