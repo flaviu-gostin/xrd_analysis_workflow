@@ -37,6 +37,7 @@ except IndexError:
 
 patterns_to_plot = list(range(start, stop))
 
+twotheta_range = [2, 41]
 offset_patterns = 2000
 label_every_nth_pattern = 5
 
@@ -72,7 +73,7 @@ fig.subplots_adjust(left=0.06, right=0.755, bottom=0.085, top=0.995,
 ax_measured.tick_params(axis='y', which='both', left=False, labelleft=False)
 ax_measured.set_ylabel("Relative intensity")
 plt.setp(ax_measured.get_xticklabels(), visible=False)
-
+ax_measured.set(xlim=twotheta_range)
 
 #plot data and label patterns with numbers
 for pattern_no in patterns_to_plot:
@@ -85,6 +86,7 @@ for pattern_no in patterns_to_plot:
         label_text = str(pattern_no)
         idx_rightmost_point = np.searchsorted(x_vals, ax_measured.get_xlim()[1],
                                               side='right') - 1
+        #xlim shouldn't be changed after this point (might affect labels)
         x_ref, y_ref = x_vals[idx_rightmost_point], y_vals[idx_rightmost_point]
         label = ax_measured.annotate(label_text, (x_ref, y_ref),
                                       textcoords="offset points", xytext=(2,0),
@@ -160,7 +162,7 @@ label_ref2 = ax_ref2.annotate('PdCl2\nreference', xy=(1, 0.5),
 
 ax_ref3.tick_params(axis='y', which='both', left=False, labelleft=False)
 #plt.setp(ax_ref3.get_xticklabels(), visible=False)
-ax_ref3.set(xlim=[2, 41], xlabel="2theta, degree")
+ax_ref3.set(xlabel="2theta, degree")
 ax_ref3.set(ylim=[0, 110])
 data = np.loadtxt(os.path.join(reference_peaks_dir, references_fnames['CuCl']))
 twotheta, intensity = data[:,0], data[:,1]
