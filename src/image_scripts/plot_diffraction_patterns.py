@@ -63,6 +63,31 @@ mpl.rcParams['axes.linewidth'] = global_linewidth
 #plt.rcParams.update({'figure.autolayout': True})
 
 
+def xydata(pattern):
+    """ Prepare data for plotting for a given pattern
+
+    pattern : integer
+    out : two numpy 1D arrays
+
+    """
+    d = np.loadtxt(os.path.join(measured_patterns_dir, str(pattern) + '.dat'))
+    x, y = d[:,0], d[:,1] - offset_patterns * pattern
+    return x, y
+
+
+def xy_rightmost_point(x, y, ax):
+    """ Determine the coordinates of the rightmost visible point in a subplot
+
+    x, y : two numpy 1D arrays
+    ax: subplot(axes) in which x, y is plotted
+    out : two floats
+
+    """
+    idx = np.searchsorted(x, ax.get_xlim()[1], side='right') - 1
+    return x[idx], y[idx]
+
+
+# Set up the figure
 fig, ax = plt.subplots(nrows=len(references_fnames) + 1, sharex=True,
                        gridspec_kw=dict(height_ratios=[1, 1, 5, 1]))
 #3rd cell is 5x higher than 1st, 2nd and 4th
@@ -73,81 +98,66 @@ fig.set_figheight(figheight)
 fig.subplots_adjust(left=0.06, right=0.75, bottom=0.085, top=0.995,
                     wspace=0.2, hspace=0.05)
 
-#plot the measured patterns
+
+# Set up subplot for measured patterns
 #ax_measured.set_box_aspect(3/1) #Don't use this.  Use gridspec_kw in fig
 ax_measured.tick_params(axis='y', which='both', left=False, labelleft=False)
 ax_measured.set_ylabel("Relative intensity")
 plt.setp(ax_measured.get_xticklabels(), visible=False)
-ax_measured.set(xlim=twotheta_range)
+ax_measured.set(xlim=twotheta_range) #set early to prevent label misplacement
 
-#plot data and label patterns with numbers
+
+# Plot measured patterns and label them with numbers
 for pattern_no in patterns_to_plot:
-    data = np.loadtxt(os.path.join(measured_patterns_dir, str(pattern_no) +
-                                   '.dat'))
-    x_vals, y_vals = data[:,0], data[:,1] - offset_patterns * pattern_no
+    x_vals, y_vals = xydata(pattern_no)
     line, = ax_measured.plot(x_vals, y_vals)
     line.set_linewidth(global_linewidth)
     if pattern_no % label_every_nth_pattern == 0:
         label_text = str(pattern_no)
-        idx_rightmost_point = np.searchsorted(x_vals, ax_measured.get_xlim()[1],
-                                              side='right') - 1
-        #xlim shouldn't be changed after this point (might affect labels)
-        x_ref, y_ref = x_vals[idx_rightmost_point], y_vals[idx_rightmost_point]
-        label = ax_measured.annotate(label_text, xy=(1, y_ref),
+        #don't change xlim from this point on (it might affect labels positions)
+        __, y_ann = xy_rightmost_point(x_vals, y_vals, ax_measured)
+        label = ax_measured.annotate(label_text, xy=(1, y_ann),
                                      xycoords=('axes fraction', 'data'),
                                      xytext=(offset_numbering_labels, 0),
                                      textcoords="offset points", va='center')
         label.set_fontsize('xx-small')
 
-#label layers, e.g. "Pd", "PdCl2"
+
+# Label layers, e.g. "Pd", "PdCl2", height shown by vertical lines
 for idx, (layer_name, layer_attributes) in enumerate(layers.items()):
-    #add upper and (empty) lower annotation boxes
     label_text = layer_attributes['label']
-    layer_st, layer_end = layer_attributes['patterns']
-    data_top = np.loadtxt(os.path.join(measured_patterns_dir, str(layer_st) +
-                                       '.dat'))
-    data_bottom = np.loadtxt(os.path.join(measured_patterns_dir, str(layer_end)
-                                          + '.dat'))
-    x_vals_top, y_vals_top = data_top[:,0], data_top[:,1] - offset_patterns *\
-                             layer_st
-    x_vals_bottom, y_vals_bottom = data_bottom[:,0], data_bottom[:,1] -\
-                                   offset_patterns * layer_end
-    idx_rightmost_point_top = np.searchsorted(x_vals_top,
-                                              ax_measured.get_xlim()[1],
-                                              side='right') - 1
-    idx_rightmost_point_bottom = np.searchsorted(x_vals_bottom,
-                                              ax_measured.get_xlim()[1],
-                                              side='right') - 1
-    x_ref_top, y_ref_top = x_vals_top[idx_rightmost_point_top],\
-    y_vals_top[idx_rightmost_point_top]
-    x_ref_bottom, y_ref_bottom = x_vals_bottom[idx_rightmost_point_bottom],\
-    y_vals_bottom[idx_rightmost_point_bottom]
+
+    layer_first_pattern, layer_last_pattern = layer_attributes['patterns']
+    xfirst, yfirst = xydata(layer_first_pattern)
+    xlast, ylast = xydata(layer_last_pattern)
+    __, y_ann_top = xy_rightmost_point(xfirst, yfirst, ax_measured)
+    __, y_ann_bottom = xy_rightmost_point(xlast, ylast, ax_measured)
 
     #Don't let lines run above top of subplot
-    if y_ref_top > ax_measured.get_ylim()[1]:
-        y_ref_top = ax_measured.get_ylim()[1]
+    if y_ann_top > ax_measured.get_ylim()[1]:
+        y_ann_top = ax_measured.get_ylim()[1]
 
     #Don't let lines run below bottom of subplot
-    if y_ref_bottom < ax_measured.get_ylim()[0]:
-        y_ref_bottom = ax_measured.get_ylim()[0]
+    if y_ann_bottom < ax_measured.get_ylim()[0]:
+        y_ann_bottom = ax_measured.get_ylim()[0]
 
     #Create layer labels only if top pattern is above bottom of subplot
-    if y_ref_top > ax_measured.get_ylim()[0] and \
-       y_ref_bottom < ax_measured.get_ylim()[1]:
+    if y_ann_top > ax_measured.get_ylim()[0] and \
+       y_ann_bottom < ax_measured.get_ylim()[1]:
         color = layer_attributes['color']
         xtext = offset_layer_lines + idx * offset_line_to_line
         yadjustment = 2 #points
-        ann_top = ax_measured.annotate(label_text, xy=(1, y_ref_top),
+        ann_top = ax_measured.annotate(label_text, xy=(1, y_ann_top),
                                        xycoords=('axes fraction', 'data'),
                                        xytext=(xtext, yadjustment),
                                        textcoords='offset points', va='bottom',
                                        ha='center', rotation=90, color=color)
-        ann_bottom = ax_measured.annotate('', xy=(1, y_ref_bottom),
+        ann_bottom = ax_measured.annotate('', xy=(1, y_ann_bottom),
                                           xycoords=('axes fraction', 'data'),
                                           xytext=(xtext, -yadjustment),
                                           textcoords="offset points",
                                           va='center')
-        #add line between upper and lower annotation boxes
+        # add line between upper and lower annotation boxes
         ax_measured.annotate('', xy=(0.5, 0), xycoords=ann_top,
                              xytext=(0, 0.3), textcoords=ann_bottom,
                              arrowprops={'arrowstyle': '-', 'color': color,
