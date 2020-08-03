@@ -65,7 +65,7 @@ ax_ref1, ax_ref2, ax_measured, ax_ref3 = ax
 #fig.set_dpi(500)    useless for vector graphics?
 fig.set_figwidth(figwidth)
 fig.set_figheight(figheight)
-fig.subplots_adjust(left=0.06, right=0.755, bottom=0.085, top=0.995,
+fig.subplots_adjust(left=0.06, right=0.75, bottom=0.085, top=0.995,
                     wspace=0.2, hspace=0.05)
 
 #plot the measured patterns
@@ -126,16 +126,18 @@ for idx, (layer_name, layer_attributes) in enumerate(layers.items()):
         y_ref_bottom = ax_measured.get_ylim()[0]
 
     #Create layer labels only if top pattern is above bottom of subplot
-    if y_ref_top > ax_measured.get_ylim()[0]:
+    if y_ref_top > ax_measured.get_ylim()[0] and \
+       y_ref_bottom < ax_measured.get_ylim()[1]:
         ann_top = ax_measured.annotate(label_text, xy=(x_ref_top, y_ref_top),
-                                       xytext=(2 + 12 + idx * 4, 0),
-                                       textcoords="offset points", va='center')
+                                       xytext=(2 + 12 + idx * 9, 2),
+                                       textcoords='offset points',
+                                       va='bottom', ha='center', rotation=90)
         ann_bottom = ax_measured.annotate('', xy=(x_ref_bottom, y_ref_bottom),
-                                          xytext=(2 + 12 + idx * 4, 0),
+                                          xytext=(2 + 12 + idx * 9, -2),
                                           textcoords="offset points",
                                           va='center')
         #add line between upper and lower annotation boxes
-        ax_measured.annotate('', xy=(0, 0.7), xycoords=ann_top,
+        ax_measured.annotate('', xy=(0.5, 0), xycoords=ann_top,
                              xytext=(0, 0.3), textcoords=ann_bottom,
                              arrowprops={'arrowstyle': '-',
                                          'linewidth': global_linewidth})
@@ -152,7 +154,7 @@ stem_container = ax_ref1.stem(twotheta, intensity)
 stem_container.baseline.set_visible(False)
 stem_container.markerline.set_visible(False)
 stem_container.stemlines.set_color('blue')
-label_ref1 = ax_ref1.annotate('Pd\nreference', xy=(1, 1),
+label_ref1 = ax_ref1.annotate('Pd', xy=(1, 1),
                               xycoords='axes fraction',
                               xytext=(10, 0), textcoords='offset points',
                               va='top', color='blue')
@@ -166,7 +168,7 @@ stem_container = ax_ref2.stem(twotheta, intensity)
 stem_container.baseline.set_visible(False)
 stem_container.markerline.set_visible(False)
 stem_container.stemlines.set_color('red')
-label_ref2 = ax_ref2.annotate(r'PdCl$_2$' + '\nreference', xy=(1, 1),
+label_ref2 = ax_ref2.annotate(r'PdCl$_2$', xy=(1, 1),
                               xycoords='axes fraction',
                               xytext=(10, 0), textcoords='offset points',
                               va='top', color='red')
@@ -181,7 +183,7 @@ stem_container = ax_ref3.stem(twotheta, intensity)
 stem_container.baseline.set_visible(False)
 stem_container.markerline.set_visible(False)
 stem_container.stemlines.set_color('green')
-label_ref3 = ax_ref3.annotate('CuCl\nreference', xy=(1, 1),
+label_ref3 = ax_ref3.annotate('CuCl', xy=(1, 1),
                               xycoords='axes fraction',
                               xytext=(10, 0), textcoords='offset points',
                               va='top', color='green')
