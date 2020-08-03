@@ -41,12 +41,12 @@ twotheta_range = [2, 41]
 offset_patterns = 2000
 label_every_nth_pattern = 5
 
-layers = {'Pd': {'patterns': (0, 83), 'label': 'Pd'},
-          'PdCl2': {'patterns': (4, 65), 'label': r'PdCl$_2$'},
-          'X1+X2': {'patterns': (52, 70), 'label': 'X1+X2'},
-          'CuCl': {'patterns': (66, 89), 'label': 'CuCl'},
-          'X3+X4': {'patterns': (67, 81), 'label': 'X3+X4'},
-          'MG': {'patterns': (77, 100), 'label': 'MG'},}
+layers = {'Pd': {'patterns': (0, 83), 'label': 'Pd', 'color': 'blue'},
+          'PdCl2': {'patterns': (4, 65), 'label': r'PdCl$_2$', 'color': 'red'},
+          'X1+X2': {'patterns': (52, 70), 'label': 'X1+X2', 'color': 'black'},
+          'CuCl': {'patterns': (66, 89), 'label': 'CuCl', 'color': 'green'},
+          'X3+X4': {'patterns': (67, 81), 'label': 'X3+X4', 'color': 'black'},
+          'MG': {'patterns': (77, 100), 'label': 'MG', 'color': 'magenta'}}
 
 standard_fig_widths_inch = {'single_column': 3.5,
                             'onehalf_column': 5,
@@ -128,10 +128,11 @@ for idx, (layer_name, layer_attributes) in enumerate(layers.items()):
     #Create layer labels only if top pattern is above bottom of subplot
     if y_ref_top > ax_measured.get_ylim()[0] and \
        y_ref_bottom < ax_measured.get_ylim()[1]:
+        color = layer_attributes['color']
         ann_top = ax_measured.annotate(label_text, xy=(x_ref_top, y_ref_top),
                                        xytext=(2 + 12 + idx * 9, 2),
-                                       textcoords='offset points',
-                                       va='bottom', ha='center', rotation=90)
+                                       textcoords='offset points', va='bottom',
+                                       ha='center', rotation=90, color=color)
         ann_bottom = ax_measured.annotate('', xy=(x_ref_bottom, y_ref_bottom),
                                           xytext=(2 + 12 + idx * 9, -2),
                                           textcoords="offset points",
@@ -139,7 +140,7 @@ for idx, (layer_name, layer_attributes) in enumerate(layers.items()):
         #add line between upper and lower annotation boxes
         ax_measured.annotate('', xy=(0.5, 0), xycoords=ann_top,
                              xytext=(0, 0.3), textcoords=ann_bottom,
-                             arrowprops={'arrowstyle': '-',
+                             arrowprops={'arrowstyle': '-', 'color': color,
                                          'linewidth': global_linewidth})
 
 
