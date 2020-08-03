@@ -44,8 +44,8 @@ label_every_nth_pattern = 5
 layers = {'Pd': (0, 83),
           'PdCl2': (4, 65),
           'X1+X2': (52, 70),
-          'X3+X4': (67,81),
           'CuCl': (66, 89),
+          'X3+X4': (67,81),
           'MG': (77, 100)}
 
 standard_fig_widths_inch = {'single_column': 3.5,
@@ -58,8 +58,8 @@ mpl.rcParams['axes.linewidth'] = global_linewidth
 #plt.rcParams.update({'figure.autolayout': True})
 
 
-fig, ax = plt.subplots(nrows=4, sharex=True,
-                       gridspec_kw=dict(height_ratios=[1, 1, 5,1]))
+fig, ax = plt.subplots(nrows=len(references_fnames) + 1, sharex=True,
+                       gridspec_kw=dict(height_ratios=[1, 1, 5, 1]))
 #3rd cell is 5x higher than 1st, 2nd and 4th
 ax_ref1, ax_ref2, ax_measured, ax_ref3 = ax
 #fig.set_dpi(500)    useless for vector graphics?
