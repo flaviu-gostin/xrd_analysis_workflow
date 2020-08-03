@@ -41,12 +41,12 @@ twotheta_range = [2, 41]
 offset_patterns = 2000
 label_every_nth_pattern = 5
 
-layers = {'Pd': (0, 83),
-          'PdCl2': (4, 65),
-          'X1+X2': (52, 70),
-          'CuCl': (66, 89),
-          'X3+X4': (67,81),
-          'MG': (77, 100)}
+layers = {'Pd': {'patterns': (0, 83), 'label': 'Pd'},
+          'PdCl2': {'patterns': (4, 65), 'label': r'PdCl$_2$'},
+          'X1+X2': {'patterns': (52, 70), 'label': 'X1+X2'},
+          'CuCl': {'patterns': (66, 89), 'label': 'CuCl'},
+          'X3+X4': {'patterns': (67, 81), 'label': 'X3+X4'},
+          'MG': {'patterns': (77, 100), 'label': 'MG'},}
 
 standard_fig_widths_inch = {'single_column': 3.5,
                             'onehalf_column': 5,
@@ -94,17 +94,18 @@ for pattern_no in patterns_to_plot:
         label.set_fontsize('xx-small')
 
 #label layers, e.g. "Pd", "PdCl2"
-for idx, (k, v) in enumerate(layers.items()):
+for idx, (layer_name, layer_attributes) in enumerate(layers.items()):
     #add upper and (empty) lower annotation boxes
-    label_text = k
-    data_top = np.loadtxt(os.path.join(measured_patterns_dir, str(v[0]) +
+    label_text = layer_attributes['label']
+    layer_st, layer_end = layer_attributes['patterns']
+    data_top = np.loadtxt(os.path.join(measured_patterns_dir, str(layer_st) +
                                        '.dat'))
-    data_bottom = np.loadtxt(os.path.join(measured_patterns_dir, str(v[1]) +
-                                          '.dat'))
+    data_bottom = np.loadtxt(os.path.join(measured_patterns_dir, str(layer_end)
+                                          + '.dat'))
     x_vals_top, y_vals_top = data_top[:,0], data_top[:,1] - offset_patterns *\
-                             v[0]
+                             layer_st
     x_vals_bottom, y_vals_bottom = data_bottom[:,0], data_bottom[:,1] -\
-                                   offset_patterns * v[1]
+                                   offset_patterns * layer_end
     idx_rightmost_point_top = np.searchsorted(x_vals_top,
                                               ax_measured.get_xlim()[1],
                                               side='right') - 1
@@ -155,14 +156,14 @@ stem_container = ax_ref2.stem(twotheta, intensity)
 stem_container.baseline.set_visible(False)
 stem_container.markerline.set_visible(False)
 stem_container.stemlines.set_color('red')
-label_ref2 = ax_ref2.annotate('PdCl2\nreference', xy=(1, 0.5),
+label_ref2 = ax_ref2.annotate(r'PdCl$_2$' + '\nreference', xy=(1, 0.5),
                               xycoords='axes fraction',
                               xytext=(10, 0), textcoords='offset points',
                               va='center', color='red')
 
 ax_ref3.tick_params(axis='y', which='both', left=False, labelleft=False)
 #plt.setp(ax_ref3.get_xticklabels(), visible=False)
-ax_ref3.set(xlabel="2theta, degree")
+ax_ref3.set(xlabel=r'$2\theta$, degree')
 ax_ref3.set(ylim=[0, 110])
 data = np.loadtxt(os.path.join(reference_peaks_dir, references_fnames['CuCl']))
 twotheta, intensity = data[:,0], data[:,1]
