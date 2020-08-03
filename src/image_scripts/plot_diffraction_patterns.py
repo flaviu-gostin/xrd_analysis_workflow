@@ -125,13 +125,13 @@ for pattern_no in patterns_to_plot:
 
 # Label layers, e.g. "Pd", "PdCl2", height shown by vertical lines
 for idx, (layer_name, layer_attributes) in enumerate(layers.items()):
-    label_text = layer_attributes['label']
-
     layer_first_pattern, layer_last_pattern = layer_attributes['patterns']
-    xfirst, yfirst = xydata(layer_first_pattern)
-    xlast, ylast = xydata(layer_last_pattern)
-    __, y_ann_top = xy_rightmost_point(xfirst, yfirst, ax_measured)
-    __, y_ann_bottom = xy_rightmost_point(xlast, ylast, ax_measured)
+    top_pattern = max(layer_first_pattern, patterns_to_plot[0])
+    bottom_pattern = min(layer_last_pattern, patterns_to_plot[-1])
+    xtop, ytop = xydata(top_pattern)
+    xbottom, ybottom = xydata(bottom_pattern)
+    __, y_ann_top = xy_rightmost_point(xtop, ytop, ax_measured)
+    __, y_ann_bottom = xy_rightmost_point(xbottom, ybottom, ax_measured)
 
     #Don't let lines run above top of subplot
     if y_ann_top > ax_measured.get_ylim()[1]:
@@ -147,6 +147,7 @@ for idx, (layer_name, layer_attributes) in enumerate(layers.items()):
         color = layer_attributes['color']
         xtext = offset_layer_lines + idx * offset_line_to_line
         yadjustment = 2 #points
+        label_text = layer_attributes['label']
         ann_top = ax_measured.annotate(label_text, xy=(1, y_ann_top),
                                        xycoords=('axes fraction', 'data'),
                                        xytext=(xtext, yadjustment),
