@@ -48,6 +48,11 @@ layers = {'Pd': {'patterns': (0, 83), 'label': 'Pd', 'color': 'blue'},
           'X3+X4': {'patterns': (67, 81), 'label': 'X3+X4', 'color': 'black'},
           'MG': {'patterns': (77, 100), 'label': 'MG', 'color': 'magenta'}}
 
+# Label positions
+offset_numbering_labels = 2 #figure points
+offset_layer_lines = 14
+offset_line_to_line = 9
+
 standard_fig_widths_inch = {'single_column': 3.5,
                             'onehalf_column': 5,
                             'two_column': 7.2}
@@ -88,9 +93,10 @@ for pattern_no in patterns_to_plot:
                                               side='right') - 1
         #xlim shouldn't be changed after this point (might affect labels)
         x_ref, y_ref = x_vals[idx_rightmost_point], y_vals[idx_rightmost_point]
-        label = ax_measured.annotate(label_text, (x_ref, y_ref),
-                                      textcoords="offset points", xytext=(2,0),
-                                      va='center')
+        label = ax_measured.annotate(label_text, xy=(1, y_ref),
+                                     xycoords=('axes fraction', 'data'),
+                                     xytext=(offset_numbering_labels, 0),
+                                     textcoords="offset points", va='center')
         label.set_fontsize('xx-small')
 
 #label layers, e.g. "Pd", "PdCl2"
@@ -129,12 +135,16 @@ for idx, (layer_name, layer_attributes) in enumerate(layers.items()):
     if y_ref_top > ax_measured.get_ylim()[0] and \
        y_ref_bottom < ax_measured.get_ylim()[1]:
         color = layer_attributes['color']
-        ann_top = ax_measured.annotate(label_text, xy=(x_ref_top, y_ref_top),
-                                       xytext=(2 + 12 + idx * 9, 2),
+        xtext = offset_layer_lines + idx * offset_line_to_line
+        yadjustment = 2 #points
+        ann_top = ax_measured.annotate(label_text, xy=(1, y_ref_top),
+                                       xycoords=('axes fraction', 'data'),
+                                       xytext=(xtext, yadjustment),
                                        textcoords='offset points', va='bottom',
                                        ha='center', rotation=90, color=color)
-        ann_bottom = ax_measured.annotate('', xy=(x_ref_bottom, y_ref_bottom),
-                                          xytext=(2 + 12 + idx * 9, -2),
+        ann_bottom = ax_measured.annotate('', xy=(1, y_ref_bottom),
+                                          xycoords=('axes fraction', 'data'),
+                                          xytext=(xtext, -yadjustment),
                                           textcoords="offset points",
                                           va='center')
         #add line between upper and lower annotation boxes
