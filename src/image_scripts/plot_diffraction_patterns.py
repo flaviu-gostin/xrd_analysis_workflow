@@ -116,19 +116,29 @@ for idx, (layer_name, layer_attributes) in enumerate(layers.items()):
     y_vals_top[idx_rightmost_point_top]
     x_ref_bottom, y_ref_bottom = x_vals_bottom[idx_rightmost_point_bottom],\
     y_vals_bottom[idx_rightmost_point_bottom]
-    ann_top = ax_measured.annotate(label_text, (x_ref_top, y_ref_top),
-                                   textcoords="offset points",
-                                   xytext = (2 + 12 + idx * 4, 0), va='center')
-    ann_bottom = ax_measured.annotate('', (x_ref_bottom, y_ref_bottom),
-                                      textcoords="offset points",
-                                      xytext = (2 + 12 + idx * 4, 0),
-                                      va='center')
 
-    #add line between upper and lower annotation boxes
-    ax_measured.annotate('', xy=(0, 0.7), xycoords=ann_top,
-                         xytext=(0, 0.3), textcoords=ann_bottom,
-                         arrowprops={'arrowstyle': '-',
-                                     'linewidth': global_linewidth})
+    #Don't let lines run above top of subplot
+    if y_ref_top > ax_measured.get_ylim()[1]:
+        y_ref_top = ax_measured.get_ylim()[1]
+
+    #Don't let lines run below bottom of subplot
+    if y_ref_bottom < ax_measured.get_ylim()[0]:
+        y_ref_bottom = ax_measured.get_ylim()[0]
+
+    #Create layer labels only if top pattern is above bottom of subplot
+    if y_ref_top > ax_measured.get_ylim()[0]:
+        ann_top = ax_measured.annotate(label_text, xy=(x_ref_top, y_ref_top),
+                                       xytext=(2 + 12 + idx * 4, 0),
+                                       textcoords="offset points", va='center')
+        ann_bottom = ax_measured.annotate('', xy=(x_ref_bottom, y_ref_bottom),
+                                          xytext=(2 + 12 + idx * 4, 0),
+                                          textcoords="offset points",
+                                          va='center')
+        #add line between upper and lower annotation boxes
+        ax_measured.annotate('', xy=(0, 0.7), xycoords=ann_top,
+                             xytext=(0, 0.3), textcoords=ann_bottom,
+                             arrowprops={'arrowstyle': '-',
+                                         'linewidth': global_linewidth})
 
 
 # Add stick plot(s) for reference phases
