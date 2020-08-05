@@ -22,6 +22,9 @@ reference_peaks_dir = "../../results/intermediate/peaks_references"
 references_fnames = {'Pd': 'Pd.dat',
                      'PdCl2': 'PdCl2.dat',
                      'CuCl': 'CuCl.dat'}
+references_colors = {'Pd': 'blue',
+                     'PdCl2': 'red',
+                     'CuCl': 'green'}
 figure_fn = "diffraction_patterns.svg"
 
 measured_patterns_fns_unsorted = os.listdir(measured_patterns_dir)
@@ -36,6 +39,8 @@ except IndexError:
     start, stop = 0, len(measured_patterns_fns)
 
 patterns_to_plot = list(range(start, stop))
+position_measured = 3 #1 is first from the top
+height_ratio_measured_to_reference = 5
 
 twotheta_range = [2, 41]
 offset_patterns = 2000
@@ -88,10 +93,17 @@ def xy_rightmost_point(x, y, ax):
 
 
 # Set up the figure
-fig, ax = plt.subplots(nrows=len(references_fnames) + 1, sharex=True,
-                       gridspec_kw=dict(height_ratios=[1, 1, 5, 1]))
-#3rd cell is 5x higher than 1st, 2nd and 4th
-ax_ref1, ax_ref2, ax_measured, ax_ref3 = ax
+no_subplots = len(references_fnames) + 1
+height_ratios = [1 for i in references_fnames]
+height_ratios.insert(position_measured - 1, height_ratio_measured_to_reference)
+# e.g. [1, 1, 5 ,1] means 3rd cell is 5x higher than 1st, 2nd and 4th
+fig, axs = plt.subplots(nrows=no_subplots, sharex=True,
+                       gridspec_kw=dict(height_ratios=height_ratios))
+ax_measured = axs[position_measured -1]
+axs_refs = axs[axs != ax_measured] #numpy boolean indexing
+
+axs[0].set(xlim=twotheta_range) #set early to prevent label misplacement
+
 #fig.set_dpi(500)    useless for vector graphics?
 fig.set_figwidth(figwidth)
 fig.set_figheight(figheight)
@@ -99,12 +111,40 @@ fig.subplots_adjust(left=0.06, right=0.75, bottom=0.085, top=0.995,
                     wspace=0.2, hspace=0.05)
 
 
+def plot_powder_diffraction(measured_patterns_dir=None, patterns=None,
+                            position_measured=None, ref_fnames=None):
+    """ Create and plot powder diffraction figure.
+
+    Parameters
+    ----------
+    measured_patterns_dir : str
+        Directory containing data for measured patterns to plot.  The base of
+    the file names must be integers, e.g. '0.dat', '23.txt'
+    patterns : tuple
+        tuple with two integers, e.g. '(21, 67)' plots all patterns from 21 to
+    66.  If omitted, all available patterns are plotted.
+    position_measured : integer
+        Position in figure of measured patterns subplot.  Counting starts at 1
+    from the top.
+    ref_fnames : list
+        List of file names as strings.  Each file contains diffraction peaks
+    for a reference phase.  First column is the 2theta value, ...
+    ... : ...
+        ...
+
+    Returns
+    -------
+    out : matplotlib figure
+
+
+    """
+    pass
+
+
 # Set up subplot for measured patterns
 #ax_measured.set_box_aspect(3/1) #Don't use this.  Use gridspec_kw in fig
 ax_measured.tick_params(axis='y', which='both', left=False, labelleft=False)
 ax_measured.set_ylabel("Relative intensity")
-plt.setp(ax_measured.get_xticklabels(), visible=False)
-ax_measured.set(xlim=twotheta_range) #set early to prevent label misplacement
 
 
 # Plot measured patterns and label them with numbers
@@ -167,48 +207,41 @@ for idx, (layer_name, layer_attributes) in enumerate(layers.items()):
 
 # Add stick plot(s) for reference phases
 #ax_ref1.set_box_aspect(1/4) #Don't use this.  Use gridspec_kw in fig
-ax_ref1.tick_params(axis='y', which='both', left=False, labelleft=False)
-plt.setp(ax_ref1.get_xticklabels(), visible=False)
-ax_ref1.set(ylim=[0, 110])
-data = np.loadtxt(os.path.join(reference_peaks_dir, references_fnames['Pd']))
-twotheta, intensity = data[:,0], data[:,1]
-stem_container = ax_ref1.stem(twotheta, intensity)
-stem_container.baseline.set_visible(False)
-stem_container.markerline.set_visible(False)
-stem_container.stemlines.set_color('blue')
-label_ref1 = ax_ref1.annotate('Pd', xy=(1, 1),
-                              xycoords='axes fraction',
-                              xytext=(10, 0), textcoords='offset points',
-                              va='top', color='blue')
 
-ax_ref2.tick_params(axis='y', which='both', left=False, labelleft=False)
-plt.setp(ax_ref2.get_xticklabels(), visible=False)
-ax_ref2.set(ylim=[0, 110])
-data = np.loadtxt(os.path.join(reference_peaks_dir, references_fnames['PdCl2']))
-twotheta, intensity = data[:,0], data[:,1]
-stem_container = ax_ref2.stem(twotheta, intensity)
-stem_container.baseline.set_visible(False)
-stem_container.markerline.set_visible(False)
-stem_container.stemlines.set_color('red')
-label_ref2 = ax_ref2.annotate(r'PdCl$_2$', xy=(1, 1),
-                              xycoords='axes fraction',
-                              xytext=(10, 0), textcoords='offset points',
-                              va='top', color='red')
 
-ax_ref3.tick_params(axis='y', which='both', left=False, labelleft=False)
-#plt.setp(ax_ref3.get_xticklabels(), visible=False)
-ax_ref3.set(xlabel=r'$2\theta$, degree')
-ax_ref3.set(ylim=[0, 110])
-data = np.loadtxt(os.path.join(reference_peaks_dir, references_fnames['CuCl']))
-twotheta, intensity = data[:,0], data[:,1]
-stem_container = ax_ref3.stem(twotheta, intensity)
-stem_container.baseline.set_visible(False)
-stem_container.markerline.set_visible(False)
-stem_container.stemlines.set_color('green')
-label_ref3 = ax_ref3.annotate('CuCl', xy=(1, 1),
-                              xycoords='axes fraction',
-                              xytext=(10, 0), textcoords='offset points',
-                              va='top', color='green')
+def xydata_reference(filename):
+    """ Extract xy data from a file containing Bragg peaks for a reference """
+    data = np.loadtxt(os.path.join(reference_peaks_dir, filename))
+    twotheta, intensity = data[:,0], data[:,1]
+    return twotheta, intensity
+
+
+def stick_plotter(ax, reference_name, twotheta, intensity, color):
+    """ Make a stick plot in a given axes for a given reference """
+    stem_container = ax.stem(twotheta, intensity)
+    stem_container.baseline.set_visible(False)
+    stem_container.markerline.set_visible(False)
+    stem_container.stemlines.set_color(color)
+    ax.annotate(reference_name, xy=(1, 1), xycoords='axes fraction',
+                xytext=(10, 0), textcoords='offset points', va='top',
+                color=color)
+
+
+# Plot stick plots for references and label them
+for ax, (ref, fname) in zip(axs_refs, references_fnames.items()):
+    twotheta, intensity = xydata_reference(fname)
+    stick_plotter(ax, ref, twotheta, intensity, references_colors[ref])
+    ax.set(ylim=[0, 110])
+    ax.tick_params(axis='y', which='both', left=False, labelleft=False)
+
+
+# Axis
+# Set up label for X axis for bottom subplot
+axs[-1].set(xlabel=r'$2\theta$, degree') #ticks labels by default
+# No label and ticks labels for X axis for the other subplots
+for ax in axs[:-1]:
+    plt.setp(ax.get_xticklabels(), visible=False)
+
 
 fig.savefig(figure_fn)
 #plt.grid()
