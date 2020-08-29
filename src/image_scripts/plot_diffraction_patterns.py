@@ -119,16 +119,16 @@ def plot_powder_diffraction(measured_patterns_dir=None, patterns=None,
     ----------
     measured_patterns_dir : str
         Directory containing data for measured patterns to plot.  The base of
-    the file names must be integers, e.g. '0.dat', '23.txt'
+        the file names must be integers, e.g. '0.dat', '23.txt'
     patterns : tuple
         tuple with two integers, e.g. '(21, 67)' plots all patterns from 21 to
-    66.  If omitted, all available patterns are plotted.
+        66.  If omitted, all available patterns are plotted.
     position_measured : integer
         Position in figure of measured patterns subplot.  Counting starts at 1
-    from the top.
+        from the top.
     ref_fnames : list
         List of file names as strings.  Each file contains diffraction peaks
-    for a reference phase.  First column is the 2theta value, ...
+        for a reference phase.  First column is the 2theta value, ...
     ... : ...
         ...
 
