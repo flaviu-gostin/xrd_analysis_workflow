@@ -46,12 +46,19 @@ twotheta_range = [2, 41]
 offset_patterns = 2000
 label_every_nth_pattern = 5
 
-layers = {'Pd': {'patterns': (0, 83), 'label': 'Pd', 'color': 'blue'},
-          'PdCl2': {'patterns': (4, 65), 'label': r'PdCl$_2$', 'color': 'red'},
-          'X1+X2': {'patterns': (52, 70), 'label': 'X1+X2', 'color': 'black'},
-          'CuCl': {'patterns': (66, 89), 'label': 'CuCl', 'color': 'green'},
-          'X3+X4': {'patterns': (67, 81), 'label': 'X3+X4', 'color': 'black'},
-          'MG': {'patterns': (77, 100), 'label': 'MG', 'color': 'magenta'}}
+layers = {'Pd': (0, 83),
+          'PdCl2': (4, 65),
+          'X1+X2': (52, 70),
+          'CuCl': (66, 89),
+          'X3+X4': (67, 81),
+          'MG': (77, 100)}
+
+references_labels_style = {'Pd': {'label': 'Pd', 'color': 'blue'},
+                           'PdCl2': {'label': r'PdCl$_2$', 'color': 'red'},
+                           'X1+X2': {'label': 'X1+X2', 'color': 'black'},
+                           'CuCl': {'label': 'CuCl', 'color': 'green'},
+                           'X3+X4': {'label': 'X3+X4', 'color': 'black'},
+                           'MG': {'label': 'MG', 'color': 'magenta'}}
 
 # Label positions
 offset_numbering_labels = 2 #figure points
@@ -164,8 +171,8 @@ for pattern_no in patterns_to_plot:
 
 
 # Label layers, e.g. "Pd", "PdCl2", height shown by vertical lines
-for idx, (layer_name, layer_attributes) in enumerate(layers.items()):
-    layer_first_pattern, layer_last_pattern = layer_attributes['patterns']
+for idx, layer_name in enumerate(layers.keys()):
+    layer_first_pattern, layer_last_pattern = layers[layer_name]
     top_pattern = max(layer_first_pattern, patterns_to_plot[0])
     bottom_pattern = min(layer_last_pattern, patterns_to_plot[-1])
     xtop, ytop = xydata(top_pattern)
@@ -184,10 +191,11 @@ for idx, (layer_name, layer_attributes) in enumerate(layers.items()):
     #Create layer labels only if top pattern is above bottom of subplot
     if y_ann_top > ax_measured.get_ylim()[0] and \
        y_ann_bottom < ax_measured.get_ylim()[1]:
-        color = layer_attributes['color']
+        style = references_labels_style[layer_name]
+        color = style['color']
         xtext = offset_layer_lines + idx * offset_line_to_line
         yadjustment = 2 #points
-        label_text = layer_attributes['label']
+        label_text = style['label']
         ann_top = ax_measured.annotate(label_text, xy=(1, y_ann_top),
                                        xycoords=('axes fraction', 'data'),
                                        xytext=(xtext, yadjustment),
