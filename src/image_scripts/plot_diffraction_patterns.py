@@ -28,7 +28,7 @@ def powder_diffr_fig(measured_patterns_dir=None,
                      offset_layer_lines = 14,
                      offset_line_to_line = 9,
                      figwidth='single_column',
-                     linewidth=0.5):
+                     linewidth=0.6):
     """Return powder diffraction figure and its axes.
 
     Create a matplotlib figure containing several subfigures aligned vertically.
