@@ -17,12 +17,19 @@ import numpy as np
 import os
 import sys
 
+
+references_labels_style = {'Pd': {'label': 'Pd', 'color': 'blue'},
+                           'PdCl2': {'label': r'PdCl$_2$', 'color': 'red'},
+                           'X1+X2': {'label': 'X1+X2', 'color': 'black'},
+                           'CuCl': {'label': 'CuCl', 'color': 'green'},
+                           'X3+X4': {'label': 'X3+X4', 'color': 'black'},
+                           'MG': {'label': 'MG', 'color': 'magenta'}}
+
 measured_patterns_dir = "../../results/intermediate/integrated_1D/PS_1p3V_b"
 reference_peaks_dir = "../../results/intermediate/peaks_references"
 references_fnames = {'Pd': 'Pd.dat',
                      'PdCl2': 'PdCl2.dat',
                      'CuCl': 'CuCl.dat'}
-
 figure_fn = "diffraction_patterns.svg"
 
 measured_patterns_fns_unsorted = os.listdir(measured_patterns_dir)
@@ -37,6 +44,7 @@ except IndexError:
     start, stop = 0, len(measured_patterns_fns)
 
 patterns_to_plot = list(range(start, stop))
+
 position_measured = 3 #1 is first from the top
 height_ratio_measured_to_reference = 5
 
@@ -50,13 +58,6 @@ layers = {'Pd': (0, 83),
           'CuCl': (66, 89),
           'X3+X4': (67, 81),
           'MG': (77, 100)}
-
-references_labels_style = {'Pd': {'label': 'Pd', 'color': 'blue'},
-                           'PdCl2': {'label': r'PdCl$_2$', 'color': 'red'},
-                           'X1+X2': {'label': 'X1+X2', 'color': 'black'},
-                           'CuCl': {'label': 'CuCl', 'color': 'green'},
-                           'X3+X4': {'label': 'X3+X4', 'color': 'black'},
-                           'MG': {'label': 'MG', 'color': 'magenta'}}
 
 # Label positions
 offset_numbering_labels = 2 #figure points
