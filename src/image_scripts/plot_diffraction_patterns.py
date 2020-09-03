@@ -8,6 +8,7 @@ phase.
 """
 import matplotlib as mpl
 import matplotlib.pyplot as plt
+from matplotlib.ticker import MultipleLocator
 import numpy as np
 import os
 import sys
@@ -18,7 +19,7 @@ def powder_diffr_fig(measured_patterns_dir=None,
                      position_subplot_measured=1,
                      reference_peaks_dir=None,
                      references=None,
-                     height_ratio_measured_to_reference=5,
+                     height_ratio_measured_to_reference=7,
                      twotheta_range=[2, 41],
                      offset_patterns=2000,
                      label_every_nth_pattern=5,
@@ -27,7 +28,7 @@ def powder_diffr_fig(measured_patterns_dir=None,
                      offset_layer_lines = 14,
                      offset_line_to_line = 9,
                      figwidth='single_column',
-                     linewidth=0.4):
+                     linewidth=0.5):
     """Return powder diffraction figure and its axes.
 
     Create a matplotlib figure containing several subfigures aligned vertically.
@@ -41,8 +42,8 @@ def powder_diffr_fig(measured_patterns_dir=None,
         Directory containing data for measured patterns to plot.  The base of
         the file names must be integers, e.g. '0.dat', '23.txt'
     patterns : tuple
-        tuple with two integers, e.g. '(21, 67)' plots all patterns from 21 to
-        66.  If omitted, all available patterns are plotted.
+        Tuple with three integers, e.g. '(21, 67, 2)' plots every second pattern
+        from 21 to 66.  If omitted, all available patterns are plotted.
     position_subplot_measured : integer
         Position in figure of the subfigure plotting the measured patterns.
         Counting starts at 1 from the top.
@@ -98,11 +99,11 @@ def powder_diffr_fig(measured_patterns_dir=None,
 
     # What patterns to plot
     if not patterns:
-        start, stop = 0, len(measured_patterns_fns)
+        start, stop, step = 0, len(measured_patterns_fns), 1
     else:
-        start, stop = patterns
+        start, stop, step = patterns
 
-    patterns_to_plot = list(range(start, stop))
+    patterns_to_plot = list(range(start, stop, step))
 
 
     # Figure dimensions
@@ -262,7 +263,9 @@ def powder_diffr_fig(measured_patterns_dir=None,
 
     # Axis
     # Set up label for X axis for bottom subplot
-    axs[-1].set(xlabel=r'$2\theta$, degree') #ticks labels by default
+    axs[-1].set(xlabel=r'$2\theta$, degree')
+    axs[-1].xaxis.set_major_locator(MultipleLocator(10))
+    axs[-1].xaxis.set_minor_locator(MultipleLocator(2))
     # No label and ticks labels for X axis for the other subplots
     for ax in axs[:-1]:
         plt.setp(ax.get_xticklabels(), visible=False)
