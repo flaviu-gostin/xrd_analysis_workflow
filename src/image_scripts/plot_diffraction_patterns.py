@@ -22,9 +22,7 @@ reference_peaks_dir = "../../results/intermediate/peaks_references"
 references_fnames = {'Pd': 'Pd.dat',
                      'PdCl2': 'PdCl2.dat',
                      'CuCl': 'CuCl.dat'}
-references_colors = {'Pd': 'blue',
-                     'PdCl2': 'red',
-                     'CuCl': 'green'}
+
 figure_fn = "diffraction_patterns.svg"
 
 measured_patterns_fns_unsorted = os.listdir(measured_patterns_dir)
@@ -238,7 +236,9 @@ def stick_plotter(ax, reference_name, twotheta, intensity, color):
 # Plot stick plots for references and label them
 for ax, (ref, fname) in zip(axs_refs, references_fnames.items()):
     twotheta, intensity = xydata_reference(fname)
-    stick_plotter(ax, ref, twotheta, intensity, references_colors[ref])
+    style = references_labels_style[ref]
+    color = style['color']
+    stick_plotter(ax, ref, twotheta, intensity, color)
     ax.set(ylim=[0, 110])
     ax.tick_params(axis='y', which='both', left=False, labelleft=False)
 
