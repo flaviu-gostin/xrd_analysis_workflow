@@ -27,9 +27,8 @@ references_labels_style = {'Pd': {'label': 'Pd', 'color': 'blue'},
 
 measured_patterns_dir = "../../results/intermediate/integrated_1D/PS_1p3V_b"
 reference_peaks_dir = "../../results/intermediate/peaks_references"
-references_fnames = {'Pd': 'Pd.dat',
-                     'PdCl2': 'PdCl2.dat',
-                     'CuCl': 'CuCl.dat'}
+references = ['Pd', 'PdCl2', 'CuCl']
+references_fnames = [reference_name + '.dat' for reference_name in references]
 figure_fn = "diffraction_patterns.svg"
 
 measured_patterns_fns_unsorted = os.listdir(measured_patterns_dir)
@@ -99,8 +98,8 @@ def xy_rightmost_point(x, y, ax):
 
 
 # Set up the figure
-no_subplots = len(references_fnames) + 1
-height_ratios = [1 for i in references_fnames]
+no_subplots = len(references) + 1
+height_ratios = [1 for i in references]
 height_ratios.insert(position_measured - 1, height_ratio_measured_to_reference)
 # e.g. [1, 1, 5 ,1] means 3rd cell is 5x higher than 1st, 2nd and 4th
 fig, axs = plt.subplots(nrows=no_subplots, sharex=True,
@@ -235,7 +234,7 @@ def stick_plotter(ax, label_text, twotheta, intensity, color):
 
 
 # Plot stick plots for references and label them
-for ax, (ref, fname) in zip(axs_refs, references_fnames.items()):
+for ax, ref, fname in zip(axs_refs, references, references_fnames):
     twotheta, intensity = xydata_reference(fname)
     style = references_labels_style[ref]
     label_text = style['label']
