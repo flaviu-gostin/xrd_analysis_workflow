@@ -17,14 +17,18 @@ import numpy as np
 import os
 import sys
 
+
+references_labels_style = {'Pd': {'label': 'Pd', 'color': 'blue'},
+                           'PdCl2': {'label': r'PdCl$_2$', 'color': 'red'},
+                           'X1+X2': {'label': 'X1+X2', 'color': 'black'},
+                           'CuCl': {'label': 'CuCl', 'color': 'green'},
+                           'X3+X4': {'label': 'X3+X4', 'color': 'black'},
+                           'MG': {'label': 'MG', 'color': 'magenta'}}
+
 measured_patterns_dir = "../../results/intermediate/integrated_1D/PS_1p3V_b"
 reference_peaks_dir = "../../results/intermediate/peaks_references"
-references_fnames = {'Pd': 'Pd.dat',
-                     'PdCl2': 'PdCl2.dat',
-                     'CuCl': 'CuCl.dat'}
-references_colors = {'Pd': 'blue',
-                     'PdCl2': 'red',
-                     'CuCl': 'green'}
+references = ['Pd', 'PdCl2', 'CuCl']
+references_fnames = [reference_name + '.dat' for reference_name in references]
 figure_fn = "diffraction_patterns.svg"
 
 measured_patterns_fns_unsorted = os.listdir(measured_patterns_dir)
@@ -39,6 +43,7 @@ except IndexError:
     start, stop = 0, len(measured_patterns_fns)
 
 patterns_to_plot = list(range(start, stop))
+
 position_measured = 3 #1 is first from the top
 height_ratio_measured_to_reference = 5
 
@@ -46,12 +51,12 @@ twotheta_range = [2, 41]
 offset_patterns = 2000
 label_every_nth_pattern = 5
 
-layers = {'Pd': {'patterns': (0, 83), 'label': 'Pd', 'color': 'blue'},
-          'PdCl2': {'patterns': (4, 65), 'label': r'PdCl$_2$', 'color': 'red'},
-          'X1+X2': {'patterns': (52, 70), 'label': 'X1+X2', 'color': 'black'},
-          'CuCl': {'patterns': (66, 89), 'label': 'CuCl', 'color': 'green'},
-          'X3+X4': {'patterns': (67, 81), 'label': 'X3+X4', 'color': 'black'},
-          'MG': {'patterns': (77, 100), 'label': 'MG', 'color': 'magenta'}}
+layers = {'Pd': (0, 83),
+          'PdCl2': (4, 65),
+          'X1+X2': (52, 70),
+          'CuCl': (66, 89),
+          'X3+X4': (67, 81),
+          'MG': (77, 100)}
 
 # Label positions
 offset_numbering_labels = 2 #figure points
@@ -93,8 +98,8 @@ def xy_rightmost_point(x, y, ax):
 
 
 # Set up the figure
-no_subplots = len(references_fnames) + 1
-height_ratios = [1 for i in references_fnames]
+no_subplots = len(references) + 1
+height_ratios = [1 for i in references]
 height_ratios.insert(position_measured - 1, height_ratio_measured_to_reference)
 # e.g. [1, 1, 5 ,1] means 3rd cell is 5x higher than 1st, 2nd and 4th
 fig, axs = plt.subplots(nrows=no_subplots, sharex=True,
@@ -164,8 +169,8 @@ for pattern_no in patterns_to_plot:
 
 
 # Label layers, e.g. "Pd", "PdCl2", height shown by vertical lines
-for idx, (layer_name, layer_attributes) in enumerate(layers.items()):
-    layer_first_pattern, layer_last_pattern = layer_attributes['patterns']
+for idx, layer_name in enumerate(layers.keys()):
+    layer_first_pattern, layer_last_pattern = layers[layer_name]
     top_pattern = max(layer_first_pattern, patterns_to_plot[0])
     bottom_pattern = min(layer_last_pattern, patterns_to_plot[-1])
     xtop, ytop = xydata(top_pattern)
@@ -184,10 +189,11 @@ for idx, (layer_name, layer_attributes) in enumerate(layers.items()):
     #Create layer labels only if top pattern is above bottom of subplot
     if y_ann_top > ax_measured.get_ylim()[0] and \
        y_ann_bottom < ax_measured.get_ylim()[1]:
-        color = layer_attributes['color']
+        style = references_labels_style[layer_name]
+        color = style['color']
         xtext = offset_layer_lines + idx * offset_line_to_line
         yadjustment = 2 #points
-        label_text = layer_attributes['label']
+        label_text = style['label']
         ann_top = ax_measured.annotate(label_text, xy=(1, y_ann_top),
                                        xycoords=('axes fraction', 'data'),
                                        xytext=(xtext, yadjustment),
@@ -216,21 +222,24 @@ def xydata_reference(filename):
     return twotheta, intensity
 
 
-def stick_plotter(ax, reference_name, twotheta, intensity, color):
+def stick_plotter(ax, label_text, twotheta, intensity, color):
     """ Make a stick plot in a given axes for a given reference """
     stem_container = ax.stem(twotheta, intensity)
     stem_container.baseline.set_visible(False)
     stem_container.markerline.set_visible(False)
     stem_container.stemlines.set_color(color)
-    ax.annotate(reference_name, xy=(1, 1), xycoords='axes fraction',
+    ax.annotate(label_text, xy=(1, 1), xycoords='axes fraction',
                 xytext=(10, 0), textcoords='offset points', va='top',
                 color=color)
 
 
 # Plot stick plots for references and label them
-for ax, (ref, fname) in zip(axs_refs, references_fnames.items()):
+for ax, ref, fname in zip(axs_refs, references, references_fnames):
     twotheta, intensity = xydata_reference(fname)
-    stick_plotter(ax, ref, twotheta, intensity, references_colors[ref])
+    style = references_labels_style[ref]
+    label_text = style['label']
+    color = style['color']
+    stick_plotter(ax, label_text, twotheta, intensity, color)
     ax.set(ylim=[0, 110])
     ax.tick_params(axis='y', which='both', left=False, labelleft=False)
 
