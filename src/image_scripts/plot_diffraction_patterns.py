@@ -223,13 +223,13 @@ def xydata_reference(filename):
     return twotheta, intensity
 
 
-def stick_plotter(ax, reference_name, twotheta, intensity, color):
+def stick_plotter(ax, label_text, twotheta, intensity, color):
     """ Make a stick plot in a given axes for a given reference """
     stem_container = ax.stem(twotheta, intensity)
     stem_container.baseline.set_visible(False)
     stem_container.markerline.set_visible(False)
     stem_container.stemlines.set_color(color)
-    ax.annotate(reference_name, xy=(1, 1), xycoords='axes fraction',
+    ax.annotate(label_text, xy=(1, 1), xycoords='axes fraction',
                 xytext=(10, 0), textcoords='offset points', va='top',
                 color=color)
 
@@ -238,8 +238,9 @@ def stick_plotter(ax, reference_name, twotheta, intensity, color):
 for ax, (ref, fname) in zip(axs_refs, references_fnames.items()):
     twotheta, intensity = xydata_reference(fname)
     style = references_labels_style[ref]
+    label_text = style['label']
     color = style['color']
-    stick_plotter(ax, ref, twotheta, intensity, color)
+    stick_plotter(ax, label_text, twotheta, intensity, color)
     ax.set(ylim=[0, 110])
     ax.tick_params(axis='y', which='both', left=False, labelleft=False)
 
