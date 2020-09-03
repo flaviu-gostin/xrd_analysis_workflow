@@ -116,9 +116,16 @@ fig.subplots_adjust(left=0.06, right=0.75, bottom=0.085, top=0.995,
                     wspace=0.2, hspace=0.05)
 
 
-def plot_powder_diffraction(measured_patterns_dir=None, patterns=None,
-                            position_measured=None, ref_fnames=None):
-    """ Create and plot powder diffraction figure.
+def powder_diffraction_figure(measured_patterns_dir=None,
+                              patterns='all',
+                              position_measured=None,
+                              ref_fnames=None):
+    """Return powder diffraction figure and its axes.
+
+    Create a matplotlib figure containing several subfigures aligned vertically.
+    One subfigure plots a sequence of measured powder diffraction patterns.  The
+    other subfigures are stick plots for selected reference patterns.  The
+    default figure settings are for single column width in a typical journal.
 
     Parameters
     ----------
@@ -140,7 +147,6 @@ def plot_powder_diffraction(measured_patterns_dir=None, patterns=None,
     Returns
     -------
     out : matplotlib figure
-
 
     """
     pass
