@@ -185,51 +185,51 @@ def powder_diffr_fig(measured_patterns_dir=None,
 
 
     # Label layers, e.g. "Pd", "PdCl2", height shown by vertical lines
-    for idx, layer_name in enumerate(layers.keys()):
-        layer_first_pattern, layer_last_pattern = layers[layer_name]
-        top_pattern = max(layer_first_pattern, patterns_to_plot[0])
-        bottom_pattern = min(layer_last_pattern, patterns_to_plot[-1])
-        xtop, ytop = xydata(top_pattern)
-        xbottom, ybottom = xydata(bottom_pattern)
-        __, y_ann_top = xy_rightmost_point(xtop, ytop, ax_measured)
-        __, y_ann_bottom = xy_rightmost_point(xbottom, ybottom, ax_measured)
+    if layers:
+        for idx, layer_name in enumerate(layers.keys()):
+            layer_first_pattern, layer_last_pattern = layers[layer_name]
+            top_pattern = max(layer_first_pattern, patterns_to_plot[0])
+            bottom_pattern = min(layer_last_pattern, patterns_to_plot[-1])
+            xtop, ytop = xydata(top_pattern)
+            xbottom, ybottom = xydata(bottom_pattern)
+            __, y_ann_top = xy_rightmost_point(xtop, ytop, ax_measured)
+            __, y_ann_bottom = xy_rightmost_point(xbottom, ybottom, ax_measured)
 
-        #Don't let lines run above top of subplot
-        if y_ann_top > ax_measured.get_ylim()[1]:
-            y_ann_top = ax_measured.get_ylim()[1]
+            #Don't let lines run above top of subplot
+            if y_ann_top > ax_measured.get_ylim()[1]:
+                y_ann_top = ax_measured.get_ylim()[1]
 
-        #Don't let lines run below bottom of subplot
-        if y_ann_bottom < ax_measured.get_ylim()[0]:
-            y_ann_bottom = ax_measured.get_ylim()[0]
+            #Don't let lines run below bottom of subplot
+            if y_ann_bottom < ax_measured.get_ylim()[0]:
+                y_ann_bottom = ax_measured.get_ylim()[0]
 
-        #Create layer labels only if top pattern is above bottom of subplot
-        if y_ann_top > ax_measured.get_ylim()[0] and \
-           y_ann_bottom < ax_measured.get_ylim()[1]:
-            style = references_labels_style[layer_name]
-            color = style['color']
-            xtext = offset_layer_lines + idx * offset_line_to_line
-            yadjustment = 2 #points
-            label_text = style['label']
-            ann_top = ax_measured.annotate(label_text, xy=(1, y_ann_top),
-                                           xycoords=('axes fraction', 'data'),
-                                           xytext=(xtext, yadjustment),
-                                           textcoords='offset points',
-                                           va='bottom', ha='center',
-                                           rotation=90, color=color)
-            ann_bottom = ax_measured.annotate('', xy=(1, y_ann_bottom),
-                                              xycoords=('axes fraction', 'data'),
-                                              xytext=(xtext, -yadjustment),
-                                              textcoords="offset points",
-                                              va='center')
-            # add line between upper and lower annotation boxes
-            ax_measured.annotate('', xy=(0.5, 0), xycoords=ann_top,
-                                 xytext=(0, 0.3), textcoords=ann_bottom,
-                                 arrowprops={'arrowstyle': '-', 'color': color,
-                                             'linewidth': linewidth})
-
-
-    # Add stick plot(s) for reference phases
-    #ax_ref1.set_box_aspect(1/4) #Don't use this.  Use gridspec_kw in fig
+            #Create layer labels only if top pattern is above bottom of subplot
+            if y_ann_top > ax_measured.get_ylim()[0] and \
+               y_ann_bottom < ax_measured.get_ylim()[1]:
+                style = references_labels_style[layer_name]
+                color = style['color']
+                xtext = offset_layer_lines + idx * offset_line_to_line
+                yadjustment = 2 #points
+                label_text = style['label']
+                ann_top = ax_measured.annotate(label_text, xy=(1, y_ann_top),
+                                               xycoords=('axes fraction',
+                                                         'data'),
+                                               xytext=(xtext, yadjustment),
+                                               textcoords='offset points',
+                                               va='bottom', ha='center',
+                                               rotation=90, color=color)
+                ann_bottom = ax_measured.annotate('', xy=(1, y_ann_bottom),
+                                                  xycoords=('axes fraction',
+                                                            'data'),
+                                                  xytext=(xtext, -yadjustment),
+                                                  textcoords="offset points",
+                                                  va='center')
+                # add line between upper and lower annotation boxes
+                ax_measured.annotate('', xy=(0.5, 0), xycoords=ann_top,
+                                     xytext=(0, 0.3), textcoords=ann_bottom,
+                                     arrowprops={'arrowstyle': '-',
+                                                 'color': color,
+                                                 'linewidth': linewidth})
 
 
     def xydata_reference(filename):
