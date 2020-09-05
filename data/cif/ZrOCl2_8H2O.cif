@@ -1,0 +1,77 @@
+#------------------------------------------------------------------------------
+#$Date: 2016-02-13 21:28:24 +0200 (Sat, 13 Feb 2016) $
+#$Revision: 176429 $
+#$URL: svn://www.crystallography.net/cod/cif/2/31/05/2310544.cif $
+#------------------------------------------------------------------------------
+#
+# This file is available in the Crystallography Open Database (COD),
+# http://www.crystallography.net/. The original data for this entry
+# were provided by IUCr Journals, http://journals.iucr.org/.
+#
+# The file may be used within the scientific community so long as
+# proper attribution is given to the journal article from which the
+# data were obtained.
+#
+data_2310544
+loop_
+_publ_author_name
+'Clearfield, A.'
+'Vaughan, P.A.'
+_publ_section_title
+;
+ The crystal structure of zirconyl chloride octahydrate and zirconyl
+ bromide octahydrate
+;
+_journal_name_full               'Acta Crystallographica (1,1948-23,1967)'
+_journal_page_first              555
+_journal_page_last               558
+_journal_volume                  9
+_journal_year                    1956
+_chemical_formula_sum            'Cl2 H16 O9 Zr'
+_chemical_name_systematic        '(Zr O) Cl2 (H2 O)8'
+_space_group_IT_number           114
+_symmetry_space_group_name_Hall  'P -4 2n'
+_symmetry_space_group_name_H-M   'P -4 21 c'
+_cell_angle_alpha                90
+_cell_angle_beta                 90
+_cell_angle_gamma                90
+_cell_formula_units_Z            8
+_cell_length_a                   17.08
+_cell_length_b                   17.08
+_cell_length_c                   7.69
+_cell_volume                     2243.376
+_citation_journal_id_ASTM        ACCRA9
+_cod_data_source_file            Clearfield_ACCRA9_1956_198.cif
+_cod_data_source_block           H16Cl2O9Zr1
+_cod_original_formula_sum        'H16 Cl2 O9 Zr1'
+_cod_database_code               2310544
+loop_
+_symmetry_equiv_pos_as_xyz
+x,y,z
+y,-x,-z
+-x,-y,z
+-y,x,-z
+x+1/2,-y+1/2,-z+1/2
+-y+1/2,-x+1/2,z+1/2
+-x+1/2,y+1/2,-z+1/2
+y+1/2,x+1/2,z+1/2
+loop_
+_atom_site_label
+_atom_site_type_symbol
+_atom_site_fract_x
+_atom_site_fract_y
+_atom_site_fract_z
+_atom_site_occupancy
+_atom_site_U_iso_or_equiv
+O4 O-2 0.24 0.048 0.007 1 0.0
+O9 O-2 0.036 0.201 0.282 1 0.0
+O7 O-2 0.361 0.06 0.218 1 0.0
+O3 O-2 0.136 0.209 0.993 1 0.0
+O2 O-2 0.037 0.201 0.719 1 0.0
+Cl2 Cl-1 0.185 0.134 0.488 1 0.0
+O6 O-2 0.132 0.321 0.591 1 0.0
+O8 O-2 0.097 0.059 0.816 1 0.0
+O1 O-2 0.098 0.061 0.161 1 0.0
+Cl1 Cl-1 0.006 0.361 0.364 1 0.0
+O5 O-2 0.283 0.18 0.82 1 0.0
+Zr1 Zr+4 0.029 0.145 0.001 1 0.0
