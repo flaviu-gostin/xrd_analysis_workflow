@@ -82,12 +82,14 @@ def powder_diffr_fig(measured_patterns_dir=None,
     out : matplotlib figure and its axes
 
     """
-    references_labels_style = {'Pd': {'label': 'Pd', 'color': 'blue'},
-                               'PdCl2': {'label': r'PdCl$_2$', 'color': 'red'},
-                               'X1+X2': {'label': 'X1+X2', 'color': 'black'},
-                               'CuCl': {'label': 'CuCl', 'color': 'green'},
-                               'X3+X4': {'label': 'X3+X4', 'color': 'black'},
-                               'MG': {'label': 'MG', 'color': 'magenta'}}
+    refs_labels_style = {'Pd': {'label': 'Pd', 'color': 'blue'},
+                         'PdCl2': {'label': r'PdCl$_2$', 'color': 'red'},
+                         'X1+X2': {'label': 'X1+X2', 'color': 'black'},
+                         'CuCl': {'label': 'CuCl', 'color': 'green'},
+                         'X3+X4': {'label': 'X3+X4', 'color': 'black'},
+                         'ZrOCl2_8H2O': {'label': r'ZrOCl$_2$' + '\n' +
+                                         r'$\cdot$8H$_2$O', 'color': 'red'},
+                         'MG': {'label': 'MG', 'color': 'magenta'}}
 
     references_fnames = [ref + '.dat' for ref in references]
 
@@ -206,7 +208,7 @@ def powder_diffr_fig(measured_patterns_dir=None,
             #Create layer labels only if top pattern is above bottom of subplot
             if y_ann_top > ax_measured.get_ylim()[0] and \
                y_ann_bottom < ax_measured.get_ylim()[1]:
-                style = references_labels_style[layer_name]
+                style = refs_labels_style[layer_name]
                 color = style['color']
                 xtext = offset_layer_lines + idx * offset_line_to_line
                 yadjustment = 2 #points
@@ -253,7 +255,7 @@ def powder_diffr_fig(measured_patterns_dir=None,
     # Plot stick plots for references and label them
     for ax, ref, fname in zip(axs_refs, references, references_fnames):
         twotheta, intensity = xydata_reference(fname)
-        style = references_labels_style[ref]
+        style = refs_labels_style[ref]
         label_text = style['label']
         color = style['color']
         stick_plotter(ax, label_text, twotheta, intensity, color)
