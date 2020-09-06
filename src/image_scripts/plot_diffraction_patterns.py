@@ -91,7 +91,15 @@ def powder_diffr_fig(measured_patterns_dir=None,
                                          r'$\cdot$8H$_2$O', 'color': 'red'},
                          'Cu': {'label': 'Cu', 'color': 'red'},
                          'Cu2O': {'label': r'Cu$_2$O', 'color': 'black'},
-                         'MG': {'label': 'MG', 'color': 'magenta'}}
+                         'Pd3.97': {'label': r'Pd ($\beta$ PdH$_x$)' + '\n' +
+                                    r'$a = 3.97 \AA$', 'color': 'red'},
+                         'Pd3.91': {'label': r'Pd ($\alpha$ PdH$_x$)' + '\n' +
+                                    r'$a = 3.91 \AA$', 'color': 'black'},
+                         'MG': {'label': 'MG', 'color': 'magenta'},
+                         'Corrosion\nproducts': {'label': 'Corrosion\nproducts',
+                                                 'color': 'black'},
+                         'Metallic\nglass': {'label': 'Metallic\nglass',
+                                             'color': 'magenta'}}
 
     references_fnames = [ref + '.dat' for ref in references]
 
