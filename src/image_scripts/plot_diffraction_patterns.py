@@ -89,6 +89,8 @@ def powder_diffr_fig(measured_patterns_dir=None,
                          'X3+X4': {'label': 'X3+X4', 'color': 'black'},
                          'ZrOCl2_8H2O': {'label': r'ZrOCl$_2$' + '\n' +
                                          r'$\cdot$8H$_2$O', 'color': 'red'},
+                         'Cu': {'label': 'Cu', 'color': 'red'},
+                         'Cu2O': {'label': r'Cu$_2$O', 'color': 'black'},
                          'MG': {'label': 'MG', 'color': 'magenta'}}
 
     references_fnames = [ref + '.dat' for ref in references]
