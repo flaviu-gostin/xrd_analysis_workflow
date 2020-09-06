@@ -160,6 +160,8 @@ reference-peaks :
 	make $(REF_PEAKS_DIR)/CuCl.dat
 	make $(REF_PEAKS_DIR)/PdCl2.dat
 	make $(REF_PEAKS_DIR)/ZrOCl2_8H2O.dat
+	make $(REF_PEAKS_DIR)/Cu.dat
+	make $(REF_PEAKS_DIR)/Cu2O.dat
 
 $(REF_PEAKS_DIR)/%.dat : $(CIF_DIR)/%.cif $(REF_PEAKS_SRC) $(REF_PEAKS_FUNC) \
 $(EXPER_PARAM_FILE)
