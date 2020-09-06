@@ -162,6 +162,8 @@ reference-peaks :
 	make $(REF_PEAKS_DIR)/ZrOCl2_8H2O.dat
 	make $(REF_PEAKS_DIR)/Cu.dat
 	make $(REF_PEAKS_DIR)/Cu2O.dat
+	make $(REF_PEAKS_DIR)/Pd3.97.dat
+	make $(REF_PEAKS_DIR)/Pd3.91.dat
 
 $(REF_PEAKS_DIR)/%.dat : $(CIF_DIR)/%.cif $(REF_PEAKS_SRC) $(REF_PEAKS_FUNC) \
 $(EXPER_PARAM_FILE)
@@ -170,6 +172,16 @@ $(EXPER_PARAM_FILE)
 
 $(REF_PEAKS_DIR)/PdCl2.dat : $(DATA_DIR)/reflections_refs/PdCl2.txt
 	cp $< $@
+
+$(REF_PEAKS_DIR)/Pd3.97.dat : $(CIF_DIR)/Pd.cif $(REF_PEAKS_SRC) $(REF_PEAKS_FUNC) \
+$(EXPER_PARAM_FILE)
+	mkdir -p $(REF_PEAKS_DIR)
+	$(REF_PEAKS_EXE) $< $@ 3.97
+
+$(REF_PEAKS_DIR)/Pd3.91.dat : $(CIF_DIR)/Pd.cif $(REF_PEAKS_SRC) $(REF_PEAKS_FUNC) \
+$(EXPER_PARAM_FILE)
+	mkdir -p $(REF_PEAKS_DIR)
+	$(REF_PEAKS_EXE) $< $@ 3.91
 
 clean-reference-peaks :
 	rm -rf $(REF_PEAKS_DIR)
