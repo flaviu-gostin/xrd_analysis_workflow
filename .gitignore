@@ -1,11 +1,23 @@
 *~
-
 venv/
+
+
 data/PS*.hdf
+# split files for easier upload
+data/PS*.hdf_a*
 data/PS*.nxs
+
+# directories containing other raw data, e.g. electrochemistry, photos, TEM
+data/PS*/
+data/TEM/
+data/artificial_pits/
+
 data/cif_files/
 data/*.tgz
+
 *#*
+
+
 results/
 
 
