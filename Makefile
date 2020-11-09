@@ -23,6 +23,8 @@ PONI_FILE:=$(RESULTS_INTERMED_DIR)/Si_17.95keV.poni
 all:
 	make data
 	make analysis
+	make figures
+
 
 data:
 	mkdir -p data
@@ -41,8 +43,8 @@ analysis:
 	make peaks
 	make tables
 	make reference-peaks
-	cd src/image_scripts/ && python stack_1D.py
 	cd src/image_scripts/ && python raw_diffr_images.py
+
 
 
 .PHONY : calibration calibration-check clean-calibration
@@ -61,6 +63,7 @@ calibration-check :
 
 clean-calibration :
 	rm -f $(PONI_FILE)
+
 
 
 # azimuthal integration 'ai'
@@ -97,6 +100,7 @@ clean-ai :
 	rm -rf $(INT_1D_DIR)/*
 
 
+
 .PHONY : peaks
 PEAKS_DIR:=$(RESULTS_INTERMED_DIR)/peaks
 PEAKS_SRC:=$(PROC_SRC_DIR)/determine_peak_position.py
@@ -128,6 +132,7 @@ clean-peaks :
 	rm -rf $(PEAKS_DIR)/*
 
 
+
 TABLE_PD_FILE:=$(RESULTS_FINAL_DIR)/table_Pd_summary.txt
 TABLE_PD_SRC:=$(SRC_DIR)/table_scripts/Pd_summary.py
 TABLE_PD_EXE:=$(LANGUAGE) $(TABLE_PD_SRC)
@@ -147,6 +152,7 @@ $(TABLE_PD_FILE) :  $(TABLE_PD_SRC) $(FILES_FOR_TABLE_PD)
 ## clean-tables     : Delete all tables
 clean-tables :
 	rm -rf $(TABLE_PD_FILE)
+
 
 
 REF_PEAKS_SRC:=$(PROC_SRC_DIR)/calc_pattern.py
@@ -187,15 +193,40 @@ clean-reference-peaks :
 	rm -rf $(REF_PEAKS_DIR)
 
 
+
+FIGS_SRC_DIR:=$(SRC_DIR)/image_scripts/paper
+FIGS:=PS_1p3V_a PS_1p3V_b PS_0p5V_b PS_0p0V_a_interface PS_0p0V_a PS_0p0V_a_heatmap
+FIGS_SRC_FNAMES:=$(addsuffix .py,$(FIGS))
+FIGS_SRC_DIR:=$(IMG_SRC_DIR)/paper/
+FIGS_SRC:=$(addprefix $(FIGS_SRC_DIR),$(FIGS_SRC_FNAMES))
+FIGS_FNAMES:=$(addsuffix .svg,$(FIGS))
+FIGS_FILES:=$(addprefix $(RESULTS_FINAL_DIR)/,$(FIGS_FNAMES))
+.PHONY : figures clean-figures
+figures : $(FIGS_FILES)
+
+$(FIGS_FILES) : $(RESULTS_FINAL_DIR)/%.svg : $(IMG_SRC_DIR)/paper/%.py
+	cd $(FIGS_SRC_DIR) && $(LANGUAGE) $(notdir $<)
+
+clean-figures :
+	for file in $(FIGS_FILES); do rm -rf $$file; done
+
+
+
 slides:
 	cd slides && make slides
+
+
+
 
 clean-all:
 	make clean-calibration
 	make clean-ai
 	make clean-peaks
 	make clean-tables
+	make clean-reference-peaks
+	make clean-figures
 # add other clean rules as you create them
+
 
 
 .PHONY : venv requirements patches clean-venv
@@ -218,6 +249,7 @@ clean-venv :
 	rm -rf venv
 
 
+
 .PHONY : test clean-test
 ## test             : Execute some rules using test files
 test :
@@ -233,6 +265,7 @@ clean-test :
 	make clean-tables
 
 
+
 ## variables        : Print some variables
 .PHONY : variables
 variables :
@@ -240,6 +273,7 @@ variables :
 	@echo HDF_STEMS: $(HDF_STEMS)
 	@echo INTEGRATED_DIRS: $(INTEGRATED_DIRS)
 	@echo AI_INDIVIDUAL_TARGETS: $(AI_INDIVIDUAL_TARGETS)
+
 
 
 ## help             : Print this help
