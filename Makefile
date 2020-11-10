@@ -22,17 +22,17 @@ PONI_FILE:=$(RESULTS_INTERMED_DIR)/Si_17.95keV.poni
 
 all:
 	make data
+	make validate
 	make analysis
 	make figures
 
 
 data:
-	mkdir -p data
-	cd data && wget -O xrd_data.tgz https://ndownloader.figshare.com/files/14574803?private_link=5f423271a5a4e7fee3ed
-	cd data && tar -zxvf xrd_data.tgz
+	cd data && make data
+
 
 validate:
-# use hash, see project-alpha
+	cd data && make validate
 
 eda:
 # to do
