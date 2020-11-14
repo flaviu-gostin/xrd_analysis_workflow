@@ -9,6 +9,7 @@ HDF200:=PS_0p0V_a.hdf PS_0p5V_b.hdf PS_0p7V_b.hdf PS_1p3V_b.hdf PSA_1p3V_c.hdf P
 data:
 	wget -i urls_Zenodo.txt
 	for HDF in ${HDF200}; do cat $${HDF}_* > ${HDF200}; done
+	for ARCHIVE in PS*V.tgz; do tar -xvzf $${ARCHIVE}; done
 
 ## validate         : Check hashes of .hdf and .nxs files
 validate:
