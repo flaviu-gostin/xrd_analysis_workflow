@@ -9,7 +9,7 @@ ARCHIVES:=$(wildcard PS*V.tgz)
 ## data             : Download data and concatenate split files
 data:
 	wget -i urls_Zenodo.txt
-	for HDF in ${HDF200}; do cat $${HDF}_* > ${HDF200}; done
+	for HDF in ${HDF200}; do cat $${HDF}_* > $${HDF}; done
 	for ARCHIVE in ${ARCHIVES}; do tar -xvzf $${ARCHIVE}; done
 
 ## validate         : Check hashes of .hdf and .nxs files
