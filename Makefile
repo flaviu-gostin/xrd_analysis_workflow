@@ -43,7 +43,6 @@ analysis:
 	make peaks
 	make tables
 	make reference-peaks
-	cd src/image_scripts/ && python raw_diffr_images.py
 
 
 
@@ -195,7 +194,8 @@ clean-reference-peaks :
 
 
 FIGS_SRC_DIR:=$(SRC_DIR)/image_scripts/paper
-FIGS:=PS_1p3V_a PS_1p3V_b PS_0p5V_b PS_0p0V_a_interface PS_0p0V_a PS_0p0V_a_heatmap
+FIGS:=PS_1p3V_a PS_1p3V_b PS_0p5V_b PS_0p0V_a_interface PS_0p0V_a \
+      PS_0p0V_a_heatmap PS_1p3V_b_slice-71_raw
 FIGS_SRC_FNAMES:=$(addsuffix .py,$(FIGS))
 FIGS_SRC_DIR:=$(IMG_SRC_DIR)/paper/
 FIGS_SRC:=$(addprefix $(FIGS_SRC_DIR),$(FIGS_SRC_FNAMES))
