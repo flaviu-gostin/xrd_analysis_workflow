@@ -5,7 +5,7 @@ Characterization of Corrosion Products of a Ti‐Based Metallic Glass
 for Implant Applications*, Advanced Healthcare Materials, 2018, 7,
 1800338 (<https://doi.org/10.1002/adhm.201800338>)
 
-Free pre-publication version:
+Free pre-publication full-text version:
 [doc/manuscript_Gostin_2018.pdf](doc/manuscript_Gostin_2018.pdf)
 
 **This project automatically:**
@@ -18,15 +18,16 @@ Free pre-publication version:
 - `git clone https://github.com/flaviu-gostin/xrd_analysis_workflow.git`
 - `cd xrd_analysis_workflow/`
 - `sudo apt install virtualenv`
-- `virtualenv --python=python3 venv` (Python>=3.6)
+- `virtualenv --python=python3 venv` You need Python>=3.6
 - `source venv/bin/activate`
 - `pip install -r requirements.txt`
-- `make all` (downloads 14.6 GB, but reserve 30 GB, and performs all
-  the data processing and plotting)
+- `make all` Downloads 14.6 GB (but reserve 30 GB) and performs all
+  the data processing and plotting
 
 You need to reserve more storage space as archives and split files are
-not automatically deleted after decompression.
-- `make clean-data` deletes archives and split files
+not automatically deleted after decompression/concatenation.  To
+delete those:
+- `make clean-data`
 
 You should find the results in [results/](results/)
 
@@ -36,8 +37,8 @@ Please feel free to create an issue or a pull request on GitHub or
 email me.
 
 ## How it works
-- download the raw 2D XRD image data from a public data repository
-  (only one set of images for now)
+- download raw 2D XRD image data from
+  [Zenodo](https://zenodo.org/record/4039843)
 - perform azimuthal integration on those images resulting in 1D XRD
   patterns using [pyFAI](https://github.com/silx-kit/pyFAI)
 - determine peak position, calculate lattice spacing and write values
