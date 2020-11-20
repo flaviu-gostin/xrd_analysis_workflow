@@ -17,8 +17,7 @@ CALIB_EXE:=$(LANGUAGE) $(CALIB_SRC)
 PONI_FILE:=$(RESULTS_INTERMED_DIR)/Si_17.95keV.poni
 
 
-.PHONY : all data validate eda analysis slides verbose coverage
-.PHONY : clean-all
+.PHONY : all data clean-data validate eda analysis slides clean-all
 
 all:
 	make data
@@ -30,6 +29,8 @@ all:
 data:
 	cd data && make data
 
+clean-data:
+	cd data && make clean-data
 
 validate:
 	cd data && make validate
@@ -219,6 +220,7 @@ slides:
 
 
 clean-all:
+	make clean-data
 	make clean-calibration
 	make clean-ai
 	make clean-peaks
