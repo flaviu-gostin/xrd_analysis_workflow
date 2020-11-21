@@ -18,7 +18,7 @@ slice = 71
 
 file = location_of_data + condition + ".hdf"
 slc = get_slice(file, dataset_path, slice)
-plt.imshow(slc, cmap='gray')
+plt.imshow(slc, cmap='gray_r')
 plt.xticks(())
 plt.yticks(())
 save_filename = condition + "_slice-" + str(slice) + "_raw.png"
