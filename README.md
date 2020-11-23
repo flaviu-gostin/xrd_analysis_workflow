@@ -18,7 +18,7 @@ Free pre-publication full-text version:
 - `git clone https://github.com/flaviu-gostin/xrd_analysis_workflow.git`
 - `cd xrd_analysis_workflow/`
 - `sudo apt install virtualenv`
-- `virtualenv --python=python3 venv` You need Python>=3.6
+- `python3 -m venv ./venv` You need Python>=3.6
 - `source venv/bin/activate`
 - `pip install -r requirements.txt`
 - `make all` Downloads 14.6 GB (but reserve 30 GB) and performs all

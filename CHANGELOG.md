@@ -11,6 +11,11 @@ Changelog](https://keepachangelog.com/en/1.0.0/).
 
 - Add this changelog file.
 
+### Changed
+
+- Recommend creating virtual environment with `python3` instead of
+  `virtualenv`
+
 ### Fixed
 
 - Fix Figure S1 coming out as negative.
