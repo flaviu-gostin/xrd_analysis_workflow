@@ -14,7 +14,7 @@ dataset_path = inside_hdf.hdf_dataset_path
 location_of_data = "../../../data/"
 location_of_images = "../../../results/final/"
 condition = "PS_1p3V_b"
-slice = 71
+slice = 72
 
 file = location_of_data + condition + ".hdf"
 slc = get_slice(file, dataset_path, slice)
