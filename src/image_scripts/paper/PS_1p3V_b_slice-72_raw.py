@@ -18,9 +18,21 @@ slice = 72
 
 file = location_of_data + condition + ".hdf"
 slc = get_slice(file, dataset_path, slice)
-plt.imshow(slc, cmap='gray_r', vmin=2000, vmax=15000)
+fig, ax = plt.subplots(subplot_kw={'autoscale_on': True})
+ax.imshow(slc, cmap='gray_r', vmin=2000, vmax=15000)
 plt.xticks(())
 plt.yticks(())
+
+#annotations
+y_ann = 2044
+y_offset = -25
+cucl111 = ax.annotate('CuCl 111', xy=(595,y_ann), xycoords='data',
+                      xytext=(0, y_offset), textcoords='offset points',
+                      color='green', rotation=90, ha='center', va='top',
+                      arrowprops=dict(arrowstyle="->",
+                                      color='green')
+                      )
+
 save_filename = condition + "_slice-" + str(slice) + "_raw.png"
-plt.savefig(location_of_images + save_filename, dpi=500)
+fig.savefig(location_of_images + save_filename, dpi=500)
 plt.close()
