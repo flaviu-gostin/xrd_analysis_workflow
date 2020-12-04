@@ -26,12 +26,21 @@ plt.yticks(())
 #annotations
 y_ann = 2044
 y_offset = -25
-cucl111 = ax.annotate('CuCl 111', xy=(595,y_ann), xycoords='data',
-                      xytext=(0, y_offset), textcoords='offset points',
-                      color='green', rotation=90, ha='center', va='top',
-                      arrowprops=dict(arrowstyle="->",
-                                      color='green')
-                      )
+labels = [['CuCl 111', 1209, 'green'],
+          ['Pd 111', 1692, 'blue'],
+          ['CuCl 022', 1995, 'green'],
+          ['CuCl 113', 2374, 'green'],
+          ['Pd 022', 2904, 'blue'],
+          ['Pd 113', 3522, 'blue']
+          ]
+for label, x_ann, color in labels:
+    ax.annotate(label, xy=(x_ann,y_ann), xycoords='data',
+                xytext=(0, y_offset), textcoords='offset points',
+                color=color, fontsize=16,
+                rotation=90, ha='center', va='top',
+                arrowprops=dict(arrowstyle="->",
+                                color=color)
+                )
 
 save_filename = condition + "_slice-" + str(slice) + "_raw.png"
 fig.savefig(location_of_images + save_filename, dpi=500)
