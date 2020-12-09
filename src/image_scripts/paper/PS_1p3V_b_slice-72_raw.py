@@ -16,9 +16,19 @@ location_of_images = "../../../results/final/"
 condition = "PS_1p3V_b"
 slice = 72
 
+# Figure dimensions
+standard_figwidths_inches = {'single_column': 3.5,
+                            'onehalf_column': 5,
+                            'two_column': 7.2}
+figheight_inches = 3.85
+
 file = location_of_data + condition + ".hdf"
 slc = get_slice(file, dataset_path, slice)
 fig, ax = plt.subplots(subplot_kw={'autoscale_on': True})
+fig.set_size_inches(standard_figwidths_inches['onehalf_column'],
+                    figheight_inches)
+fig.subplots_adjust(left=0.002, right=0.998, bottom=0.35, top=0.999)
+
 ax.imshow(slc, cmap='gray_r', vmin=2000, vmax=15000)
 plt.xticks(())
 plt.yticks(())
