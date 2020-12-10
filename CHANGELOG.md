@@ -13,6 +13,7 @@ Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 
+- Add annotations to and adjust margins in Fig S1.
 - Adjust gray levels in Fig S1 to improve visibility of diffraction
   rings and spots.
 - Recommend creating virtual environment with `python3` instead of
