@@ -24,9 +24,9 @@ Free pre-publication full-text version:
 - `make all` Downloads 14.6 GB (but reserve 30 GB) and performs all
   the data processing and plotting.
 
-You need to reserve more storage space as archives and split files are
-not automatically deleted after decompression/concatenation.  To
-delete those:
+You need to reserve more storage space as downloaded archives and
+split files will automatically be decompressed/concatenated.  To
+delete the archives and split files:
 - `make clean-data`
 
 You should find the results in [results/](results/)
@@ -37,8 +37,8 @@ Please feel free to create an issue or a pull request on GitHub or
 email me.
 
 ## How it works
-- download raw 2D XRD image data from
-  [Zenodo](https://zenodo.org/record/4039843)
+- download raw 2D XRD image data from [a Zenodo
+  repository](https://zenodo.org/record/4039843)
 - perform azimuthal integration on those images resulting in 1D XRD
   patterns using [pyFAI](https://github.com/silx-kit/pyFAI)
 - determine peak position, calculate lattice spacing and write values
