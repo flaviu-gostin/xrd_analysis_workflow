@@ -11,6 +11,8 @@ measured_patterns_dir = "../../../results/intermediate/integrated_1D/PS_1p3V_b"
 reference_peaks_dir = "../../../results/intermediate/peaks_references"
 figure_fn = "../../../results/final/PS_1p3V_b_52-82.svg"
 
+first_pattern = 52
+last_pattern = 82
 references = ['Pd', 'PdCl2', 'CuCl']
 layers = {'Pd': (0, 83),
           'PdCl2': (4, 65),
@@ -89,7 +91,7 @@ def yval_max(patterns, x):
 
 
 fig, axs = powder_diffr_fig(measured_patterns_dir=measured_patterns_dir,
-                            patterns=(52, 82, 1),
+                            patterns=(first_pattern, last_pattern, 1),
                             position_subplot_measured=3,
                             reference_peaks_dir=reference_peaks_dir,
                             twotheta_range=[2.5, 21],
@@ -131,6 +133,12 @@ label = ax.annotate('X1', xy=(xann, yann), xycoords='data',
                     ha='center', va='bottom')
 #label.set_fontsize('small')
 
+# Annotate one X2 peak
+xann = X2[0][0]
+yann = yval_max((first_pattern, X2[0][1][1]), X2[0][0]) + excess_length
+label = ax.annotate('X2', xy=(xann, yann), xycoords='data',
+                    xytext=(4, offset_labels), textcoords='offset points',
+                    ha='center', va='bottom', color='blue')
 
 
 fig.savefig(figure_fn)
