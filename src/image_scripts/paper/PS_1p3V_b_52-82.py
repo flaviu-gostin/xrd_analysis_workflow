@@ -140,6 +140,14 @@ label = ax.annotate('X2', xy=(xann, yann), xycoords='data',
                     xytext=(4, offset_labels), textcoords='offset points',
                     ha='center', va='bottom', color='blue')
 
+# Annotate one X3 peak
+text_ann = 'X3'
+i_ann = 0   # index of vertical line to annotate (in its list)
+x_ann = X3[i_ann][0]
+y_ann = yval(X3[i_ann][1][1], X3[i_ann][0]) - excess_length
+label = ax.annotate(text_ann, xy=(x_ann, y_ann), xycoords='data',
+                    xytext=(0, - offset_labels), textcoords='offset points',
+                    ha='center', va='top', color='red')
 
 fig.savefig(figure_fn)
 
