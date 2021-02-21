@@ -149,6 +149,15 @@ label = ax.annotate(text_ann, xy=(x_ann, y_ann), xycoords='data',
                     xytext=(0, - offset_labels), textcoords='offset points',
                     ha='center', va='top', color='red')
 
+# Annotate one X4 peak
+text_ann = 'X4'
+i_ann = 0   # index of vertical line to annotate (in its list)
+x_ann = X4[i_ann][0]
+y_ann = yval(X4[i_ann][1][1], X4[i_ann][0]) - excess_length
+label = ax.annotate(text_ann, xy=(x_ann, y_ann), xycoords='data',
+                    xytext=(0, - offset_labels), textcoords='offset points',
+                    ha='center', va='top', color='green')
+
 fig.savefig(figure_fn)
 
 #plt.grid()
