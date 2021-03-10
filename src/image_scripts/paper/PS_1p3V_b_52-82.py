@@ -98,7 +98,10 @@ fig, axs = powder_diffr_fig(measured_patterns_dir=measured_patterns_dir,
                             label_every_nth_pattern=5,
                             references=references,
                             offset_patterns=offset_patterns,
-                            layers=layers)
+                            layers=layers,
+                            figwidth='two_column')
+
+fig.set_figheight(fig.get_figwidth())
 
 # Add vertical lines indicating diffraction peaks
 ax = axs[2]   # subplot containing measured diffraction patterns
