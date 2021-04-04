@@ -15,6 +15,7 @@ location_of_data = "../../../data/"
 location_of_images = "../../../results/final/"
 condition = "PS_1p3V_b"
 slice = 72
+save_filename = condition + "_raw_2D.png"
 
 # Figure dimensions
 standard_figwidths_inches = {'single_column': 3.5,
@@ -52,6 +53,6 @@ for label, x_ann, color in labels:
                                 color=color)
                 )
 
-save_filename = condition + "_slice-" + str(slice) + "_raw.png"
+
 fig.savefig(location_of_images + save_filename, dpi=500)
 plt.close()

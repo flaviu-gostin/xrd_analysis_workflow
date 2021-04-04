@@ -9,7 +9,7 @@ from plot_diffraction_patterns import powder_diffr_fig
 
 measured_patterns_dir = "../../../results/intermediate/integrated_1D/PS_1p3V_b"
 reference_peaks_dir = "../../../results/intermediate/peaks_references"
-figure_fn = "../../../results/final/PS_1p3V_b_52-82.svg"
+figure_fn = "../../../results/final/PS_1p3V_b_52_82.svg"
 
 first_pattern = 52
 last_pattern = 82
