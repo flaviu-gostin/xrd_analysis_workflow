@@ -9,6 +9,7 @@ Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Added
 
+- Add Figure S2.
 - Add this changelog file.
 
 ### Changed
@@ -18,6 +19,7 @@ Changelog](https://keepachangelog.com/en/1.0.0/).
   rings and spots.
 - Recommend creating virtual environment with `python3` instead of
   `virtualenv`.
+- Makefile: use Python module venv instead of with virtualenv utility.
 
 ### Fixed
 
