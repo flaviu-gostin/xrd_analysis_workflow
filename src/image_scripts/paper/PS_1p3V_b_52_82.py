@@ -161,7 +161,8 @@ label = ax.annotate(text_ann, xy=(x_ann, y_ann), xycoords='data',
                     xytext=(0, - offset_labels), textcoords='offset points',
                     ha='center', va='top', color='green')
 
-fig.savefig(figure_fn)
+if __name__ == "__main__":
+    fig.savefig(figure_fn)
 
 #plt.grid()
 #plt.show()
