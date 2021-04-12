@@ -2,7 +2,10 @@ TEST_DATA_DIR:=test_data
 TEST_FILES:=$(addprefix  $(TEST_DATA_DIR)/test-,PS_1p3V_b.hdf PSP_1p3V_b.hdf)
 
 # hdf files larger than 200M
-HDF200:=PS_0p0V_a.hdf PS_0p5V_b.hdf PS_0p7V_b.hdf PS_1p3V_b.hdf PSA_1p3V_c.hdf PSP_1p3V_b.hdf PSA_1p3V_a.hdf PS_1p3V_c.hdf PSAP_1p3V_a.hdf PSP_1p3V_a.hdf PSAP_1p3V_d.hdf PS_0p7V_a.hdf PSA_1p3V_d.hdf PSAP_1p3V_c.hdf PSAP_1p3V_b.hdf PS_1p3V_a.hdf PSA_1p3V_b.hdf
+HDF200:=PS_0p0V_a.hdf PS_0p5V_b.hdf PS_0p7V_b.hdf PS_1p3V_b.hdf PSA_1p3V_c.hdf
+HDF200+=PSP_1p3V_b.hdf PSA_1p3V_a.hdf PS_1p3V_c.hdf PSAP_1p3V_a.hdf
+HDF200+=PSP_1p3V_a.hdf PSAP_1p3V_d.hdf PS_0p7V_a.hdf PSA_1p3V_d.hdf
+HDF200+=PSAP_1p3V_c.hdf PSAP_1p3V_b.hdf PS_1p3V_a.hdf PSA_1p3V_b.hdf
 ARCHIVES:=$(wildcard PS*V.tgz)
 
 .PHONY: data validate clean-data
