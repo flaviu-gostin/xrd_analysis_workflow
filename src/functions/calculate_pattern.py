@@ -28,6 +28,10 @@ def calculate_pattern(structure, wavelength, two_theta_range):
     two_theta, intensity : 2x numpy arrays
         Numpy arrays.  Two-theta in degree and intensity for each Bragg
     reflection.
+    hkl_labels : list
+        List of strings, one for each Bragg reflections.  Each string is a
+    comma-separated sequence of 3-figures sub-strings corresponding to hkl
+    indices of atomic planes that contribute to that Bragg reflection.
 
     References
     ----------
@@ -41,7 +45,22 @@ def calculate_pattern(structure, wavelength, two_theta_range):
     pattern = calculator.get_pattern(structure, two_theta_range=two_theta_range)
     two_theta, intensity = pattern.x, pattern.y
 
-    return two_theta, intensity
+
+    #Extract hkl labels for each reflection
+    #(one reflection can have contributions from multiple hkl planes)
+    hkl_labels = []
+    for reflection in pattern.hkls:
+        #get the hkl tuples for each reflection
+        #(a reflection may have contributions from several hkl planes)
+        hkl_tuples = [refl['hkl'] for refl in reflection]
+        #this variable above is a list of tuples
+        #now, convert it to a list of strings
+        hkl_strings = [''.join([str(i) for i in hkl_tup]) for hkl_tup
+                       in hkl_tuples]
+        hkl_string = ','.join(hkl_strings)
+        hkl_labels.append(hkl_string)
+
+    return two_theta, intensity, hkl_labels
 
 
 def plot_calculated_pattern(two_theta, intensity):
