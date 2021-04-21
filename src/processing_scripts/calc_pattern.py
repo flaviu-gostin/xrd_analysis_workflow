@@ -31,7 +31,8 @@ try:
 except IndexError:
     pass
 
-twotheta, intensity = calculate_pattern(structure, wavelength_Angstrom,
-                                        two_theta_range)
-stacked_array = np.column_stack((twotheta,intensity))
-np.savetxt(result_fname, stacked_array, fmt='%.6e')
+twotheta, intensity, hkl_labels = calculate_pattern(structure,
+                                                    wavelength_Angstrom,
+                                                    two_theta_range)
+stacked_array = np.column_stack((twotheta, intensity, hkl_labels))
+np.savetxt(result_fname, stacked_array, fmt = '%s')
