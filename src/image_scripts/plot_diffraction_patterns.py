@@ -246,12 +246,26 @@ def powder_diffr_fig(measured_patterns_dir=None,
 
     def xydata_reference(filename):
         """Extract xy data from a file containing Bragg peaks for a reference"""
-        data = np.loadtxt(os.path.join(reference_peaks_dir, filename))
-        twotheta, intensity = data[:,0], data[:,1]
+        twotheta, intensity = \
+        np.loadtxt(os.path.join(reference_peaks_dir, filename), usecols=(0,1),
+                   unpack=True)
         return twotheta, intensity
 
 
-    def stick_plotter(ax, label_text, twotheta, intensity, color):
+    def hkl_labels(filename):
+        """Extract hkl labels from file"""
+        try:
+            hkl_labels = \
+            np.loadtxt(os.path.join(reference_peaks_dir, filename),
+                                    dtype=np.unicode_, usecols=(2,))
+        except IndexError:
+            x, _ = xydata_reference(filename)
+            hkl_labels = np.full_like(x, '', dtype=np.unicode_)
+
+        return hkl_labels
+
+
+    def stick_plotter(ax, label_text, twotheta, intensity, hkl_labels, color):
         """ Make a stick plot in a given axes for a given reference """
         stem_container = ax.stem(twotheta, intensity)
         stem_container.baseline.set_visible(False)
@@ -260,15 +274,22 @@ def powder_diffr_fig(measured_patterns_dir=None,
         ax.annotate(label_text, xy=(1, 1), xycoords='axes fraction',
                     xytext=(10, 0), textcoords='offset points', va='top',
                     color=color)
+        if any(hkl_labels):
+            for x, y, label in zip(twotheta, intensity, hkl_labels):
+                ax.annotate(label, xy=(x, y), xycoords='data',
+                            xytext=(x-0.2, 10), textcoords='data',
+                            va='bottom', ha='right',
+                            rotation=90, color=color)
 
 
     # Plot stick plots for references and label them
     for ax, ref, fname in zip(axs_refs, references, references_fnames):
         twotheta, intensity = xydata_reference(fname)
+        hkl_lbls = hkl_labels(fname)
         style = refs_labels_style[ref]
         label_text = style['label']
         color = style['color']
-        stick_plotter(ax, label_text, twotheta, intensity, color)
+        stick_plotter(ax, label_text, twotheta, intensity, hkl_lbls, color)
         ax.set(ylim=[0, 110])
         ax.tick_params(axis='y', which='both', left=False, labelleft=False)
 
