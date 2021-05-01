@@ -205,7 +205,8 @@ FIGS_FILES:=$(addprefix $(RESULTS_FINAL_DIR)/,$(FIGS_FNAMES))
 .PHONY : figures clean-figures
 figures : $(FIGS_FILES)
 
-$(FIGS_FILES) : $(RESULTS_FINAL_DIR)/%.svg : $(IMG_SRC_DIR)/paper/%.py
+$(FIGS_FILES) : $(RESULTS_FINAL_DIR)/%.svg : $(IMG_SRC_DIR)/paper/%.py \
+$(IMG_SRC_DIR)/plot_diffraction_patterns.py
 	cd $(FIGS_SRC_DIR) && $(LANGUAGE) $(notdir $<)
 
 clean-figures :
