@@ -276,10 +276,11 @@ def powder_diffr_fig(measured_patterns_dir=None,
                     color=color)
         if any(hkl_labels):
             for x, y, label in zip(twotheta, intensity, hkl_labels):
-                ax.annotate(label, xy=(x, y), xycoords='data',
-                            xytext=(x-0.2, 10), textcoords='data',
-                            va='bottom', ha='right',
-                            rotation=90, color=color)
+                label = ax.annotate(label, xy=(x, y), xycoords='data',
+                                    xytext=(x-0.2, 10), textcoords='data',
+                                    va='bottom', ha='right',
+                                    rotation=90, color=color)
+                label.set_fontsize('xx-small')
 
 
     # Plot stick plots for references and label them
