@@ -26,6 +26,6 @@ def test_calculate_pattern():
     # make the lattice parameter equal to the NIST one
     structure.scale_lattice(lattice_param ** 3)
 
-    twotheta, intensity = calculate_pattern(structure, wavelength,
+    twotheta, intensity, _ = calculate_pattern(structure, wavelength,
                                             two_theta_range)
     np.testing.assert_allclose(twotheta, reference_peaks, rtol=0, atol=0.001)
