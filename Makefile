@@ -203,12 +203,14 @@ FIGS_SRC:=$(addprefix $(FIGS_SRC_DIR),$(FIGS_SRC_FNAMES))
 FIGS_FNAMES:=$(addsuffix .svg,$(FIGS))
 FIGS_FILES:=$(addprefix $(RESULTS_FINAL_DIR)/,$(FIGS_FNAMES))
 .PHONY : figures clean-figures
+## figures          : Generate figures for paper
 figures : $(FIGS_FILES)
 
 $(FIGS_FILES) : $(RESULTS_FINAL_DIR)/%.svg : $(IMG_SRC_DIR)/paper/%.py \
 $(IMG_SRC_DIR)/plot_diffraction_patterns.py
 	cd $(FIGS_SRC_DIR) && $(LANGUAGE) $(notdir $<)
 
+## clean-figures    : Delete figures for paper
 clean-figures :
 	for file in $(FIGS_FILES); do rm -rf $$file; done
 
