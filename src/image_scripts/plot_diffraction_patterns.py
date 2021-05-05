@@ -274,12 +274,22 @@ def powder_diffr_fig(measured_patterns_dir=None,
         ax.annotate(label_text, xy=(1, 1), xycoords='axes fraction',
                     xytext=(10, 0), textcoords='offset points', va='top',
                     color=color)
+
         if any(hkl_labels):
+            ymax = max(intensity) #TODO: exclude peaks outside plotting area
             for x, y, label in zip(twotheta, intensity, hkl_labels):
+                if y / ymax > 0.5:
+                    xtext = x - 0.2
+                    ytext = y
+                    ha = 'right'; va = 'top'
+                else:
+                    xtext = x
+                    ytext = y + 10
+                    ha = 'center'; va = 'bottom'
+
                 label = ax.annotate(label, xy=(x, y), xycoords='data',
-                                    xytext=(x-0.2, 10), textcoords='data',
-                                    va='bottom', ha='right',
-                                    rotation=90, color=color)
+                                    xytext=(xtext, ytext), textcoords='data',
+                                    va=va, ha=ha, rotation=90, color=color)
                 label.set_fontsize('xx-small')
 
 
