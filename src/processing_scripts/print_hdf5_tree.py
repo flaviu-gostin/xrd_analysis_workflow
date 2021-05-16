@@ -25,6 +25,8 @@ def find_all(name, object):
 
     elif isinstance(object, h5py.Group):
         print(name, '(Group)')
+        for item in object.attrs.items():
+            print(item)
 
 
 file.visititems(find_all)
