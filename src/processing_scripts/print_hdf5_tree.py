@@ -19,14 +19,16 @@ def find_all(name, object):
 
     if isinstance(object, h5py.Dataset):    # if the member is a Dataset ...
         if object.shape == (1,):    # has one dimension with one single value
-            print(name, '(Dataset, value =', object[()], ')')    # print value
+            print('Dataset named: ', name, '(value =', object[()], ')')
         else:
-            print(name, '(Dataset, shape:', object.shape, ', type:', object.dtype, ')')    # otherwise print the shape and type
+            print('Dataset named: ', name, '(shape:', object.shape,
+                  ', type:', object.dtype, ')')
+
 
     elif isinstance(object, h5py.Group):
-        print(name, '(Group)')
+        print('+ Group named: ', name)
         for item in object.attrs.items():
-            print(item)
+            print('Attribute: ', item)
 
 
 file.visititems(find_all)
