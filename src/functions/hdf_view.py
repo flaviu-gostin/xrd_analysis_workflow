@@ -19,7 +19,7 @@ def get_slice(filename, dataset_path, n):
     return slice
 
 
-def print_hdf5_tree(fname):
+def print_tree(fname):
     """Print the entire hierarchy of a hdf5 file.
 
     Note (May 2016):
