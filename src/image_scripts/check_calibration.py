@@ -12,7 +12,7 @@ from pymatgen import Structure
 import sys
 import os
 sys.path.append(os.path.join(os.path.dirname(__file__), "../functions/"))
-from hdf_view import get_slice
+from hdf_view import get_diffraction_image
 from calculate_pattern import calculate_pattern, plot_calculated_pattern
 sys.path.append(os.path.join(os.path.dirname(__file__), "../../data/"))
 import inside_hdf, exper_param
@@ -24,7 +24,7 @@ Si_1D_file = "../../results/intermediate/integrated_1D/Si_17.95keV/0.dat"
 Si_cif_file = "../../data/cif/Si.cif"
 Si_lattice_param = 5.43118 # in Angstrom (Si powder SRM 640e from NIST)
 poni_file = "../../results/intermediate/Si_17.95keV.poni"
-measured_image = get_slice(Si_hdf_file, dataset_path, slice)
+measured_image = get_diffraction_image(Si_hdf_file, dataset_path, slice)
 image_fn = "../../results/intermediate/check_calibration_image.png"
 pattern_fn = "../../results/intermediate/check_calibration_pattern.png"
 

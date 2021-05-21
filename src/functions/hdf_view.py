@@ -10,9 +10,15 @@ https://docs.h5py.org/en/stable/high/group.html
 """
 import h5py
 
-def get_slice(filename, dataset_path, n):
-    """Extract one single slice from a .hdf file.  Counting starts at 0."""
-    file = h5py.File(filename, 'r')
+def get_diffraction_image(fname, dataset_path, n):
+    """Extract one diffraction image from a .hdf file.
+
+    Counting starts at 0.
+
+    Image is equivalent to 'slice' in DAWN software.
+
+    """
+    file = h5py.File(fname, 'r')
     dataset = file[dataset_path]
     slice = dataset[n]
     file.close()

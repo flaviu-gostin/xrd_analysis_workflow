@@ -5,7 +5,7 @@ import sys
 import os
 sys.path.append(os.path.join(os.path.dirname(__file__),
                              "../../functions/"))
-from hdf_view import get_slice
+from hdf_view import get_diffraction_image
 sys.path.append(os.path.join(os.path.dirname(__file__),
                              "../../../data/"))
 import inside_hdf
@@ -24,7 +24,7 @@ standard_figwidths_inches = {'single_column': 3.5,
 figheight_inches = 3.85
 
 file = location_of_data + condition + ".hdf"
-slc = get_slice(file, dataset_path, slice)
+slc = get_diffraction_image(file, dataset_path, slice)
 fig, ax = plt.subplots(subplot_kw={'autoscale_on': True})
 fig.set_size_inches(standard_figwidths_inches['onehalf_column'],
                     figheight_inches)
