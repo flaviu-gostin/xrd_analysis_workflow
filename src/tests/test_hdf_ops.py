@@ -1,13 +1,13 @@
-""" Test functions in hdf_view module.
+""" Test functions in hdf_ops module.
 
-Run from project root with: python -m pytest [src/tests/test_hdf_view.py]
+Run from project root with: python -m pytest [src/tests/test_hdf_ops.py]
 
 """
 import numpy as np
 import sys
 import os
 sys.path.append(os.path.join(os.path.dirname(__file__), "../functions/"))
-from hdf_view import get_diffraction_image
+from hdf_ops import get_diffraction_image
 sys.path.append(os.path.join(os.path.dirname(__file__), "../../data/"))
 import inside_hdf
 

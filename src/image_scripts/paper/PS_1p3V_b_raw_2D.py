@@ -5,7 +5,7 @@ import sys
 import os
 sys.path.append(os.path.join(os.path.dirname(__file__),
                              "../../functions/"))
-from hdf_view import get_diffraction_image
+from hdf_ops import get_diffraction_image
 sys.path.append(os.path.join(os.path.dirname(__file__),
                              "../../../data/"))
 import inside_hdf

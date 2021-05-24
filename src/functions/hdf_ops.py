@@ -3,7 +3,7 @@
 Get tree info (the structure of the hdf5 file).
 Get actual data sets contained inside the file.
 
-Use: from hdf_view import the_function_you_need
+Use: from hdf_ops import the_function_you_need
 
 https://docs.h5py.org/en/stable/high/group.html
 
