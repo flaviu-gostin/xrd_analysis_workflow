@@ -52,3 +52,52 @@ def print_tree(fname):
     file = h5py.File(fname, 'r')
     file.visititems(find_all)
     file.close()
+
+
+def vertical_position(fname, images_idx=None):
+    """Get vertical position for diffraction images from nxs file.
+
+    Arguments
+    ---------
+    fname (string): Name of hdf5 file containing the metadata (.nxs).
+
+    images_idx (list or int): List of indices for diffraction images
+        (slices) for which to get the vertical position at which they
+        were captured.  If None, return position for all images.
+
+    Returns
+    -------
+    (list of floats): List of vertical positions.
+
+    FORMAT THIS DOCSTRING PROPERLY!
+
+    """
+    file = h5py.File(fname, 'r')
+    scan_command_dataset = file["entry1/scan_command"]
+    scan_command_str = scan_command_dataset[0]
+    images_no_dataset = file["entry1/scan_dimensions"]
+    images_no = images_no_dataset[0]
+    file.close()
+    sc_split = scan_command_str.split()
+    pos_0 = float(sc_split[2])
+    step = float(sc_split[4])
+    max_idx = images_no - 1
+
+    if not images_idx:
+        images_idx = range(images_no)
+
+
+    if isinstance(images_idx, int):
+        if 0 <= images_idx <= max_idx:
+            return pos_0 + images_idx*step
+        else:
+            raise ValueError("Image index {} is out of range".format(\
+                                                            images_idx))
+
+
+    if all(0 <= idx <= max_idx for idx in images_idx):
+        positions = [round(pos_0 + idx*step, 3) for idx in images_idx]
+    else:
+        raise ValueError("One or more image indices are out of range")
+
+    return positions
