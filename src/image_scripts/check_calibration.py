@@ -39,7 +39,7 @@ structure_Si = Structure.from_file(Si_cif_file)
 # make the lattice parameter equal to the NIST one
 structure_Si.scale_lattice(Si_lattice_param ** 3)
 wl = exper_param.wavelength * 1e10
-twotheta, intensity = calculate_pattern(structure_Si, wl, (0, 41.6))
+twotheta, intensity, *_ = calculate_pattern(structure_Si, wl, (0, 41.6))
 
 
 title = """Two superimposed images: measured image and "fake" image"""
