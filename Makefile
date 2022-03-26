@@ -242,7 +242,7 @@ venv :
 
 ## requirements     : Install requirements (do it in a virtual environment?)
 requirements :
-	pip install -r requirements.txt
+	python -m pip install -r requirements.txt
 
 pyFAI_bad_ver:=0.17.0
 
