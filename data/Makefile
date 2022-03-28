@@ -6,7 +6,10 @@ HDF200:=PS_0p0V_a.hdf PS_0p5V_b.hdf PS_0p7V_b.hdf PS_1p3V_b.hdf PSA_1p3V_c.hdf
 HDF200+=PSP_1p3V_b.hdf PSA_1p3V_a.hdf PS_1p3V_c.hdf PSAP_1p3V_a.hdf
 HDF200+=PSP_1p3V_a.hdf PSAP_1p3V_d.hdf PS_0p7V_a.hdf PSA_1p3V_d.hdf
 HDF200+=PSAP_1p3V_c.hdf PSAP_1p3V_b.hdf PS_1p3V_a.hdf PSA_1p3V_b.hdf
-ARCHIVES:=$(wildcard PS*V.tgz)
+ARCHIVES=$(wildcard PS*V.tgz) # Don't use `:=` here.  Using `=`, this variable
+#is expanded when it's substituted, i.e. after PS*V.tgz are downloaded (before
+#download, there is no PS*V.tgz file).  See:
+#https://www.gnu.org/software/make/manual/html_node/Flavors.html#Flavors
 
 .PHONY: data validate clean-data
 ## data             : Download data and concatenate split files
