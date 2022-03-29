@@ -22,7 +22,7 @@ data:
 validate:
 	md5sum --ignore-missing --quiet -c hashes.md5
 
-## clean-splits     : Delete splits of large .hdf files
+## clean-data       : Delete splits of large .hdf files and .tgz archives
 clean-data:
 	for HDF in ${HDF200}; do rm -f $${HDF}_*; done
 	rm -rf ${ARCHIVES}
