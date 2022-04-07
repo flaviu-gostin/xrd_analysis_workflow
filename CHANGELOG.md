@@ -9,6 +9,12 @@ Changelog](https://keepachangelog.com/en/1.0.0/).
 
 - No item here yet
 
+## [2.1.1] - 2022-04-07
+
+### Fixed
+
+- Path to PONI file not being created (due to incorrect syntax in Makefile)
+
 ## [2.1.0] - 2022-03-29
 
 ### Added

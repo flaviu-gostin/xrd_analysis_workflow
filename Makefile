@@ -50,7 +50,7 @@ analysis:
 .PHONY : calibration calibration-check clean-calibration
 ## calibration      : Refine experiment geometry
 calibration :
-	mkdir -p $(dir PONI_FILE)
+	mkdir -p $(dir $(PONI_FILE))
 	make $(PONI_FILE)
 	make calibration-check
 
